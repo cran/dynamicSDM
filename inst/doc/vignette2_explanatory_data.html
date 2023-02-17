@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>dynamicSDM: Explanatory variable data</title>
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">dynamicSDM: Explanatory variable data</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(dynamicSDM)</a></code></pre></div>
+<div id="stage-2-explanatory-variable-data" class="section level2">
+<h2>Stage 2: Explanatory variable data</h2>
+<p>In this tutorial, we will be extracting spatiotemporally buffered explanatory variables for each occurrence and pseudo-absence record. The <em>dynamicSDM</em> functions for extracting such variables require Google Earth Engine and Google Drive to be initialised. Fill in the code below with your Google account email, and run the code to check that <em>rgee</em> and <em>googledrive</em> have been correctly installed and authorised.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(rgee)</a>
+<a class="sourceLine" id="cb2-2" title="2">rgee<span class="op">::</span><span class="kw">ee_check</span>()</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">library</span>(googledrive)</a>
+<a class="sourceLine" id="cb2-5" title="5">googledrive<span class="op">::</span><span class="kw">drive_user</span>()</a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co"># Set your user email here</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#user.email&lt;-&quot;your_google_email_here&quot;</span></a></code></pre></div>
+<p>Note: You will need internet connection for this tutorial. Variable extraction may take some time depending on your internet connection strength. If you try out these functions and are excited to move onto the next tutorial, then don’t worry - you can read the extracted data into your R environment from the dynamicSDM package.</p>
+</div>
+<div id="directory-organisation" class="section level2">
+<h2>Directory organisation</h2>
+<p>We will be extracting data for three dynamic explanatory variables. Let’s first create new folders within the project directory to export extracted variable data to.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">project_directory &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;dynamicSDM_vignette&quot;</span>))</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">dir.create</span>(project_directory)</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; Warning in dir.create(project_directory):</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; &#39;C:\Users\eerdo\AppData\Local\Temp\RtmpkpoNKt\dynamicSDM_vignette&#39; already</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; exists</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8">variablenames&lt;-<span class="kw">c</span>(<span class="st">&quot;eight_sum_prec&quot;</span>,<span class="st">&quot;year_sum_prec&quot;</span>,<span class="st">&quot;grass_crop_percentage&quot;</span>)</a>
+<a class="sourceLine" id="cb3-9" title="9"></a>
+<a class="sourceLine" id="cb3-10" title="10">extraction_directories &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">file.path</span>(project_directory,<span class="st">&quot;extraction&quot;</span>))</a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="kw">dir.create</span>(extraction_directories)</a>
+<a class="sourceLine" id="cb3-12" title="12"></a>
+<a class="sourceLine" id="cb3-13" title="13">extraction_directory_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">file.path</span>(project_directory,variablenames[<span class="dv">1</span>]))</a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="kw">dir.create</span>(extraction_directory_<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb3-15" title="15"></a>
+<a class="sourceLine" id="cb3-16" title="16">extraction_directory_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">file.path</span>(project_directory,variablenames[<span class="dv">2</span>]))</a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="kw">dir.create</span>(extraction_directory_<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb3-18" title="18"></a>
+<a class="sourceLine" id="cb3-19" title="19">extraction_directory_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">file.path</span>(project_directory,variablenames[<span class="dv">3</span>]))</a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="kw">dir.create</span>(extraction_directory_<span class="dv">3</span>)</a></code></pre></div>
+<p>Now, the filtered occurrence and pseudo-absence record data frame generated in the first tutorial can be imported or read into your R environment from the <em>dynamicSDM</em> package.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># sample_filt_data&lt;-read.csv(paste0(project_directory,&quot;/filtered_quelea_occ.csv&quot;))</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">data</span>(sample_filt_data)</a></code></pre></div>
+<div id="a-extract-dynamic-explanatory-variables" class="section level3">
+<h3>a) Extract dynamic explanatory variables</h3>
+<p><code>extract_dynamic_coords()</code> extracts processed remote sensing data using the Google Earth Engine cloud servers. There are various arguments to this function to specify the explanatory variable including:</p>
+<p>• <code>datasetname</code>: the dataset’s Google Earth Engine catalogue name.</p>
+<p>• <code>bandname</code> : the band of interest with the dataset.</p>
+<p>• <code>temporal.res</code> : the temporal resolution (i.e. the number of days to calculate the variable over).</p>
+<p>• <code>temporal.direction</code>: temporal direction (days either prior or post each record’s date).</p>
+<p>• <code>spatial.res.metres</code>: spatial resolution (the resolution in metres to extract data at).</p>
+<p>• <code>GEE.math.fun</code> : the mathematical function to calculate across the period (e.g. mean, sum or standard deviation across the given period).</p>
+<div id="case-study" class="section level4">
+<h4>Case study</h4>
+<p>The distribution of our case study species, the red-billed quelea, is driven by precipitation levels. Run the code below to extract the sum of precipitation across the 8-week and 52-week period prior to each occurrence record from the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS) dataset at <a href="https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHG_CHIRPS_DAILY">GEE</a>.</p>
+<p>For the 8-week precipitation extraction, we will use the split method to save extracted data. Notice how each record’s data are extracted and exported individually. If you specify <code>resume = T</code>, then if internet connection is lost you can resume extraction to where the code stopped.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># 8-week total precipitation</span></a>
+<a class="sourceLine" id="cb5-2" title="2">dynamicSDM<span class="op">::</span><span class="kw">extract_dynamic_coords</span>(<span class="dt">occ.data=</span>sample_filt_data,</a>
+<a class="sourceLine" id="cb5-3" title="3">                                   <span class="dt">datasetname =</span> <span class="st">&quot;UCSB-CHG/CHIRPS/DAILY&quot;</span>,</a>
+<a class="sourceLine" id="cb5-4" title="4">                                   <span class="dt">bandname=</span><span class="st">&quot;precipitation&quot;</span>,</a>
+<a class="sourceLine" id="cb5-5" title="5">                                   <span class="dt">spatial.res.metres =</span> <span class="dv">5566</span> ,</a>
+<a class="sourceLine" id="cb5-6" title="6">                                   <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
+<a class="sourceLine" id="cb5-7" title="7">                                   <span class="dt">temporal.direction =</span> <span class="st">&quot;prior&quot;</span>,</a>
+<a class="sourceLine" id="cb5-8" title="8">                                   <span class="dt">temporal.res =</span> <span class="dv">56</span>,</a>
+<a class="sourceLine" id="cb5-9" title="9">                                   <span class="dt">save.method=</span><span class="st">&quot;split&quot;</span>,</a>
+<a class="sourceLine" id="cb5-10" title="10">                                   <span class="dt">varname =</span> variablenames[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb5-11" title="11">                                   <span class="dt">save.directory=</span>extraction_directory_<span class="dv">1</span>)</a></code></pre></div>
+<p>For the 52-week precipitation extraction, we will use the combined method to save extracted data. Here, all data are extracted and then exported as a single data frame. This approach writes fewer files but may be more vulnerable to internet connection outage as all progress is lost and cannot be resumed.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># 52-week total precipitation</span></a>
+<a class="sourceLine" id="cb6-2" title="2">dynamicSDM<span class="op">::</span><span class="kw">extract_dynamic_coords</span>(<span class="dt">occ.data=</span>sample_filt_data,</a>
+<a class="sourceLine" id="cb6-3" title="3">                                   <span class="dt">datasetname =</span> <span class="st">&quot;UCSB-CHG/CHIRPS/DAILY&quot;</span>,</a>
+<a class="sourceLine" id="cb6-4" title="4">                                   <span class="dt">bandname=</span><span class="st">&quot;precipitation&quot;</span>,</a>
+<a class="sourceLine" id="cb6-5" title="5">                                   <span class="dt">spatial.res.metres =</span> <span class="dv">5566</span> ,</a>
+<a class="sourceLine" id="cb6-6" title="6">                                   <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
+<a class="sourceLine" id="cb6-7" title="7">                                   <span class="dt">temporal.direction =</span> <span class="st">&quot;prior&quot;</span>,</a>
+<a class="sourceLine" id="cb6-8" title="8">                                   <span class="dt">temporal.res =</span> <span class="dv">364</span>,</a>
+<a class="sourceLine" id="cb6-9" title="9">                                   <span class="dt">save.method=</span><span class="st">&quot;combined&quot;</span>,</a>
+<a class="sourceLine" id="cb6-10" title="10">                                   <span class="dt">varname =</span> variablenames[<span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb6-11" title="11">                                   <span class="dt">save.directory=</span> extraction_directory_<span class="dv">2</span>)</a></code></pre></div>
+</div>
+</div>
+<div id="b-extract-spatially-buffered-explanatory-variables" class="section level3">
+<h3>b) Extract spatially buffered explanatory variables</h3>
+<p><code>extract_buffered_coords()</code>extracts explanatory variable data across a spatial buffer from occurrence record co-ordinates. These variables can be categorical or continuous, but if a temporal buffer is also used only continuous data will work. This function utilises a “moving window matrix” that specifies the neighbourhood of cells (spatial buffer area) surrounding each occurrence record’s cell that will also be included in the calculation. <code>get_moving_window()</code> generates the optimal “moving window matrix” sizes based upon a given spatial radius and resolution of remote-sensing data.</p>
+<div id="case-study-1" class="section level4">
+<h4>Case study</h4>
+<p>The distribution of red-billed quelea is driven by availability of wild grass and cereal crop seed availability. The code below extracts the total number of grassland or cereal cropland cells across a spatial buffer from the MODIS Annual Land Cover Type dataset <a href="https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MCD12Q1#bands">googleearthenginecatalogue</a>.</p>
+<p>First, however, we must generate the optimal moving window matrix for this calculated based upon the fact that quelea travel up to 10km to access resources and that the data will be at 0.05 degree resolution (500m aggregated by 12).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">matrix &lt;-<span class="st"> </span><span class="kw">get_moving_window</span>(<span class="dt">radial.distance =</span> <span class="dv">10000</span>,</a>
+<a class="sourceLine" id="cb7-2" title="2">                                        <span class="dt">spatial.res.degrees =</span> <span class="fl">0.05</span>,</a>
+<a class="sourceLine" id="cb7-3" title="3">                                        <span class="dt">spatial.ext =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">35</span>, <span class="dv">-6</span>, <span class="dv">10</span>, <span class="dv">40</span>))</a>
+<a class="sourceLine" id="cb7-4" title="4">matrix</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;      [,1] [,2] [,3]</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; [1,]    1    1    1</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [2,]    1    1    1</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; [3,]    1    1    1</span></a></code></pre></div>
+</div>
+</div>
+<div id="c-combine-explanatory-variable-data" class="section level3">
+<h3>c) Combine explanatory variable data</h3>
+<p>Data for each explanatory variable have been saved across multiple directories and files. <code>extract_coord_combine()</code> combine the extracted explanatory variable data into a single data frame.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># Total grassland and cereal cropland cells in surrounding area</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">extract_buffered_coords</span>(<span class="dt">occ.data=</span>sample_filt_data,</a>
+<a class="sourceLine" id="cb8-3" title="3">                        <span class="dt">datasetname =</span> <span class="st">&quot;MODIS/006/MCD12Q1&quot;</span>,</a>
+<a class="sourceLine" id="cb8-4" title="4">                        <span class="dt">bandname=</span><span class="st">&quot;LC_Type5&quot;</span>,</a>
+<a class="sourceLine" id="cb8-5" title="5">                        <span class="dt">spatial.res.metres =</span> <span class="dv">500</span>,</a>
+<a class="sourceLine" id="cb8-6" title="6">                        <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
+<a class="sourceLine" id="cb8-7" title="7">                        <span class="dt">moving.window.matrix=</span>matrix,</a>
+<a class="sourceLine" id="cb8-8" title="8">                        <span class="dt">user.email=</span> user.email,</a>
+<a class="sourceLine" id="cb8-9" title="9">                        <span class="dt">save.method=</span><span class="st">&quot;split&quot;</span>,</a>
+<a class="sourceLine" id="cb8-10" title="10">                        <span class="dt">temporal.level=</span><span class="st">&quot;year&quot;</span>,</a>
+<a class="sourceLine" id="cb8-11" title="11">                        <span class="dt">categories=</span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb8-12" title="12">                        <span class="dt">agg.factor =</span> <span class="dv">12</span>,</a>
+<a class="sourceLine" id="cb8-13" title="13">                        <span class="dt">varname =</span> variablenames[<span class="dv">3</span>],</a>
+<a class="sourceLine" id="cb8-14" title="14">                        <span class="dt">save.directory=</span>extraction_directory_<span class="dv">3</span></a>
+<a class="sourceLine" id="cb8-15" title="15">)</a></code></pre></div>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>At the end of this vignette, we now have a complete data frame of filtered species occurrence and pseudo-absence records with associated extracted dynamic variables. Let’s save this to our project directory for use in the next tutorial!</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">complete.dataset &lt;-<span class="st"> </span><span class="kw">extract_coords_combine</span>(<span class="dt">varnames =</span> variablenames,</a>
+<a class="sourceLine" id="cb9-2" title="2">                                           <span class="dt">local.directory =</span> <span class="kw">c</span>(extraction_directory_<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb9-3" title="3">                                                               extraction_directory_<span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb9-4" title="4">                                                               extraction_directory_<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co"># Set NA values as zero </span></a>
+<a class="sourceLine" id="cb9-6" title="6"></a>
+<a class="sourceLine" id="cb9-7" title="7">complete.dataset[<span class="kw">is.na</span>(complete.dataset<span class="op">$</span>grass_crop_percentage),<span class="st">&quot;grass_crop_percentage&quot;</span>]&lt;-<span class="dv">0</span></a>
+<a class="sourceLine" id="cb9-8" title="8"></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="kw">write.csv</span>(complete.dataset, <span class="dt">file =</span> <span class="kw">paste0</span>(project_directory, <span class="st">&quot;/extracted_quelea_occ.csv&quot;</span>))</a></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

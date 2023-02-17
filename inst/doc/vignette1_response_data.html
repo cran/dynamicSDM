@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>dynamicSDM: Response variable data</title>
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">dynamicSDM: Response variable data</h1>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>dynamicSDM offers novel tools for developing species geographical distribution and abundance modelling (SDM) at high spatiotemporal resolution. Across the dynamicSDM vignettes, we demonstrate package functions on a case study species and guide users through the four key species distribution modelling stages:</p>
+<ul>
+<li>Stage 1: Organising response variable data including species occurrence and pseudo-absence records</li>
+<li>Stage 2: Extracting spatiotemporally-buffered explanatory variables</li>
+<li>Stage 3: Fitting SDMs whilst accounting for spatial and temporal autocorrelation</li>
+<li>Stage 4: Projecting intra- and inter- annual geographical distributions and abundances at high spatiotemporal resolution.</li>
+</ul>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>Before starting this tutorial, the dynamicSDM package needs to be installed. You can install the latest version from <a href="https://github.com/r-a-dobson/dynamicSDM">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># devtools::install_github(&#39;r-a-dobson/dynamicSDM&#39;)</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(dynamicSDM)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(sp)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; Warning: package &#39;sp&#39; was built under R version 4.0.5</span></a></code></pre></div>
+<p>Due to the utilisation of Google Earth Engine and Google Drive across dynamicSDM functions, you must also set up a free Google account at <a href="https://www.google.com/account/about/">Google</a>. Once you have your Google log-in details, these can be used to authorise Google Earth Engine in the rgee package and Google Drive in the googledrive package.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(rgee)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">#rgee::ee_install()</span></a>
+<a class="sourceLine" id="cb2-3" title="3">rgee<span class="op">::</span><span class="kw">ee_check</span>()</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">library</span>(googledrive)</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#googledrive::drive_auth_configure()</span></a>
+<a class="sourceLine" id="cb2-7" title="7">googledrive<span class="op">::</span><span class="kw">drive_user</span>()</a></code></pre></div>
+</div>
+<div id="directory-organisation" class="section level2">
+<h2>Directory organisation</h2>
+<p>As we continue through the species distribution modelling framework, functions will generate a range of outputs. To keep organised, we recommend a structured directory system. The code below will create a new project directory in your temporary folders, but you can edit the script to specify your home directory if you want to retain function outputs between R sessions.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">project_directory &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;dynamicSDM_vignette&quot;</span>))</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">dir.create</span>(project_directory)</a></code></pre></div>
+</div>
+<div id="case-study-the-red-billed-quelea" class="section level2">
+<h2>Case study: the red-billed quelea</h2>
+<p>In this four stage tutorial, we will be studying the case study species, the red-billed quelea (Quelea quelea), a nomadic bird inhabiting sub-Saharan Africa. With highly variable distributions driven by short-term weather and resource availability, <em>dynamicSDM</em> provides key functions to accurately model quelea’s distribution through space and time.</p>
+</div>
+<div id="stage-1-response-variable-data" class="section level2">
+<h2>Stage 1: Response variable data</h2>
+<p>In this tutorial, we will be processing a sample of species occurrence records for the red-billed quelea (Quelea quelea) to generate an SDM response variable data frame. This will involve filtering records by spatiotemporal quality, extent and resolution; testing and accounting for spatiotemporal biases in records, and generating pseudo-absences through space and time.</p>
+<div id="a-import-occurrence-records" class="section level3">
+<h3>a) Import occurrence records</h3>
+<p>A sample of red-billed quelea occurrence data can be loaded into your local R environment using the code below.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">data</span>(<span class="st">&quot;sample_occ_data&quot;</span>)</a></code></pre></div>
+<p>These records are formatted as exported from the Global Biodiversity Information Facility, with columns labelled “decimalLongitude” and “decimalLatitude”. For dynamicSDM functions, occurrence data must be in a specific format; containing numeric data in columns labelled “x” and “y” for the record co-ordinates longitude and latitude, and “day”, “month” and “year” for the record’s date.</p>
+<p><code>convert_gbif()</code> can be used to convert between these formats, or this can be achieved manually for data not extracted from GBIF.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">sample_occ &lt;-<span class="st"> </span><span class="kw">convert_gbif</span>(sample_occ_data)</a></code></pre></div>
+</div>
+<div id="b-filter-occurrence-records" class="section level3">
+<h3>b) Filter occurrence records</h3>
+<div id="validity-and-completeness" class="section level4">
+<h4>Validity and completeness</h4>
+<p>Species occurrence records may contain anomalous or missing values in the co-ordinates or dates given. <code>spatiotemp_check()</code> can be used to exclude records with missing (NA) values (argument <code>na.handle</code>), invalid co-ordinates (<code>coord.handle</code>), invalid dates (<code>date.handle</code>) and duplicate records (<code>duplicate.handle</code>).</p>
+<p>Here, we specify <code>date.res = &quot;day&quot;</code> to check all date columns from year to day. If you only want to check the year of record dates, then you could specify <code>date.res = &quot;year&quot;</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">sample_occ_filtered &lt;-<span class="st"> </span><span class="kw">spatiotemp_check</span>(<span class="dt">occ.data =</span> sample_occ,</a>
+<a class="sourceLine" id="cb6-2" title="2">                                               <span class="dt">na.handle =</span> <span class="st">&quot;exclude&quot;</span>,</a>
+<a class="sourceLine" id="cb6-3" title="3">                                               <span class="dt">date.handle =</span> <span class="st">&quot;exclude&quot;</span>,</a>
+<a class="sourceLine" id="cb6-4" title="4">                                               <span class="dt">date.res =</span> <span class="st">&quot;day&quot;</span>,</a>
+<a class="sourceLine" id="cb6-5" title="5">                                               <span class="dt">coord.handle =</span> <span class="st">&quot;exclude&quot;</span>,</a>
+<a class="sourceLine" id="cb6-6" title="6">                                               <span class="dt">duplicate.handle =</span> <span class="st">&quot;exclude&quot;</span>)</a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; omitting any species records with coordinates containing NA</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; omitting any species records with dates containing NA</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; omitting any duplicate records</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; any records with invalid co-ordinates excluded</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; any records with invalid dates excluded</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="kw">nrow</span>(sample_occ_filtered)</a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; [1] 311</span></a></code></pre></div>
+<p>Additionally, users can opt to take advantage of the CoordinateCleaner package function to exclude records flagged as containing potentially anomalous co-ordinates, based on a wider variety of spatial tests than dynamicSDM alone offers.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">sample_occ_filtered &lt;-<span class="st"> </span><span class="kw">spatiotemp_check</span>(<span class="dt">occ.data =</span> sample_occ,</a>
+<a class="sourceLine" id="cb7-2" title="2">                                               <span class="dt">na.handle =</span> <span class="st">&quot;exclude&quot;</span>,</a>
+<a class="sourceLine" id="cb7-3" title="3">                                               <span class="dt">date.handle =</span> <span class="st">&quot;exclude&quot;</span>,</a>
+<a class="sourceLine" id="cb7-4" title="4">                                               <span class="dt">date.res =</span> <span class="st">&quot;day&quot;</span>,</a>
+<a class="sourceLine" id="cb7-5" title="5">                                               <span class="dt">coord.handle =</span> <span class="st">&quot;exclude&quot;</span>,</a>
+<a class="sourceLine" id="cb7-6" title="6">                                               <span class="dt">duplicate.handle =</span> <span class="st">&quot;exclude&quot;</span>,</a>
+<a class="sourceLine" id="cb7-7" title="7">                                               <span class="dt">coordclean =</span> T,</a>
+<a class="sourceLine" id="cb7-8" title="8">                                               <span class="dt">coordclean.species =</span> <span class="st">&quot;quelea&quot;</span>,</a>
+<a class="sourceLine" id="cb7-9" title="9">                                               <span class="dt">coordclean.handle =</span> <span class="st">&quot;exclude&quot;</span>)</a></code></pre></div>
+</div>
+<div id="spatiotemporal-extent" class="section level4">
+<h4>Spatiotemporal extent</h4>
+<p>When generating dynamic species distribution models, it is important that occurrence records match the spatiotemporal extent of the study and any remote-sensing datasets to be utilised as explanatory variables. <code>spatiotemporal_extent()</code> removes any records outside of the set spatiotemporal extents.</p>
+<p>In this case study, we want to model the subspecies Q. q. lathamii which is typically limited to southern Africa and we will incorporate remote sensing datasets available for the years 2001 to 2019. To filter records to these extents, we use a polygon of southern African countries, which can be read into your R environment and applied using the following code.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">data</span>(<span class="st">&quot;sample_extent_data&quot;</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3">sample_occ_cropped &lt;-<span class="st"> </span><span class="kw">spatiotemp_extent</span>(<span class="dt">occ.data =</span> sample_occ_filtered,</a>
+<a class="sourceLine" id="cb8-4" title="4">                                               <span class="dt">temporal.ext =</span> <span class="kw">c</span>(<span class="st">&quot;2001-01-01&quot;</span>, <span class="st">&quot;2018-12-01&quot;</span>),</a>
+<a class="sourceLine" id="cb8-5" title="5">                                               <span class="dt">spatial.ext =</span> raster<span class="op">::</span><span class="kw">extent</span>(sample_extent_data),</a>
+<a class="sourceLine" id="cb8-6" title="6">                                               <span class="dt">prj =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>)</a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; Loading required namespace: sf</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; spatial.mask could not be used. Check valid input type.</span></a>
+<a class="sourceLine" id="cb8-9" title="9"></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">## Lets plot the change</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="kw">plot</span>(sample_extent_data<span class="op">$</span>geometry)</a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="kw">plot</span>(<span class="kw">SpatialPointsDataFrame</span>(<span class="dt">coords =</span> sample_occ_filtered[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)], </a>
+<a class="sourceLine" id="cb8-13" title="13">                            <span class="dt">proj4string =</span> sp<span class="op">::</span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),</a>
+<a class="sourceLine" id="cb8-14" title="14">                            <span class="dt">data =</span> sample_occ_filtered), <span class="dt">add =</span> T)</a></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAMAAACTGUWNAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAMIUlEQVR4nO2di7arKBBE8f9/etac6wOa5qVilab2mlkniSINO4Cg8YZFQAnoAH4dCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJEAMBIARgLASAAYCQAjAWAkAIwEgJGA/wkH0Yfuy9uznnfoVxH+/y8E89FScHNvxmxAQnLq+WdbAEZAqQXYlxMyZoNFQLp1YsZsYEKq9vUS8FDOP98CZp9yNLMH5Pl8ljYCGwIwpF8UELIYJODp/E0bkICH8yfqggCAS+vUPzqkhyEU8FtIABh08QM8AjDo4oOmXDxwFD84oGN6CHg5S5UND+wh0OUs5o8O7CnQ5Sznj47sIeDF/PUmAC+mBKD5cQMEpRy5DPW981OC4vQ2gfWElSDiO2EoTmcTWN9+bKLGUI6+JsBz3exWKMrR1QQkYB6tJuD1/RSB3wBFOarT4X/dPdO9E7dCUY5KEIh7pR6FoxxnohhLQ3vmxBHTXAFH1RMq4IjoRBQD9Z+8YXNAEc7UBpDf9kLlgCKWZwUsVF0RQySnYuhNVNiPRgFDHAgBNAur742hM1VtjsEgAZ3/H5gmsN6afSbvG0Hn/weqCTAYoBAw1UBLALgKfl0A/BIbh4CZo0B1rwDvhD4voL5Tt4Bp9UQiYN5k+B4B885Wf1tA6DsPmnkzBouAaQuilattvbfCTz1XerWAnp8TdLSAjnFaAupJKj90uiQgMisB9dTFhtCYhxUFlJ9fdi9fEVA8TKcAK88mk4DOxJmJLgFh+xOWwuV7CehNvN1G1CkgT97M4V4+J2DZHbSP27GLn8ONfEOAl7q/CUjAcjmO2nnMv47d3VsCdm5vAPGWYOYJJwR8fR4woQGkW1wBA2PAxwVcjaKS3qtkCTCcCqL3yRJON2MqXgLOCRjab6/syFl5+nwhu1EYBJyLoTtVvtxjG8WPCzgZQn+yrI+SgDsiuBC5BNwRwVUB2frRtOwgx50fwGUBaa/UOpwE3JbwOII/PZ6V3bPHnR/AxcWL7LfHPyrgfP4XUkZXC+KRYFJ2jWAmHXd+/mfPXu2jwjsvu0vADSlLD2jsWhOaVFM/JKB575AEzE3ZXLOWgLkprwn46BhweT3hlhQS8EzSUoquZWkJuJq0vODTI2BaPWEFXMl9KG31eYsSMDvtdod56/7d5jA9gV8QYPYsPf2sfWF5Bu8VMHhRuPKBvT5zPqsTQAVcXNDs3M3pc5xLlKD6f7OAvuSl5c5EQWWE7s3nLG8W0JO+suKfbEI1gA8JcA+W9zShvK2Qydwqwgu48izuVjcSsnclAaUMpj9PCHwWdPVXiGkPbwdTp88ZEfDI05x4TkPNt7Xvxs+12tcbDY2A+KVzsEbRH3qWFo+ASp3Xp0jHr8JSAekgOyjgsUeZEQmo7lhcx/mr+PSO28LEykqoWX2uWl4iwBmr9/dhSVtPh4BQz/zJSqEW4Gy2XckmwTQEd+DoHYQfrZO3CUg22+99+BsRqsvOHQKerRKsgEb2ha3mO74u9Y8KiF6NxHQ3YAFO/lEPXhKQvz0cVAT87exUez5dexAqAdvMeBkRkPZDtTHg3975UTrXJOaAFpDPxcLxxIxCTfotYPHP9guJCgKef5IxXEA2db0gYH3rlqlHAOJB0ngBtiZGuyD7UcgblU0UPEB1QSmg1Y9XP0qT7TraLQBTFSwCvG/kyRZwUgCoJggEmG5iqAtyXVgBfpOyDW806pv4ngC7Q7EFJNnC6oFaQE/9lvdodGeJAFw1MAjYg7giwJnOplO0ylEkIP57iwBnZK8cBVkLVAI6N7jTXrtrMLtIQI1SFOdbwLL/ErjnXFYCnI+6Oo+KgGW/RNCR5Y+PASNTriUXUHDlPpk7mL/1/B/gCwIKu44I+O15wP80q9r/tCEgnwBIQIGTAmofBvfO9PLeGFgE9NZq367lEbw4v5CA0qedX1Z3t0RAfZn75wW4Pbt/maQz5pA7WCoX7UE1wSPAG1CzhyrVrtOkByssQ5STS0BU7/sLK2DwcFvy+G6g4qwbUxVMAvJzxJsErPerFP51kigvALwCvE5kNNp/axHp77SLEiRgHTNd9h3GD7ifezYMSEDSAu4REJKLC6E2CEuAOwYU7vLpP6DbAqq5P8uXBZS6M3VBJW4UsPU8/fUvAVaAU19DArajbB1/695pCciDCcv5FrCN276A0wscd8MtwH40IMD2P+XVieFj38r3BGznnMdi3CZgqU+GMVPhDwpIvuf2t5N0TeCDAtbvem1e7RqQgHYwJwTs/y+NxQiNAUs7ml4BwWkBWXMYP/QMPiWg3uFUqx9WD18SUK1zb/OR8HroZ3mZgI6qCtG6Z6U9HNNuZPWzCWj2MR3jtFvfawvYN+9ZYWt/eZ+AjkayrmB4AvIu6rbIz4KPIGFcgO3Om71PagUOQwwRbQHu1Cx+ckq27Ga7/u0FR9E5ojhonOcke8TtYf9WL/mUK+10cidQ4AEY2gKiSk9239pC4etv10ZZSk4SxkE1ICsg2G35oz5Ml7+uz7Uyeg6SMA5GBCT7FnqdCnMKMAhHFBH9AkwN7i2g9O1fh+BlbwYUZacIIqZbgJ2URV1QcQwOsQCOslMEEdMnwIynvV3OLoBlFkAooBpR1M1ke9a6INPxRy/hcEQR0xZQe9eoe9te7g39DAQhGK4IKCz6+OsT94d+BpIwYiohheSvFbCf4i8hugMiHQQiEVOCH4YkjJh5AhibAEcUKeWYgrfHbuM4sUwELHsXlA4Ut8d9CpIwEi4JaH7ryRoBQQg5xaBqAtJKXo4TzmOBKFmxmxL5OCxxpHh9/PpJ/vXNFjpL50J7IglocqzbZB/Hf6M3YVtg2CZq5U5IAjqw/yLP9qn5m9VuU0B8eAZY4shIFj6TD+3npgWYwWBdfNtebmkYxt8/WOLIcIaBo9KqXdAxFNgmEu1NU26aQDKOZbP1fTDbojeN3n5fMl1csVB4IrEckcWdt7NH1AI8E0c/FC3HTY++G6JQLM3Q9qaRDsJHFxTi7v8QQFVmqmBSegVsb7Yu/vji79usIyK4oklpxZYLSHueY1s2FPNAFk7CNQFxA2C9GLBwC6itymVVmX7fl7irIa36f7DFk9AIzpkN7K8K/T/VCdAfbPGk1KMrbDVn+tt4sA7AbAVmiyflgoBoyisB56mGVxeQLVMf98cxwRaPYVSAPTHa5wYL0wpoDGNMMSPxZZOsozNiWwE6YIwpYSDA0iw3P1MlgjKoGAlA0x9hQwBnUTmjSuhclGtNdklLShpWTI+A9loDa0FZ44rpXZSrLDXTrUDs0AYW0Seg1gaIS0kc2s5QC/B2Zi4kc2wblRjtSqcrgLqM1MGtjLeAwkI1I9zR/dEcQKM6dwSQl5A8vKUnwqoA9gKyxzciwJsM0JePPsDembDbAnhP/3f4I+w8r9kFEF+A93hnjGbZP7nu9arq/4aA9aPoqtdrqv+bAt5T+8snBITsgR2vKNXKG0K11W36+/XDZfvfpuDmDaHmPcpa6elOYSG/+OXyilAzA3aQfdupT8RLAk4WdwrVHJbXFCfiLRHvlR6K9SwBk0lWHErbX8eboj76Hglg5J1FeWfUH0ICwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADASAEYCwEgAGAkAIwFgJACMBICRADD/AffoMP2iVn5vAAAAAElFTkSuQmCC" /><!-- --></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">plot</span>(sample_extent_data<span class="op">$</span>geometry)</a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw">plot</span>(<span class="kw">SpatialPointsDataFrame</span>(<span class="dt">coords =</span> sample_occ_cropped[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)], </a>
+<a class="sourceLine" id="cb9-4" title="4">                            <span class="dt">proj4string =</span> sp<span class="op">::</span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),</a>
+<a class="sourceLine" id="cb9-5" title="5">                            <span class="dt">data =</span> sample_occ_cropped), <span class="dt">add =</span> T)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="spatiotemporal-resolution" class="section level4">
+<h4>Spatiotemporal resolution</h4>
+<p>The spatial resolution of occurrence record co-ordinates and the temporal resolution of occurrence record dates are also important when generating dynamic SDMs. <code>spatiotemp_resolution()</code> can filter records by set thresholds.</p>
+<p>As quelea migrations are driven by highly local and short-term environmental factors, we will filter to exclude records not given to the specific day and co-ordinates to four decimal places.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">sample_occ_cropped&lt;-<span class="kw">spatiotemp_resolution</span>(<span class="dt">occ.data =</span> sample_occ_cropped,</a>
+<a class="sourceLine" id="cb10-2" title="2">                                             <span class="dt">spatial.res =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb10-3" title="3">                                             <span class="dt">temporal.res =</span> <span class="st">&quot;day&quot;</span>)</a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="kw">nrow</span>(sample_occ_cropped) <span class="co"># Even more records have been removed!</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="co">#&gt; [1] 142</span></a></code></pre></div>
+</div>
+</div>
+<div id="c-test-for-spatial-and-temporal-sampling-biases" class="section level3">
+<h3>c) Test for spatial and temporal sampling biases</h3>
+<p>For many reasons, the collection of species occurrence records are biased through space and time. These biases can impact SDM performance by over- or under- representing conditions at a given site or time. <code>spatiotemp_bias()</code> returns the results of statistical tests and plots for visual assessment of such biases. The code below tests for bias across the entire dataset and species range.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">bias_results &lt;-<span class="st"> </span><span class="kw">spatiotemp_bias</span>(<span class="dt">occ.data =</span> sample_occ_cropped,</a>
+<a class="sourceLine" id="cb11-2" title="2">                                <span class="dt">temporal.level =</span> <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>),</a>
+<a class="sourceLine" id="cb11-3" title="3">                                <span class="dt">plot =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb11-4" title="4">                                <span class="dt">spatial.method =</span> <span class="st">&quot;simple&quot;</span>,</a>
+<a class="sourceLine" id="cb11-5" title="5">                                <span class="dt">prj =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)</a>
+<a class="sourceLine" id="cb11-6" title="6">bias_results</a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="co">#&gt; $Temporal_bias_year</span></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="co">#&gt;  Chi-squared test for given probabilities</span></a>
+<a class="sourceLine" id="cb11-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="co">#&gt; data:  occ.data.frequency</span></a>
+<a class="sourceLine" id="cb11-12" title="12"><span class="co">#&gt; X-squared = 50.451, df = 15, p-value = 1.016e-05</span></a>
+<a class="sourceLine" id="cb11-13" title="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb11-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb11-15" title="15"><span class="co">#&gt; $Spatial_bias</span></a>
+<a class="sourceLine" id="cb11-16" title="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb11-17" title="17"><span class="co">#&gt;  Welch Two Sample t-test</span></a>
+<a class="sourceLine" id="cb11-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb11-19" title="19"><span class="co">#&gt; data:  min.nndist.actual and min.nndist.random</span></a>
+<a class="sourceLine" id="cb11-20" title="20"><span class="co">#&gt; t = -7.0975, df = 244.84, p-value = 1.366e-11</span></a>
+<a class="sourceLine" id="cb11-21" title="21"><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></a>
+<a class="sourceLine" id="cb11-22" title="22"><span class="co">#&gt; 95 percent confidence interval:</span></a>
+<a class="sourceLine" id="cb11-23" title="23"><span class="co">#&gt;  -73811.39 -41742.94</span></a>
+<a class="sourceLine" id="cb11-24" title="24"><span class="co">#&gt; sample estimates:</span></a>
+<a class="sourceLine" id="cb11-25" title="25"><span class="co">#&gt; mean of x mean of y </span></a>
+<a class="sourceLine" id="cb11-26" title="26"><span class="co">#&gt;  44614.25 102391.41</span></a></code></pre></div>
+<p>Whereas, this code will test for bias across only the core of the species range.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">bias_results &lt;-<span class="st"> </span><span class="kw">spatiotemp_bias</span>(<span class="dt">occ.data =</span> sample_occ_cropped,</a>
+<a class="sourceLine" id="cb12-2" title="2">                                <span class="dt">temporal.level =</span> <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>),</a>
+<a class="sourceLine" id="cb12-3" title="3">                                <span class="dt">plot =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb12-4" title="4">                                <span class="dt">spatial.method =</span> <span class="st">&quot;core&quot;</span>,</a>
+<a class="sourceLine" id="cb12-5" title="5">                                <span class="dt">prj =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)</a>
+<a class="sourceLine" id="cb12-6" title="6">bias_results</a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt; $Temporal_bias_year</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="co">#&gt;  Chi-squared test for given probabilities</span></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="co">#&gt; data:  occ.data.frequency</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="co">#&gt; X-squared = 50.451, df = 15, p-value = 1.016e-05</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="co">#&gt; $Spatial_bias</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-17" title="17"><span class="co">#&gt;  Welch Two Sample t-test</span></a>
+<a class="sourceLine" id="cb12-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-19" title="19"><span class="co">#&gt; data:  min.nndist.actual and min.nndist.random</span></a>
+<a class="sourceLine" id="cb12-20" title="20"><span class="co">#&gt; t = -4.0052, df = 149.1, p-value = 9.744e-05</span></a>
+<a class="sourceLine" id="cb12-21" title="21"><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></a>
+<a class="sourceLine" id="cb12-22" title="22"><span class="co">#&gt; 95 percent confidence interval:</span></a>
+<a class="sourceLine" id="cb12-23" title="23"><span class="co">#&gt;  -25839.161  -8766.373</span></a>
+<a class="sourceLine" id="cb12-24" title="24"><span class="co">#&gt; sample estimates:</span></a>
+<a class="sourceLine" id="cb12-25" title="25"><span class="co">#&gt; mean of x mean of y </span></a>
+<a class="sourceLine" id="cb12-26" title="26"><span class="co">#&gt;  29862.97  47165.74</span></a></code></pre></div>
+<p>Both approaches can generate important results. The latter may be a more reliable indicator if the species range is expanding or shifting in response to global change. This is because records at the range periphery that have been collected randomly may still not be evenly distributed through space and time due to underlying ecological processes. Therefore, testing for biased on the species range core may be more representative of true spatial and temporal sampling biases.</p>
+</div>
+<div id="d-account-for-spatial-and-temporal-sampling-biases" class="section level3">
+<h3>d) Account for spatial and temporal sampling biases</h3>
+<div id="occurrence-record-thinning" class="section level4">
+<h4>Occurrence record thinning</h4>
+<p>One approach to correct spatiotemporal sampling biases are to “thin” records, which involves excluding records that have been collected too closely in space or time. <code>spatiotemp_thin()</code> allows users to specify the spatial and temporal distance to thin records by. An important argument of <code>spatiotemp_thin()</code> is <code>spatial.split.degrees</code> which specifies the size of grid cells to split occurrence records into before temporal thinning. This prevents spatially distant but temporally close records from being filtered out.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">occ_thin &lt;-<span class="st"> </span><span class="kw">spatiotemp_thin</span>(<span class="dt">occ.data =</span> sample_occ_cropped,</a>
+<a class="sourceLine" id="cb13-2" title="2">                                   <span class="dt">temporal.method =</span> <span class="st">&quot;day&quot;</span>,</a>
+<a class="sourceLine" id="cb13-3" title="3">                                   <span class="dt">temporal.dist =</span> <span class="dv">30</span>,</a>
+<a class="sourceLine" id="cb13-4" title="4">                                   <span class="dt">spatial.split.degrees =</span> <span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb13-5" title="5">                                   <span class="dt">spatial.dist =</span> <span class="dv">30000</span>,</a>
+<a class="sourceLine" id="cb13-6" title="6">                                   <span class="dt">iterations =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="co">#&gt; ********************************************** </span></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="co">#&gt;  Beginning Spatial Thinning.</span></a>
+<a class="sourceLine" id="cb13-9" title="9"><span class="co">#&gt;  Script Started at: Thu Feb 16 14:46:52 2023</span></a>
+<a class="sourceLine" id="cb13-10" title="10"><span class="co">#&gt; lat.long.thin.count</span></a>
+<a class="sourceLine" id="cb13-11" title="11"><span class="co">#&gt; 86 </span></a>
+<a class="sourceLine" id="cb13-12" title="12"><span class="co">#&gt;  1 </span></a>
+<a class="sourceLine" id="cb13-13" title="13"><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 86&quot;</span></a>
+<a class="sourceLine" id="cb13-14" title="14"><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></a>
+<a class="sourceLine" id="cb13-15" title="15"><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></a>
+<a class="sourceLine" id="cb13-16" title="16"><span class="co">#&gt; ********************************************** </span></a>
+<a class="sourceLine" id="cb13-17" title="17"><span class="co">#&gt;  Beginning Spatial Thinning.</span></a>
+<a class="sourceLine" id="cb13-18" title="18"><span class="co">#&gt;  Script Started at: Thu Feb 16 14:46:53 2023</span></a>
+<a class="sourceLine" id="cb13-19" title="19"><span class="co">#&gt; lat.long.thin.count</span></a>
+<a class="sourceLine" id="cb13-20" title="20"><span class="co">#&gt; 86 </span></a>
+<a class="sourceLine" id="cb13-21" title="21"><span class="co">#&gt;  1 </span></a>
+<a class="sourceLine" id="cb13-22" title="22"><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 86&quot;</span></a>
+<a class="sourceLine" id="cb13-23" title="23"><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></a>
+<a class="sourceLine" id="cb13-24" title="24"><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></a>
+<a class="sourceLine" id="cb13-25" title="25"><span class="co">#&gt; ********************************************** </span></a>
+<a class="sourceLine" id="cb13-26" title="26"><span class="co">#&gt;  Beginning Spatial Thinning.</span></a>
+<a class="sourceLine" id="cb13-27" title="27"><span class="co">#&gt;  Script Started at: Thu Feb 16 14:46:53 2023</span></a>
+<a class="sourceLine" id="cb13-28" title="28"><span class="co">#&gt; lat.long.thin.count</span></a>
+<a class="sourceLine" id="cb13-29" title="29"><span class="co">#&gt; 86 </span></a>
+<a class="sourceLine" id="cb13-30" title="30"><span class="co">#&gt;  1 </span></a>
+<a class="sourceLine" id="cb13-31" title="31"><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 86&quot;</span></a>
+<a class="sourceLine" id="cb13-32" title="32"><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></a>
+<a class="sourceLine" id="cb13-33" title="33"><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></a>
+<a class="sourceLine" id="cb13-34" title="34"><span class="co">#&gt; ********************************************** </span></a>
+<a class="sourceLine" id="cb13-35" title="35"><span class="co">#&gt;  Beginning Spatial Thinning.</span></a>
+<a class="sourceLine" id="cb13-36" title="36"><span class="co">#&gt;  Script Started at: Thu Feb 16 14:46:54 2023</span></a>
+<a class="sourceLine" id="cb13-37" title="37"><span class="co">#&gt; lat.long.thin.count</span></a>
+<a class="sourceLine" id="cb13-38" title="38"><span class="co">#&gt; 87 </span></a>
+<a class="sourceLine" id="cb13-39" title="39"><span class="co">#&gt;  1 </span></a>
+<a class="sourceLine" id="cb13-40" title="40"><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 87&quot;</span></a>
+<a class="sourceLine" id="cb13-41" title="41"><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></a>
+<a class="sourceLine" id="cb13-42" title="42"><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></a>
+<a class="sourceLine" id="cb13-43" title="43"><span class="co">#&gt; ********************************************** </span></a>
+<a class="sourceLine" id="cb13-44" title="44"><span class="co">#&gt;  Beginning Spatial Thinning.</span></a>
+<a class="sourceLine" id="cb13-45" title="45"><span class="co">#&gt;  Script Started at: Thu Feb 16 14:46:55 2023</span></a>
+<a class="sourceLine" id="cb13-46" title="46"><span class="co">#&gt; lat.long.thin.count</span></a>
+<a class="sourceLine" id="cb13-47" title="47"><span class="co">#&gt; 85 </span></a>
+<a class="sourceLine" id="cb13-48" title="48"><span class="co">#&gt;  1 </span></a>
+<a class="sourceLine" id="cb13-49" title="49"><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 85&quot;</span></a>
+<a class="sourceLine" id="cb13-50" title="50"><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></a>
+<a class="sourceLine" id="cb13-51" title="51"><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></a>
+<a class="sourceLine" id="cb13-52" title="52"></a>
+<a class="sourceLine" id="cb13-53" title="53"><span class="co"># Plot the difference in spatial distribution after thinning</span></a>
+<a class="sourceLine" id="cb13-54" title="54"><span class="co"># Non-thinned</span></a>
+<a class="sourceLine" id="cb13-55" title="55"><span class="kw">plot</span>(sample_extent_data<span class="op">$</span>geometry)</a>
+<a class="sourceLine" id="cb13-56" title="56">sp<span class="op">::</span><span class="kw">plot</span>(sp<span class="op">::</span><span class="kw">SpatialPointsDataFrame</span>(<span class="dt">coords =</span> sample_occ_cropped[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</a>
+<a class="sourceLine" id="cb13-57" title="57">                                    <span class="dt">proj4string =</span> sp<span class="op">::</span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),</a>
+<a class="sourceLine" id="cb13-58" title="58">                                    <span class="dt">data =</span> sample_occ_cropped), <span class="dt">add =</span> T)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="co"># Thinned</span></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw">plot</span>(sample_extent_data<span class="op">$</span>geometry)</a>
+<a class="sourceLine" id="cb14-4" title="4">sp<span class="op">::</span><span class="kw">plot</span>(sp<span class="op">::</span><span class="kw">SpatialPointsDataFrame</span>(<span class="dt">coords =</span> occ_thin[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</a>
+<a class="sourceLine" id="cb14-5" title="5">                                    <span class="dt">proj4string =</span> sp<span class="op">::</span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),</a>
+<a class="sourceLine" id="cb14-6" title="6">                                    <span class="dt">data =</span> occ_thin), <span class="dt">add =</span> T)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="weight-records-by-sampling-effort" class="section level4">
+<h4>Weight records by sampling effort</h4>
+<p>Another approach to account for spatiotemporal sampling biases is to weight records by sampling effort when fitting SDMs.This results in the down weighing of the importance of records from over-sampled regions and vice versa.</p>
+<p>Here, we will read in a sample of e-Bird avian sampling records in southern Africa to use as a sampling effort proxy, and sum these across a spatial and temporal buffer from each occurrence record using <code>spatiotemp_weights()</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">data</span>(<span class="st">&quot;sample_events_data&quot;</span>)</a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3">sample_occ_cropped &lt;-<span class="st"> </span><span class="kw">spatiotemp_weights</span>(<span class="dt">occ.data =</span> sample_occ_cropped,</a>
+<a class="sourceLine" id="cb15-4" title="4">                                       <span class="dt">samp.events =</span> sample_events_data,</a>
+<a class="sourceLine" id="cb15-5" title="5">                                       <span class="dt">spatial.dist =</span> <span class="dv">100000</span>,</a>
+<a class="sourceLine" id="cb15-6" title="6">                                       <span class="dt">temporal.dist =</span> <span class="dv">30</span>,</a>
+<a class="sourceLine" id="cb15-7" title="7">                                       <span class="dt">prj =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)</a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="co">#&gt; Records completed: 100</span></a></code></pre></div>
+</div>
+</div>
+<div id="e-generate-pseudo-absences-through-space-and-time" class="section level3">
+<h3>e) Generate pseudo-absences through space and time</h3>
+<p>Often the paucity of species absence records necessitates the generation of pseudo-absences, which are inferred absences based upon presence records. When modelling a species distribution at high spatiotemporal resolution, it may be best to generate pseudo-absences within close spatial and temporal buffers of species occurrence. This is because model presence-absence comparisons are made at fine scales, instead of coarsely between biomes and seasons. Using <code>spatiotemp_pseudoabs()</code> you can specify the spatial and temporal buffer size or extents to randomly generate pseudo-absences within.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># Pseudo-absences generated within spatial and temporal buffer</span></a>
+<a class="sourceLine" id="cb16-2" title="2">pseudo_abs_buff &lt;-<span class="st"> </span><span class="kw">spatiotemp_pseudoabs</span>(<span class="dt">occ.data =</span> sample_occ_cropped,</a>
+<a class="sourceLine" id="cb16-3" title="3">                                        <span class="dt">spatial.method =</span> <span class="st">&quot;buffer&quot;</span>,</a>
+<a class="sourceLine" id="cb16-4" title="4">                                        <span class="dt">temporal.method =</span> <span class="st">&quot;buffer&quot;</span>,</a>
+<a class="sourceLine" id="cb16-5" title="5">                                        <span class="dt">spatial.buffer =</span> <span class="kw">c</span>(<span class="dv">250000</span>, <span class="dv">500000</span>),</a>
+<a class="sourceLine" id="cb16-6" title="6">                                        <span class="dt">temporal.buffer =</span> <span class="kw">c</span>(<span class="dv">42</span>, <span class="dv">84</span>),</a>
+<a class="sourceLine" id="cb16-7" title="7">                                        <span class="dt">n.pseudoabs =</span> <span class="kw">nrow</span>(sample_occ_cropped))</a>
+<a class="sourceLine" id="cb16-8" title="8"></a>
+<a class="sourceLine" id="cb16-9" title="9"><span class="co"># Pseudo-absences generated randomly across given spatial and temporal extent</span></a>
+<a class="sourceLine" id="cb16-10" title="10">pseudo_abs_rand &lt;-<span class="st"> </span><span class="kw">spatiotemp_pseudoabs</span>(<span class="dt">occ.data =</span> sample_occ_cropped,</a>
+<a class="sourceLine" id="cb16-11" title="11">                                        <span class="dt">spatial.method =</span> <span class="st">&quot;random&quot;</span>,</a>
+<a class="sourceLine" id="cb16-12" title="12">                                        <span class="dt">temporal.method =</span> <span class="st">&quot;random&quot;</span>,  </a>
+<a class="sourceLine" id="cb16-13" title="13">                                        <span class="dt">spatial.ext =</span> sample_extent_data,</a>
+<a class="sourceLine" id="cb16-14" title="14">                                        <span class="dt">temporal.ext =</span> <span class="kw">c</span>(<span class="st">&quot;2002-01-01&quot;</span>, <span class="st">&quot;2019-12-01&quot;</span>),</a>
+<a class="sourceLine" id="cb16-15" title="15">                                        <span class="dt">n.pseudoabs =</span> <span class="kw">nrow</span>(sample_occ_cropped))</a>
+<a class="sourceLine" id="cb16-16" title="16"></a>
+<a class="sourceLine" id="cb16-17" title="17"><span class="co"># Plot the spatial distribution of pseudo-absences (red) compared to occurrence records for:</span></a>
+<a class="sourceLine" id="cb16-18" title="18"><span class="co"># Buffered</span></a>
+<a class="sourceLine" id="cb16-19" title="19"><span class="kw">plot</span>(sample_extent_data<span class="op">$</span>geometry)</a>
+<a class="sourceLine" id="cb16-20" title="20">sp<span class="op">::</span><span class="kw">plot</span>(sp<span class="op">::</span><span class="kw">SpatialPointsDataFrame</span>(<span class="dt">coords =</span> sample_occ_cropped[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</a>
+<a class="sourceLine" id="cb16-21" title="21">                                    <span class="dt">proj4string =</span> sp<span class="op">::</span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),</a>
+<a class="sourceLine" id="cb16-22" title="22">                                    <span class="dt">data =</span> sample_occ_cropped), <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,<span class="dt">add =</span> T)</a>
+<a class="sourceLine" id="cb16-23" title="23">sp<span class="op">::</span><span class="kw">plot</span>(sp<span class="op">::</span><span class="kw">SpatialPointsDataFrame</span>(<span class="dt">coords =</span> pseudo_abs_buff[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</a>
+<a class="sourceLine" id="cb16-24" title="24">                                    <span class="dt">proj4string =</span> sp<span class="op">::</span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),</a>
+<a class="sourceLine" id="cb16-25" title="25">                                    <span class="dt">data =</span> pseudo_abs_buff), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,<span class="dt">add =</span> T)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="co"># Random</span></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="kw">plot</span>(sample_extent_data<span class="op">$</span>geometry)</a>
+<a class="sourceLine" id="cb17-4" title="4">sp<span class="op">::</span><span class="kw">plot</span>(sp<span class="op">::</span><span class="kw">SpatialPointsDataFrame</span>(<span class="dt">coords =</span> sample_occ_cropped[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</a>
+<a class="sourceLine" id="cb17-5" title="5">                                    <span class="dt">proj4string =</span> sp<span class="op">::</span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),</a>
+<a class="sourceLine" id="cb17-6" title="6">                                    <span class="dt">data =</span> sample_occ_cropped), <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,<span class="dt">add =</span> T)</a>
+<a class="sourceLine" id="cb17-7" title="7">sp<span class="op">::</span><span class="kw">plot</span>(sp<span class="op">::</span><span class="kw">SpatialPointsDataFrame</span>(<span class="dt">coords =</span> pseudo_abs_rand[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</a>
+<a class="sourceLine" id="cb17-8" title="8">                                    <span class="dt">proj4string =</span> sp<span class="op">::</span><span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),</a>
+<a class="sourceLine" id="cb17-9" title="9">                                    <span class="dt">data =</span> pseudo_abs_rand), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,<span class="dt">add =</span> T)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Then, the generated pseudo-absences need to be added to the occurrence record data frame by adding relevant columns and binding the rows together.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">pseudo_abs_buff<span class="op">$</span>decimalLatitude &lt;-<span class="st"> </span>pseudo_abs_buff<span class="op">$</span>y</a>
+<a class="sourceLine" id="cb18-2" title="2">pseudo_abs_buff<span class="op">$</span>decimalLongitude &lt;-<span class="st"> </span>pseudo_abs_buff<span class="op">$</span>x</a>
+<a class="sourceLine" id="cb18-3" title="3">pseudo_abs_buff<span class="op">$</span>occurrenceStatus &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;absent&quot;</span>, <span class="kw">nrow</span>(pseudo_abs_buff))</a>
+<a class="sourceLine" id="cb18-4" title="4">pseudo_abs_buff<span class="op">$</span>source &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;dynamicSDM&quot;</span>, <span class="kw">nrow</span>(pseudo_abs_buff))</a>
+<a class="sourceLine" id="cb18-5" title="5">pseudo_abs_buff&lt;-<span class="kw">spatiotemp_weights</span>(<span class="dt">occ.data =</span> pseudo_abs_buff,</a>
+<a class="sourceLine" id="cb18-6" title="6">                                       <span class="dt">samp.events =</span> sample_events_data,</a>
+<a class="sourceLine" id="cb18-7" title="7">                                       <span class="dt">spatial.dist =</span> <span class="dv">100000</span>,</a>
+<a class="sourceLine" id="cb18-8" title="8">                                       <span class="dt">temporal.dist =</span> <span class="dv">30</span>,</a>
+<a class="sourceLine" id="cb18-9" title="9">                                       <span class="dt">prj =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)</a>
+<a class="sourceLine" id="cb18-10" title="10"></a>
+<a class="sourceLine" id="cb18-11" title="11">complete.dataset &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">rbind</span>(sample_occ_cropped, pseudo_abs_buff))</a></code></pre></div>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>At the end of this vignette, we now have a complete data frame of filtered species occurrence and pseudo-absence records of appropriate spatiotemporal quality, extent and resolution. Let’s save this to our project directory for use in the next tutorial!</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">write.csv</span>(complete.dataset, <span class="dt">file =</span> <span class="kw">paste0</span>(project_directory, <span class="st">&quot;/filtered_quelea_occ.csv&quot;</span>))</a></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
