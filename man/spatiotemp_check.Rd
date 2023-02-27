@@ -10,7 +10,7 @@ spatiotemp_check(
   duplicate.handle,
   coord.handle,
   date.handle,
-  date.res = "day",
+  date.res,
   coordclean = FALSE,
   coordclean.species,
   coordclean.handle = "exclude",
@@ -35,7 +35,7 @@ One of \code{exclude} or \code{ignore}: can be abbreviated. Default; \code{exclu
 \code{exclude} or \code{ignore}: can be abbreviated. Default; \code{exclude}.}
 
 \item{date.res}{a character string, stating the temporal resolution to complete checks on. One of
-\code{year}, \code{month} or \code{day}. Default \code{day}.}
+\code{year}, \code{month} or \code{day}. If not given, dates are not checked.}
 
 \item{coordclean}{a logical indicating whether to run function
 \code{clean_coordinates} from package \code{CoordinateCleaner} on \code{occ.data}. Default = FALSE.}
@@ -82,9 +82,9 @@ record belonds to. If \code{coordclean.handle} = \code{exclude} then all \code{o
 \code{CoordinateCleaner::clean_coordinates()} as potentially erroneous are removed in the returned
 data.
 
-If  \code{coordclean.handle} = \code{report}, then the in-built report output by
-\code{CoordinateCleaner::clean_coordinates()}is returned. This report contains logicals specifying the
-potentially erroneous records.
+If  \code{coordclean.handle} = \code{report}, then the occurrence data frame is returned with an additional
+\code{CC_REPORT} column. This column contains the logicals from
+\code{CoordinateCleaner::clean_coordinates()} which indicates the potentially erroneous records.
 }
 
 \examples{

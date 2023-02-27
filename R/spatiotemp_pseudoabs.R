@@ -61,14 +61,15 @@
 #'If `spatial.method` is `random`, then the pseudo-absence record co-ordinates are randomly
 #'generated across `spatial.ext` object given.
 #'
-#'If `spatial.ext` is an `sf` polygon or multipolygon object, `RasterLayer` (mask if possible before
+#'If `spatial.ext` is a `sf` polygon or multipolygon object, `RasterLayer` (mask if possible before
 #'input) or `SpatialPolygonsDataFrame`, then these shapes are used, instead of a simple rectangular
 #'extent. Therefore, inputting one of these objects will allow for more specific pseudo-absence
 #'generation.
 #'
 #'For example, inputting a `SpatialPolygonsDataFrame` of specific countries will ensure co-ordinates
-#'are terrestrial, whereas an extent that encompasses these countries may result in the generation
-#'of pseudo-absence records in inappropriate areas, such as oceans or non-study-area countries.
+#'are terrestrial, whereas an extent (xmin, xmax, ymin, ymax) that encompasses these countries may
+#'result in the generation of pseudo-absence records in inappropriate areas, such as oceans or
+#'non-study-area countries.
 #'
 #'# Temporal buffer
 #'

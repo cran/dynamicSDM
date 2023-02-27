@@ -18,7 +18,11 @@ dynamic_proj_GIF(
   legend.min,
   legend.name,
   file.name,
-  colour.palette = "inferno"
+  borders = FALSE,
+  border.regions,
+  border.colour = "black",
+  colour.palette.custom,
+  colour.palette
 )
 }
 \arguments{
@@ -57,6 +61,17 @@ projection.type.}
 \item{file.name}{optional, a character string, the name for the output GIF file. Default =
 \code{projection.type}.}
 
+\item{borders}{a logical indicating whether to add country borders to map. Default = \code{FALSE}.}
+
+\item{border.regions}{optional; a character string or vector, the region or regionss for which to
+add map borders. Required if \code{borders = TRUE}.}
+
+\item{border.colour}{optional; a character vector, the colour for plotted map borders. Default =
+\code{black.}}
+
+\item{colour.palette.custom}{optional; a character string or vector, the colours to use as plot
+colour palette.}
+
 \item{colour.palette}{optional; a character string, the colormap option to use from \code{viridis}. See
 details for colour palette options.}
 }
@@ -72,8 +87,8 @@ Function reads in projection rasters for each date. These are plotted using \cod
 combined into a Graphics Interchange Format (GIF).
 }
 \section{Import projection rasters}{
-Projection rasters for each date must be “tif” files that are uniquely named with the date in
-format "YYYY-MM-DD" and \code{projection.type.} If more than one file name matches the date and
+Projection rasters for each date must be “tif” files that are uniquely named with the date
+in format "YYYY-MM-DD" and \code{projection.type.} If more than one file name matches the date and
 \code{projection.type}, the function will error.
 }
 

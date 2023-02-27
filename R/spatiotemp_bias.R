@@ -10,7 +10,7 @@
 #'@param temporal.level a character string or vector, the time step(s) to test for temporal bias at.
 #'  One or multiple of `day` or `month`, `year.` Can be abbreviated.
 #'@param plot a logical indicating whether to generate plots of spatial and temporal bias. See
-#'  details for plot descriptions.
+#'  details for plot descriptions. Default = `FALSE`.
 #'@param spatial.method a character string, the method to calculate the spatial bias statistic. One
 #'  of; `simple`, `convex_hull` or `core`. See details.
 #'@param prj a character string, the coordinate reference system of occ.data co-ordinates. Default
@@ -205,7 +205,7 @@ spatiotemp_bias <-  function(occ.data,
   dist <- geosphere::distm(data.frame(clipped.occ$x, clipped.occ$y))
 
   # Calculate which column contain the minimum distance from another record
-  min.d <- apply(dist, 1, function(x)   order(x, decreasing = FALSE)[2])
+  min.d <- apply(dist, 1, function(x){order(x, decreasing = FALSE)[2]})
 
   # Add column numbers for each occurrence record
   min.d <- cbind(min.d, rep(1:ncol(dist), 1))
@@ -223,8 +223,7 @@ spatiotemp_bias <-  function(occ.data,
   dist <- geosphere::distm(data.frame(df$x, df$y))
 
   # Calculate minimum distance between simulated set of co-ordinates
-  min.d <- apply(dist, 1, function(x)
-    order(x, decreasing = FALSE)[2])
+  min.d <- apply(dist, 1, function(x){order(x, decreasing = FALSE)[2]})
 
   # Add column numbers for each simulated set of co-ordinates
   min.d <- cbind(min.d, rep(1:ncol(dist), 1))
@@ -245,7 +244,7 @@ spatiotemp_bias <-  function(occ.data,
     plot.list[[length(temporal.level)+1]]<- ggplot2::ggplot(clipped.occ, ggplot2::aes(x, y)) +
       ggplot2::geom_point(ggplot2::aes(colour="Occurrence"))+
       ggplot2::coord_fixed(ratio = 1)+
-      ggplot2::labs( title = "Spatial cluster of occurrence records",
+      ggplot2::labs( title = "Spatial clustering of occurrence records",
                      x = "Longitude",
                      y = "Latitude",color="Type")+
       ggplot2::geom_point(df,mapping =ggplot2::aes(x=x,y=y,colour="Randomly simulated"),alpha=0.2)+
@@ -254,15 +253,13 @@ spatiotemp_bias <-  function(occ.data,
 
   #Function to allow users to click through each plot individually
   oldpar<- par(no.readonly=TRUE)
-  on.exit(par(oldpar))
+  on.exit(suppressWarnings(graphics::par(oldpar)),add=T)
 
-  op <- graphics::par(ask=TRUE)
-  graphics::par(op)
+  graphics::par(ask=TRUE, new = FALSE)
 
   for (i in 1:length(plot.list)){
     plot(plot.list[[i]])
   }
-
 
 
   names(plot.list) <- c(paste0("Temporal_bias_plot_",temporal.level),"Spatial_bias_plot")

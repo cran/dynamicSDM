@@ -10,6 +10,8 @@
 coverage](https://codecov.io/gh/r-a-dobson/dynamicSDM/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-a-dobson/dynamicSDM?branch=main)
 [![R-CMD-check](https://github.com/r-a-dobson/dynamicSDM/workflows/R-CMD-check/badge.svg)](https://github.com/r-a-dobson/dynamicSDM/actions)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7405906.svg)](https://doi.org/10.5281/zenodo.7405906)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/dynamicSDM)](https://CRAN.R-project.org/package=dynamicSDM)
 <!-- badges: end -->
 
 # Summary
@@ -37,7 +39,7 @@ projections. See the package manual
 for more details on each
 function.
 
-<a href='https://github.com/r-a-dobson/dynamicSDM'><img src="https://raw.githubusercontent.com/r-a-dobson/dynamicSDM/main/man/figures/Figure1.png" align="centre" height="320"/></a>
+<a href='https://github.com/r-a-dobson/dynamicSDM'><img src="https://raw.githubusercontent.com/r-a-dobson/dynamicSDM/main/man/figures/Figure1.png" align="centre" height="300"/></a>
 
 ### 1\) Response data functions
 

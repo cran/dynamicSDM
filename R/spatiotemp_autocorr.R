@@ -11,7 +11,7 @@
 #'@param varname a character string or vector, the name(s) of the columns within `occ.data`
 #'  containing data to test for autocorrelation.
 #'@param plot a logical indicating whether to generate plot of temporal autocorrelation. See details
-#'  for plot description. Default = FALSE.
+#'  for plot description. Default = `FALSE`.
 #'@details To test for temporal autocorrelation, the function first calculates the average value
 #'  across records for each time step (`temporal.level`). The correlation between the average value
 #'  at one time point (t) and the value at the previous time point (t-1) is calculated and plotted
@@ -147,10 +147,10 @@ spatiotemp_autocorr <- function(occ.data,
     names(plot.list) <- c(varname)
 
     oldpar<- par(no.readonly=TRUE)
-    on.exit(par(oldpar))
+    on.exit(suppressWarnings(graphics::par(oldpar)),add=T)
 
     #Function to allow users to click through each plot individually
-    graphics::par(ask=TRUE)
+    graphics::par(ask=TRUE, new = FALSE)
 
     for (i in 1:length(plot.list)) {
       for (t in 1:length(temporal.level)) {
