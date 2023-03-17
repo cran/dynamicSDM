@@ -329,7 +329,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(dynamicSDM)</a></code></pre></div>
 <div id="stage-4-dynamic-projections-of-species-distribution" class="section level2">
 <h2>Stage 4: Dynamic projections of species distribution</h2>
-<p>In this tutorial, we will learn about functions within the <em>dynamicSDM</em> package for projecting intra- and inter- annual geographical distributions and abundances at high spatiotemporal resolution. This will involve extracting rasters for each explanatory variable across southern Africa at various intervals. Then we can project our dynamic SDMs onto these data to visualise species distribution patterns through space and time.</p>
+<p>In this tutorial, we will learn about functions within the <em>dynamicSDM</em> package for projecting intra- and inter-annual geographical distributions and abundances at high spatiotemporal resolution. This will involve extracting rasters for each explanatory variable across southern Africa at various intervals. Then we can project our dynamic SDMs onto these data to visualise species distribution patterns through space and time.</p>
 <p>The <em>dynamicSDM</em> functions for extracting dynamic rasters require Google Earth Engine and Google Drive to be initialised. Fill in the code below with your Google account email, and run the code to check that <em>rgee</em> and <em>googledrive</em> have been correctly installed and authorised.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(rgee)</a>
 <a class="sourceLine" id="cb2-2" title="2">rgee<span class="op">::</span><span class="kw">ee_check</span>()</a>
@@ -349,16 +349,16 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb3-5" title="5"><span class="kw">dir.create</span>(project_directory, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb3-6" title="6"></a>
 <a class="sourceLine" id="cb3-7" title="7">projection_directories &lt;-<span class="st"> </span><span class="kw">file.path</span>(project_directory, <span class="st">&quot;projection&quot;</span>)</a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="kw">dir.create</span>(project_directory, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="kw">dir.create</span>(projection_directories, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb3-9" title="9"></a>
 <a class="sourceLine" id="cb3-10" title="10">projectionrasters &lt;-<span class="st"> </span><span class="kw">file.path</span>(project_directory, <span class="st">&quot;projectionrasters&quot;</span>)</a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="kw">dir.create</span>(project_directory, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="kw">dir.create</span>(projectionrasters, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb3-12" title="12"></a>
 <a class="sourceLine" id="cb3-13" title="13">projection_covariates &lt;-<span class="st"> </span><span class="kw">file.path</span>(project_directory, <span class="st">&quot;projectioncovariates&quot;</span>)</a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="kw">dir.create</span>(project_directory, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="kw">dir.create</span>(projection_covariates, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb3-15" title="15"></a>
 <a class="sourceLine" id="cb3-16" title="16">projection_GIF &lt;-<span class="st"> </span><span class="kw">file.path</span>(project_directory, <span class="st">&quot;projection_GIF&quot;</span>)</a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="kw">dir.create</span>(project_directory, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-17" title="17"><span class="kw">dir.create</span>(projection_GIF, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <div id="a-generate-projection-dates" class="section level3">
 <h3>a) Generate projection dates</h3>
 <p><code>dynamic_proj_dates()</code> generates all dates in a given period at the interval type and size specified. This can be used to create a vector of dates that you want to project a species distribution at.</p>
@@ -404,9 +404,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>Run the following code to extract rasters for each explanatory variable and projection date.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">data</span>(<span class="st">&quot;sample_extent_data&quot;</span>)</a>
 <a class="sourceLine" id="cb6-2" title="2"></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="kw">extract_dynamic_raster</span>(<span class="dt">dates=</span>projectiondates,</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw">extract_dynamic_raster</span>(<span class="dt">dates =</span> projectiondates,</a>
 <a class="sourceLine" id="cb6-4" title="4">                       <span class="dt">datasetname =</span> <span class="st">&quot;UCSB-CHG/CHIRPS/DAILY&quot;</span>,</a>
-<a class="sourceLine" id="cb6-5" title="5">                       <span class="dt">bandname=</span><span class="st">&quot;precipitation&quot;</span>,</a>
+<a class="sourceLine" id="cb6-5" title="5">                       <span class="dt">bandname =</span> <span class="st">&quot;precipitation&quot;</span>,</a>
 <a class="sourceLine" id="cb6-6" title="6">                       <span class="dt">user.email =</span> user.email,</a>
 <a class="sourceLine" id="cb6-7" title="7">                       <span class="dt">spatial.res.metres =</span> <span class="dv">5566</span>,</a>
 <a class="sourceLine" id="cb6-8" title="8">                       <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
@@ -414,11 +414,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb6-10" title="10">                       <span class="dt">temporal.res =</span> <span class="dv">56</span>,</a>
 <a class="sourceLine" id="cb6-11" title="11">                       <span class="dt">spatial.ext =</span> sample_extent_data,</a>
 <a class="sourceLine" id="cb6-12" title="12">                       <span class="dt">varname =</span> variablenames[<span class="dv">1</span>],</a>
-<a class="sourceLine" id="cb6-13" title="13">                       <span class="dt">save.directory=</span>projectionrasters)</a>
+<a class="sourceLine" id="cb6-13" title="13">                       <span class="dt">save.directory =</span> projectionrasters)</a>
 <a class="sourceLine" id="cb6-14" title="14"></a>
-<a class="sourceLine" id="cb6-15" title="15"><span class="kw">extract_dynamic_raster</span>(<span class="dt">dates=</span>projectiondates,</a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="kw">extract_dynamic_raster</span>(<span class="dt">dates =</span> projectiondates,</a>
 <a class="sourceLine" id="cb6-16" title="16">                       <span class="dt">datasetname =</span> <span class="st">&quot;UCSB-CHG/CHIRPS/DAILY&quot;</span>,</a>
-<a class="sourceLine" id="cb6-17" title="17">                       <span class="dt">bandname=</span><span class="st">&quot;precipitation&quot;</span>,</a>
+<a class="sourceLine" id="cb6-17" title="17">                       <span class="dt">bandname =</span> <span class="st">&quot;precipitation&quot;</span>,</a>
 <a class="sourceLine" id="cb6-18" title="18">                       <span class="dt">user.email =</span> user.email,</a>
 <a class="sourceLine" id="cb6-19" title="19">                       <span class="dt">spatial.res.metres =</span> <span class="dv">5566</span>,</a>
 <a class="sourceLine" id="cb6-20" title="20">                       <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
@@ -426,7 +426,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb6-22" title="22">                       <span class="dt">temporal.res =</span> <span class="dv">364</span>,</a>
 <a class="sourceLine" id="cb6-23" title="23">                       <span class="dt">spatial.ext =</span> sample_extent_data,</a>
 <a class="sourceLine" id="cb6-24" title="24">                       <span class="dt">varname =</span> variablenames[<span class="dv">2</span>],</a>
-<a class="sourceLine" id="cb6-25" title="25">                       <span class="dt">save.directory=</span>projectionrasters)</a>
+<a class="sourceLine" id="cb6-25" title="25">                       <span class="dt">save.directory =</span> projectionrasters)</a>
 <a class="sourceLine" id="cb6-26" title="26"></a>
 <a class="sourceLine" id="cb6-27" title="27">matrix&lt;-dynamicSDM<span class="op">::</span><span class="kw">get_moving_window</span>(<span class="dt">radial.distance =</span> <span class="dv">10000</span>,</a>
 <a class="sourceLine" id="cb6-28" title="28">                                      <span class="dt">spatial.res.degrees =</span> <span class="fl">0.05</span>,</a>
@@ -434,30 +434,30 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb6-30" title="30"></a>
 <a class="sourceLine" id="cb6-31" title="31"><span class="kw">extract_buffered_raster</span>(<span class="dt">dates=</span>projectiondates,</a>
 <a class="sourceLine" id="cb6-32" title="32">                        <span class="dt">datasetname =</span> <span class="st">&quot;MODIS/006/MCD12Q1&quot;</span>,</a>
-<a class="sourceLine" id="cb6-33" title="33">                        <span class="dt">bandname=</span><span class="st">&quot;LC_Type5&quot;</span>,</a>
+<a class="sourceLine" id="cb6-33" title="33">                        <span class="dt">bandname =</span> <span class="st">&quot;LC_Type5&quot;</span>,</a>
 <a class="sourceLine" id="cb6-34" title="34">                        <span class="dt">spatial.res.metres =</span> <span class="dv">500</span>,</a>
 <a class="sourceLine" id="cb6-35" title="35">                        <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
-<a class="sourceLine" id="cb6-36" title="36">                        <span class="dt">moving.window.matrix=</span>matrix,,</a>
-<a class="sourceLine" id="cb6-37" title="37">                        <span class="dt">user.email=</span>user.email,</a>
-<a class="sourceLine" id="cb6-38" title="38">                        <span class="dt">categories=</span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb6-36" title="36">                        <span class="dt">moving.window.matrix =</span> matrix,</a>
+<a class="sourceLine" id="cb6-37" title="37">                        <span class="dt">user.email =</span> user.email,</a>
+<a class="sourceLine" id="cb6-38" title="38">                        <span class="dt">categories =</span> <span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>),</a>
 <a class="sourceLine" id="cb6-39" title="39">                        <span class="dt">agg.factor =</span> <span class="dv">12</span>,</a>
 <a class="sourceLine" id="cb6-40" title="40">                        <span class="dt">spatial.ext =</span> sample_extent_data,</a>
 <a class="sourceLine" id="cb6-41" title="41">                        <span class="dt">varname =</span> variablenames[<span class="dv">3</span>],</a>
-<a class="sourceLine" id="cb6-42" title="42">                        <span class="dt">save.directory=</span>projectionrasters)</a></code></pre></div>
+<a class="sourceLine" id="cb6-42" title="42">                        <span class="dt">save.directory =</span> projectionrasters)</a></code></pre></div>
 </div>
 <div id="c-combine-dynamic-projection-covariates" class="section level3">
 <h3>c) Combine dynamic projection covariates</h3>
 <p>Now we need to combine the rasters for each variable into single projection covariate data frames for each projection date.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">dynamic_proj_covariates</span>(<span class="dt">dates=</span>projectiondates,</a>
-<a class="sourceLine" id="cb7-2" title="2">           <span class="dt">varnames=</span>variablenames,</a>
-<a class="sourceLine" id="cb7-3" title="3">           <span class="dt">local.directory=</span>projectionrasters,</a>
-<a class="sourceLine" id="cb7-4" title="4">           <span class="dt">spatial.ext=</span>sample_extent_data,</a>
-<a class="sourceLine" id="cb7-5" title="5">           <span class="dt">spatial.mask=</span>sample_extent_data,</a>
-<a class="sourceLine" id="cb7-6" title="6">           <span class="dt">spatial.res.degrees =</span> <span class="fl">0.05</span>,</a>
-<a class="sourceLine" id="cb7-7" title="7">           <span class="dt">resample.method =</span> <span class="kw">c</span>(<span class="st">&quot;bilinear&quot;</span>,<span class="st">&quot;bilinear&quot;</span>,<span class="st">&quot;ngb&quot;</span>),</a>
-<a class="sourceLine" id="cb7-8" title="8">           <span class="dt">cov.file.type =</span> <span class="st">&quot;csv&quot;</span>,</a>
-<a class="sourceLine" id="cb7-9" title="9">           <span class="dt">prj=</span><span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>,</a>
-<a class="sourceLine" id="cb7-10" title="10">           <span class="dt">save.directory =</span> projection_covariates)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">dynamic_proj_covariates</span>(<span class="dt">dates =</span> projectiondates,</a>
+<a class="sourceLine" id="cb7-2" title="2">                        <span class="dt">varnames =</span> variablenames,</a>
+<a class="sourceLine" id="cb7-3" title="3">                        <span class="dt">local.directory =</span> projectionrasters,</a>
+<a class="sourceLine" id="cb7-4" title="4">                        <span class="dt">spatial.ext =</span> sample_extent_data,</a>
+<a class="sourceLine" id="cb7-5" title="5">                        <span class="dt">spatial.mask =</span> sample_extent_data,</a>
+<a class="sourceLine" id="cb7-6" title="6">                        <span class="dt">spatial.res.degrees =</span> <span class="fl">0.05</span>,</a>
+<a class="sourceLine" id="cb7-7" title="7">                        <span class="dt">resample.method =</span> <span class="kw">c</span>(<span class="st">&quot;bilinear&quot;</span>,<span class="st">&quot;bilinear&quot;</span>,<span class="st">&quot;ngb&quot;</span>),</a>
+<a class="sourceLine" id="cb7-8" title="8">                        <span class="dt">cov.file.type =</span> <span class="st">&quot;csv&quot;</span>,</a>
+<a class="sourceLine" id="cb7-9" title="9">                        <span class="dt">prj=</span><span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>,</a>
+<a class="sourceLine" id="cb7-10" title="10">                        <span class="dt">save.directory =</span> projection_covariates)</a></code></pre></div>
 </div>
 <div id="d-project-models-onto-covariates" class="section level3">
 <h3>d) Project models onto covariates</h3>
@@ -468,11 +468,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb8-3" title="3">sample_explan_data<span class="op">$</span>weights &lt;-<span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>sample_explan_data<span class="op">$</span>REL_SAMP_EFFORT)</a>
 <a class="sourceLine" id="cb8-4" title="4"></a>
 <a class="sourceLine" id="cb8-5" title="5">sample_brt_models &lt;-<span class="st"> </span><span class="kw">brt_fit</span>(sample_explan_data,</a>
-<a class="sourceLine" id="cb8-6" title="6">                  <span class="dt">response.col =</span> <span class="st">&quot;presence.absence&quot;</span>,</a>
-<a class="sourceLine" id="cb8-7" title="7">                  <span class="dt">varnames =</span> variablenames,</a>
-<a class="sourceLine" id="cb8-8" title="8">                  <span class="dt">block.col =</span> <span class="st">&quot;BLOCK.CATS&quot;</span>,</a>
-<a class="sourceLine" id="cb8-9" title="9">                  <span class="dt">weights.col =</span> <span class="st">&quot;weights&quot;</span>,</a>
-<a class="sourceLine" id="cb8-10" title="10">                  <span class="dt">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>)</a>
+<a class="sourceLine" id="cb8-6" title="6">                             <span class="dt">response.col =</span> <span class="st">&quot;presence.absence&quot;</span>,</a>
+<a class="sourceLine" id="cb8-7" title="7">                             <span class="dt">varnames =</span> variablenames,</a>
+<a class="sourceLine" id="cb8-8" title="8">                             <span class="dt">block.col =</span> <span class="st">&quot;BLOCK.CATS&quot;</span>,</a>
+<a class="sourceLine" id="cb8-9" title="9">                             <span class="dt">weights.col =</span> <span class="st">&quot;weights&quot;</span>,</a>
+<a class="sourceLine" id="cb8-10" title="10">                             <span class="dt">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>)</a>
 <a class="sourceLine" id="cb8-11" title="11"></a>
 <a class="sourceLine" id="cb8-12" title="12"><span class="kw">dynamic_proj</span>(<span class="dt">dates =</span> projectiondates,</a>
 <a class="sourceLine" id="cb8-13" title="13">             <span class="dt">projection.method =</span> <span class="kw">c</span>(<span class="st">&quot;proportional&quot;</span>),</a>
@@ -490,21 +490,34 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="e-visualise-projections-with-a-gif" class="section level3">
 <h3>e) Visualise projections with a GIF</h3>
 <p>To better visualise our dynamic distribution projections through time, <code>dynamic_proj_GIF()</code> can generate animated GIFs from the projection rasters.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">dynamic_proj_GIF</span>(<span class="dt">dates =</span> projectiondates,</a>
-<a class="sourceLine" id="cb10-2" title="2">                 <span class="dt">projection.type =</span> <span class="st">&quot;proportional&quot;</span>,</a>
-<a class="sourceLine" id="cb10-3" title="3">                 <span class="dt">local.directory =</span> projection_directories,</a>
-<a class="sourceLine" id="cb10-4" title="4">                 <span class="dt">save.directory =</span> projection_GIF,</a>
-<a class="sourceLine" id="cb10-5" title="5">                 <span class="dt">legend.max =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb10-6" title="6">                 <span class="dt">legend.min =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb10-7" title="7">                 <span class="dt">width =</span> <span class="dv">650</span>,</a>
-<a class="sourceLine" id="cb10-8" title="8">                 <span class="dt">legend.name =</span> <span class="st">&quot;Distribution</span><span class="ch">\n</span><span class="st"> suitability&quot;</span>)</a></code></pre></div>
+<p>We will set our own colour scheme and add borders for the southern African countries.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"></a>
+<a class="sourceLine" id="cb10-2" title="2">cols1&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#F0F0F0&quot;</span>,<span class="st">&quot;#40863A&quot;</span>,<span class="st">&quot;#FBF357&quot;</span>,<span class="st">&quot;#ED8E07&quot;</span>,<span class="st">&quot;#cc0000&quot;</span>,<span class="st">&quot;#660000&quot;</span>)</a>
+<a class="sourceLine" id="cb10-3" title="3">border.countries&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;South Africa&#39;</span>, <span class="st">&#39;Botswana&#39;</span>,<span class="st">&#39;Lesotho&#39;</span>, <span class="st">&#39;Swaziland&#39;</span>,<span class="st">&#39;Mozambique&#39;</span>,<span class="st">&#39;Namibia&#39;</span></a>
+<a class="sourceLine" id="cb10-4" title="4">                     ,<span class="st">&#39;Zimbabwe&#39;</span>,<span class="st">&#39;Angola&#39;</span>,<span class="st">&#39;Zambia&#39;</span>,<span class="st">&#39;Malawi&#39;</span>)</a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="kw">dynamic_proj_GIF</span>(</a>
+<a class="sourceLine" id="cb10-7" title="7">  <span class="dt">dates =</span> projectiondates,</a>
+<a class="sourceLine" id="cb10-8" title="8">  <span class="dt">projection.type =</span> <span class="st">&quot;proportional&quot;</span>,</a>
+<a class="sourceLine" id="cb10-9" title="9">  <span class="dt">local.directory =</span> projection_directories,</a>
+<a class="sourceLine" id="cb10-10" title="10">  <span class="dt">save.directory =</span> projection_GIF,</a>
+<a class="sourceLine" id="cb10-11" title="11">  <span class="dt">width =</span> <span class="dv">7</span>,</a>
+<a class="sourceLine" id="cb10-12" title="12">  <span class="dt">height =</span> <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb10-13" title="13">  <span class="dt">colour.palette.custom =</span> cols1,</a>
+<a class="sourceLine" id="cb10-14" title="14">  <span class="dt">borders =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb10-15" title="15">  <span class="dt">border.regions =</span> border.countries,</a>
+<a class="sourceLine" id="cb10-16" title="16">  <span class="dt">border.colour =</span> <span class="st">&quot;grey50&quot;</span>,</a>
+<a class="sourceLine" id="cb10-17" title="17">  <span class="dt">legend.max =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb10-18" title="18">  <span class="dt">legend.min =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb10-19" title="19">  <span class="dt">legend.name =</span>  <span class="st">&quot;Distribution</span><span class="ch">\n</span><span class="st"> suitability&quot;</span>,</a>
+<a class="sourceLine" id="cb10-20" title="20">  <span class="dt">file.name =</span> <span class="st">&quot;RBQ_proportional_GIF&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
 <ul>
 <li><p>This concludes the <em>dynamicSDM</em> tutorial. We hope that you have been able to utilise the package to model the dynamic distributions of our case study species, the red-billed quelea, and can now apply these functions to your own study species!</p></li>
-<li><p>We have demonstrated a variety of options across our functions, but even more are available with the diverse and flexible arguments. Please see our package manual for full details of each <em>dynamicSDM</em> function <a href="https://github.com/r-a-dobson/dynamicSDM/blob/main/man/figures/dynamicSDM_1.0.pdf">manual</a>.</p></li>
+<li><p>We have demonstrated a variety of options across our functions, but even more are available with the diverse and flexible arguments. Please see our package manual for full details of each <em>dynamicSDM</em> function <a href="https://github.com/r-a-dobson/dynamicSDM/blob/main/man/figures/dynamicSDM_1.2.pdf">manual</a>.</p></li>
 <li><p>Also, please visit the GitHub discussion page for <em>dynamicSDM</em> if you have any questions or are facing errors with any of our functions <a href="https://github.com/r-a-dobson/dynamicSDM/issues">github</a>. We also have a quick guide to common bugs that are thrown up when installing and running <em>dynamicSDM</em>.</p></li>
 </ul>
 </div>

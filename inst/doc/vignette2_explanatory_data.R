@@ -46,30 +46,30 @@ data(sample_filt_data)
 
 ## ----example-extract_dynamic_coords week, eval=F------------------------------
 #  # 8-week total precipitation
-#  dynamicSDM::extract_dynamic_coords(occ.data=sample_filt_data,
-#                                     datasetname = "UCSB-CHG/CHIRPS/DAILY",
-#                                     bandname="precipitation",
-#                                     spatial.res.metres = 5566 ,
-#                                     GEE.math.fun = "sum",
-#                                     temporal.direction = "prior",
-#                                     temporal.res = 56,
-#                                     save.method="split",
-#                                     varname = variablenames[1],
-#                                     save.directory=extraction_directory_1)
+#  extract_dynamic_coords(occ.data=sample_filt_data,
+#                         datasetname = "UCSB-CHG/CHIRPS/DAILY",
+#                         bandname="precipitation",
+#                         spatial.res.metres = 5566 ,
+#                         GEE.math.fun = "sum",
+#                         temporal.direction = "prior",
+#                         temporal.res = 56,
+#                         save.method = "split",
+#                         varname = variablenames[1],
+#                         save.directory = extraction_directory_1)
 #  
 
 ## ----example-extract_dynamic_coords annual,eval=F-----------------------------
 #  # 52-week total precipitation
-#  dynamicSDM::extract_dynamic_coords(occ.data=sample_filt_data,
-#                                     datasetname = "UCSB-CHG/CHIRPS/DAILY",
-#                                     bandname="precipitation",
-#                                     spatial.res.metres = 5566 ,
-#                                     GEE.math.fun = "sum",
-#                                     temporal.direction = "prior",
-#                                     temporal.res = 364,
-#                                     save.method="combined",
-#                                     varname = variablenames[2],
-#                                     save.directory= extraction_directory_2)
+#  extract_dynamic_coords(occ.data=sample_filt_data,
+#                         datasetname = "UCSB-CHG/CHIRPS/DAILY",
+#                         bandname = "precipitation",
+#                         spatial.res.metres = 5566 ,
+#                         GEE.math.fun = "sum",
+#                         temporal.direction = "prior",
+#                         temporal.res = 364,
+#                         save.method = "combined",
+#                         varname = variablenames[2],
+#                         save.directory = extraction_directory_2)
 
 ## ----example-get_moving_window------------------------------------------------
 matrix <- get_moving_window(radial.distance = 10000,
@@ -91,16 +91,16 @@ matrix
 #                          categories=c(6,7),
 #                          agg.factor = 12,
 #                          varname = variablenames[3],
-#                          save.directory=extraction_directory_3
-#  )
+#                          save.directory=extraction_directory_3)
 
-## ----save extracted data,eval=F-----------------------------------------------
+## ----combine extracted data,eval=F--------------------------------------------
 #  complete.dataset <- extract_coords_combine(varnames = variablenames,
 #                                             local.directory = c(extraction_directory_1,
 #                                                                 extraction_directory_2,
 #                                                                 extraction_directory_3))
+
+## ----save extracted data,eval=F-----------------------------------------------
 #  # Set NA values as zero
-#  
 #  complete.dataset[is.na(complete.dataset$grass_crop_percentage),"grass_crop_percentage"]<-0
 #  
 #  write.csv(complete.dataset, file = paste0(project_directory, "/extracted_quelea_occ.csv"))

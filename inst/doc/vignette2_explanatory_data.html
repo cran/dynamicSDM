@@ -329,7 +329,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(dynamicSDM)</a></code></pre></div>
 <div id="stage-2-explanatory-variable-data" class="section level2">
 <h2>Stage 2: Explanatory variable data</h2>
-<p>In this tutorial, we will be extracting spatiotemporally buffered explanatory variables for each occurrence and pseudo-absence record. The <em>dynamicSDM</em> functions for extracting such variables require Google Earth Engine and Google Drive to be initialised. Fill in the code below with your Google account email, and run the code to check that <em>rgee</em> and <em>googledrive</em> have been correctly installed and authorised.</p>
+<p>In this tutorial, we will be extracting spatio-temporally buffered explanatory variables for each occurrence and pseudo-absence record. The <em>dynamicSDM</em> functions for extracting such variables require Google Earth Engine and Google Drive to be initialised. Fill in the code below with your Google account email, and run the code to check that <em>rgee</em> and <em>googledrive</em> have been correctly installed and authorised.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(rgee)</a>
 <a class="sourceLine" id="cb2-2" title="2">rgee<span class="op">::</span><span class="kw">ee_check</span>()</a>
 <a class="sourceLine" id="cb2-3" title="3"></a>
@@ -347,7 +347,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb3-2" title="2"></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="kw">dir.create</span>(project_directory)</a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; Warning in dir.create(project_directory):</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; &#39;C:\Users\eerdo\AppData\Local\Temp\RtmpWoz8Su\dynamicSDM_vignette&#39; already</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; &#39;C:\Users\eerdo\AppData\Local\Temp\Rtmpg3XUPZ\dynamicSDM_vignette&#39; already</span></a>
 <a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; exists</span></a>
 <a class="sourceLine" id="cb3-7" title="7"></a>
 <a class="sourceLine" id="cb3-8" title="8">variablenames&lt;-<span class="kw">c</span>(<span class="st">&quot;eight_sum_prec&quot;</span>,<span class="st">&quot;year_sum_prec&quot;</span>,<span class="st">&quot;grass_crop_percentage&quot;</span>)</a>
@@ -378,30 +378,30 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="case-study" class="section level4">
 <h4>Case study</h4>
 <p>The distribution of our case study species, the red-billed quelea, is driven by precipitation levels. Run the code below to extract the sum of precipitation across the 8-week and 52-week period prior to each occurrence record from the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS) dataset at <a href="https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHG_CHIRPS_DAILY">GEE</a>.</p>
-<p>For the 8-week precipitation extraction, we will use the split method to save extracted data. Notice how each record’s data are extracted and exported individually. If you specify <code>resume = T</code>, then if internet connection is lost you can resume extraction to where the code stopped.</p>
+<p>For the 8-week precipitation extraction, we will use the split method to save extracted data. Notice how each record’s data are extracted and exported individually. If you specify <code>resume = T</code>, then if internet connection is lost, progress can be resumed.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># 8-week total precipitation</span></a>
-<a class="sourceLine" id="cb5-2" title="2">dynamicSDM<span class="op">::</span><span class="kw">extract_dynamic_coords</span>(<span class="dt">occ.data=</span>sample_filt_data,</a>
-<a class="sourceLine" id="cb5-3" title="3">                                   <span class="dt">datasetname =</span> <span class="st">&quot;UCSB-CHG/CHIRPS/DAILY&quot;</span>,</a>
-<a class="sourceLine" id="cb5-4" title="4">                                   <span class="dt">bandname=</span><span class="st">&quot;precipitation&quot;</span>,</a>
-<a class="sourceLine" id="cb5-5" title="5">                                   <span class="dt">spatial.res.metres =</span> <span class="dv">5566</span> ,</a>
-<a class="sourceLine" id="cb5-6" title="6">                                   <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
-<a class="sourceLine" id="cb5-7" title="7">                                   <span class="dt">temporal.direction =</span> <span class="st">&quot;prior&quot;</span>,</a>
-<a class="sourceLine" id="cb5-8" title="8">                                   <span class="dt">temporal.res =</span> <span class="dv">56</span>,</a>
-<a class="sourceLine" id="cb5-9" title="9">                                   <span class="dt">save.method=</span><span class="st">&quot;split&quot;</span>,</a>
-<a class="sourceLine" id="cb5-10" title="10">                                   <span class="dt">varname =</span> variablenames[<span class="dv">1</span>],</a>
-<a class="sourceLine" id="cb5-11" title="11">                                   <span class="dt">save.directory=</span>extraction_directory_<span class="dv">1</span>)</a></code></pre></div>
-<p>For the 52-week precipitation extraction, we will use the combined method to save extracted data. Here, all data are extracted and then exported as a single data frame. This approach writes fewer files but may be more vulnerable to internet connection outage as all progress is lost and cannot be resumed.</p>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">extract_dynamic_coords</span>(<span class="dt">occ.data=</span>sample_filt_data,</a>
+<a class="sourceLine" id="cb5-3" title="3">                       <span class="dt">datasetname =</span> <span class="st">&quot;UCSB-CHG/CHIRPS/DAILY&quot;</span>,</a>
+<a class="sourceLine" id="cb5-4" title="4">                       <span class="dt">bandname=</span><span class="st">&quot;precipitation&quot;</span>,</a>
+<a class="sourceLine" id="cb5-5" title="5">                       <span class="dt">spatial.res.metres =</span> <span class="dv">5566</span> ,</a>
+<a class="sourceLine" id="cb5-6" title="6">                       <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
+<a class="sourceLine" id="cb5-7" title="7">                       <span class="dt">temporal.direction =</span> <span class="st">&quot;prior&quot;</span>,</a>
+<a class="sourceLine" id="cb5-8" title="8">                       <span class="dt">temporal.res =</span> <span class="dv">56</span>,</a>
+<a class="sourceLine" id="cb5-9" title="9">                       <span class="dt">save.method =</span> <span class="st">&quot;split&quot;</span>,</a>
+<a class="sourceLine" id="cb5-10" title="10">                       <span class="dt">varname =</span> variablenames[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb5-11" title="11">                       <span class="dt">save.directory =</span> extraction_directory_<span class="dv">1</span>)</a></code></pre></div>
+<p>For the 52-week precipitation extraction, we will use the combined method to save extracted data. Here, all data are extracted and then exported as a single data frame. This approach writes fewer files but may be more vulnerable to internet connection outage because all progress will be lost and cannot be resumed.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># 52-week total precipitation</span></a>
-<a class="sourceLine" id="cb6-2" title="2">dynamicSDM<span class="op">::</span><span class="kw">extract_dynamic_coords</span>(<span class="dt">occ.data=</span>sample_filt_data,</a>
-<a class="sourceLine" id="cb6-3" title="3">                                   <span class="dt">datasetname =</span> <span class="st">&quot;UCSB-CHG/CHIRPS/DAILY&quot;</span>,</a>
-<a class="sourceLine" id="cb6-4" title="4">                                   <span class="dt">bandname=</span><span class="st">&quot;precipitation&quot;</span>,</a>
-<a class="sourceLine" id="cb6-5" title="5">                                   <span class="dt">spatial.res.metres =</span> <span class="dv">5566</span> ,</a>
-<a class="sourceLine" id="cb6-6" title="6">                                   <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
-<a class="sourceLine" id="cb6-7" title="7">                                   <span class="dt">temporal.direction =</span> <span class="st">&quot;prior&quot;</span>,</a>
-<a class="sourceLine" id="cb6-8" title="8">                                   <span class="dt">temporal.res =</span> <span class="dv">364</span>,</a>
-<a class="sourceLine" id="cb6-9" title="9">                                   <span class="dt">save.method=</span><span class="st">&quot;combined&quot;</span>,</a>
-<a class="sourceLine" id="cb6-10" title="10">                                   <span class="dt">varname =</span> variablenames[<span class="dv">2</span>],</a>
-<a class="sourceLine" id="cb6-11" title="11">                                   <span class="dt">save.directory=</span> extraction_directory_<span class="dv">2</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">extract_dynamic_coords</span>(<span class="dt">occ.data=</span>sample_filt_data,</a>
+<a class="sourceLine" id="cb6-3" title="3">                       <span class="dt">datasetname =</span> <span class="st">&quot;UCSB-CHG/CHIRPS/DAILY&quot;</span>,</a>
+<a class="sourceLine" id="cb6-4" title="4">                       <span class="dt">bandname =</span> <span class="st">&quot;precipitation&quot;</span>,</a>
+<a class="sourceLine" id="cb6-5" title="5">                       <span class="dt">spatial.res.metres =</span> <span class="dv">5566</span> ,</a>
+<a class="sourceLine" id="cb6-6" title="6">                       <span class="dt">GEE.math.fun =</span> <span class="st">&quot;sum&quot;</span>,</a>
+<a class="sourceLine" id="cb6-7" title="7">                       <span class="dt">temporal.direction =</span> <span class="st">&quot;prior&quot;</span>,</a>
+<a class="sourceLine" id="cb6-8" title="8">                       <span class="dt">temporal.res =</span> <span class="dv">364</span>,</a>
+<a class="sourceLine" id="cb6-9" title="9">                       <span class="dt">save.method =</span> <span class="st">&quot;combined&quot;</span>,</a>
+<a class="sourceLine" id="cb6-10" title="10">                       <span class="dt">varname =</span> variablenames[<span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb6-11" title="11">                       <span class="dt">save.directory =</span> extraction_directory_<span class="dv">2</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="b-extract-spatially-buffered-explanatory-variables" class="section level3">
@@ -419,11 +419,6 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; [1,]    1    1    1</span></a>
 <a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [2,]    1    1    1</span></a>
 <a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; [3,]    1    1    1</span></a></code></pre></div>
-</div>
-</div>
-<div id="c-combine-explanatory-variable-data" class="section level3">
-<h3>c) Combine explanatory variable data</h3>
-<p>Data for each explanatory variable have been saved across multiple directories and files. <code>extract_coord_combine()</code> combine the extracted explanatory variable data into a single data frame.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># Total grassland and cereal cropland cells in surrounding area</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="kw">extract_buffered_coords</span>(<span class="dt">occ.data=</span>sample_filt_data,</a>
 <a class="sourceLine" id="cb8-3" title="3">                        <span class="dt">datasetname =</span> <span class="st">&quot;MODIS/006/MCD12Q1&quot;</span>,</a>
@@ -437,22 +432,25 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb8-11" title="11">                        <span class="dt">categories=</span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>),</a>
 <a class="sourceLine" id="cb8-12" title="12">                        <span class="dt">agg.factor =</span> <span class="dv">12</span>,</a>
 <a class="sourceLine" id="cb8-13" title="13">                        <span class="dt">varname =</span> variablenames[<span class="dv">3</span>],</a>
-<a class="sourceLine" id="cb8-14" title="14">                        <span class="dt">save.directory=</span>extraction_directory_<span class="dv">3</span></a>
-<a class="sourceLine" id="cb8-15" title="15">)</a></code></pre></div>
+<a class="sourceLine" id="cb8-14" title="14">                        <span class="dt">save.directory=</span>extraction_directory_<span class="dv">3</span>)</a></code></pre></div>
+</div>
+</div>
+<div id="c-combine-explanatory-variable-data" class="section level3">
+<h3>c) Combine explanatory variable data</h3>
+<p>Data for each explanatory variable have been saved across multiple directories and files. <code>extract_coord_combine()</code> combine the extracted explanatory variable data into a single data frame.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">complete.dataset &lt;-<span class="st"> </span><span class="kw">extract_coords_combine</span>(<span class="dt">varnames =</span> variablenames,</a>
+<a class="sourceLine" id="cb9-2" title="2">                                           <span class="dt">local.directory =</span> <span class="kw">c</span>(extraction_directory_<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb9-3" title="3">                                                               extraction_directory_<span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb9-4" title="4">                                                               extraction_directory_<span class="dv">3</span>))</a></code></pre></div>
 </div>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
 <p>At the end of this vignette, we now have a complete data frame of filtered species occurrence and pseudo-absence records with associated extracted dynamic variables. Let’s save this to our project directory for use in the next tutorial!</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">complete.dataset &lt;-<span class="st"> </span><span class="kw">extract_coords_combine</span>(<span class="dt">varnames =</span> variablenames,</a>
-<a class="sourceLine" id="cb9-2" title="2">                                           <span class="dt">local.directory =</span> <span class="kw">c</span>(extraction_directory_<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb9-3" title="3">                                                               extraction_directory_<span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb9-4" title="4">                                                               extraction_directory_<span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co"># Set NA values as zero </span></a>
-<a class="sourceLine" id="cb9-6" title="6"></a>
-<a class="sourceLine" id="cb9-7" title="7">complete.dataset[<span class="kw">is.na</span>(complete.dataset<span class="op">$</span>grass_crop_percentage),<span class="st">&quot;grass_crop_percentage&quot;</span>]&lt;-<span class="dv">0</span></a>
-<a class="sourceLine" id="cb9-8" title="8"></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="kw">write.csv</span>(complete.dataset, <span class="dt">file =</span> <span class="kw">paste0</span>(project_directory, <span class="st">&quot;/extracted_quelea_occ.csv&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Set NA values as zero </span></a>
+<a class="sourceLine" id="cb10-2" title="2">complete.dataset[<span class="kw">is.na</span>(complete.dataset<span class="op">$</span>grass_crop_percentage),<span class="st">&quot;grass_crop_percentage&quot;</span>]&lt;-<span class="dv">0</span></a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="kw">write.csv</span>(complete.dataset, <span class="dt">file =</span> <span class="kw">paste0</span>(project_directory, <span class="st">&quot;/extracted_quelea_occ.csv&quot;</span>))</a></code></pre></div>
 </div>
 
 

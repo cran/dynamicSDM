@@ -22,8 +22,8 @@ variablenames<-c("eight_sum_prec","year_sum_prec","grass_crop_percentage")
 
 autocorrelation <- spatiotemp_autocorr(sample_explan_data,
                                        varname = variablenames,
+                                       plot = TRUE,
                                        temporal.level = c("year")) # can choose month or day too
-
 
 autocorrelation
 

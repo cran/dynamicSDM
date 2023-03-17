@@ -4,11 +4,12 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----install package----------------------------------------------------------
+## ----install package GitHub---------------------------------------------------
 # devtools::install_github('r-a-dobson/dynamicSDM')
-library(dynamicSDM)
-library(sp)
 
+## ----install package CRAN-----------------------------------------------------
+#install.packages("dynamicSDM")
+library(dynamicSDM)
 
 ## ----check Google, eval=FALSE-------------------------------------------------
 #  library(rgee)
@@ -19,14 +20,16 @@ library(sp)
 #  #googledrive::drive_auth_configure()
 #  googledrive::drive_user()
 
+## ----install sp---------------------------------------------------------------
+#install.packages("sp")
+library(sp)
+
 ## ----create directory---------------------------------------------------------
 project_directory <- file.path(file.path(tempdir(), "dynamicSDM_vignette"))
-
 dir.create(project_directory)
 
 ## ----import occurrence--------------------------------------------------------
 data("sample_occ_data")
-
 
 ## ----example-convert_gbif-----------------------------------------------------
 sample_occ <- convert_gbif(sample_occ_data)
@@ -42,15 +45,14 @@ nrow(sample_occ_filtered)
 
 ## ----example-spatiotemp_check with Coordinate Cleaner,eval=F------------------
 #  sample_occ_filtered <- spatiotemp_check(occ.data = sample_occ,
-#                                                 na.handle = "exclude",
-#                                                 date.handle = "exclude",
-#                                                 date.res = "day",
-#                                                 coord.handle = "exclude",
-#                                                 duplicate.handle = "exclude",
-#                                                 coordclean = T,
-#                                                 coordclean.species = "quelea",
-#                                                 coordclean.handle = "exclude")
-#  
+#                                          na.handle = "exclude",
+#                                          date.handle = "exclude",
+#                                          date.res = "day",
+#                                          coord.handle = "exclude",
+#                                          duplicate.handle = "exclude",
+#                                          coordclean = TRUE,
+#                                          coordclean.species = "quelea",
+#                                          coordclean.handle = "exclude")
 
 ## ----example-spatiotemp_extent,fig.width=4, fig.height=4----------------------
 data("sample_extent_data")
@@ -117,7 +119,6 @@ sp::plot(sp::SpatialPointsDataFrame(coords = occ_thin[, c("x", "y")],
 
 ## ----example-spatiotemp_weights-----------------------------------------------
 data("sample_events_data")
-
 sample_occ_cropped <- spatiotemp_weights(occ.data = sample_occ_cropped,
                                        samp.events = sample_events_data,
                                        spatial.dist = 100000,
@@ -129,6 +130,7 @@ sample_occ_cropped <- spatiotemp_weights(occ.data = sample_occ_cropped,
 pseudo_abs_buff <- spatiotemp_pseudoabs(occ.data = sample_occ_cropped,
                                         spatial.method = "buffer",
                                         temporal.method = "buffer",
+                                        spatial.ext = sample_extent_data,
                                         spatial.buffer = c(250000, 500000),
                                         temporal.buffer = c(42, 84),
                                         n.pseudoabs = nrow(sample_occ_cropped))
