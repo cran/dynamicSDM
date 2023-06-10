@@ -14,89 +14,103 @@
 
 <title>dynamicSDM: Model fitting and autocorrelation</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {  }
+{ }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -322,39 +336,52 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">dynamicSDM: Model fitting and autocorrelation</h1>
+<h1 class="title toc-ignore">dynamicSDM: Model fitting and
+autocorrelation</h1>
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(dynamicSDM)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dynamicSDM)</span></code></pre></div>
 <div id="stage-3-explanatory-variable-data" class="section level2">
 <h2>Stage 3: Explanatory variable data</h2>
-<p>In this tutorial, we will be fitting boosted regression tree SDMs to our dataset, whilst accounting for spatial and temporal autocorrelation.</p>
+<p>In this tutorial, we will be fitting boosted regression tree SDMs to
+our dataset, whilst accounting for spatial and temporal
+autocorrelation.</p>
 </div>
 <div id="import-covariates" class="section level2">
 <h2>Import covariates</h2>
-<p>The covariate data frame generated in the second tutorial can be imported from your project directory.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">project_directory &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;dynamicSDM_vignette&quot;</span>))</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="co"># project_directory&lt;-&quot;your_path_here&quot;</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="kw">dir.create</span>(project_directory)</a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; Warning in dir.create(project_directory):</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; &#39;C:\Users\eerdo\AppData\Local\Temp\Rtmpg3XUPZ\dynamicSDM_vignette&#39; already</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; exists</span></a>
-<a class="sourceLine" id="cb2-7" title="7"></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co">#sample_explan_data &lt;- read.csv(paste0(project_directory, &quot;/extracted_quelea_occ.csv&quot;))</span></a></code></pre></div>
-<p>Or alternatively, you can run the code below to read the pre-extracted data into your R environment from the <em>dynamicSDM</em> package.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">data</span>(<span class="st">&quot;sample_explan_data&quot;</span>)</a></code></pre></div>
+<p>The covariate data frame generated in the second tutorial can be
+imported from your project directory.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>project_directory <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;dynamicSDM_vignette&quot;</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># project_directory&lt;-&quot;your_path_here&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(project_directory)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in dir.create(project_directory):</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &#39;C:\Users\eerdo\AppData\Local\Temp\RtmpovDc4e\dynamicSDM_vignette&#39; already</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; exists</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#sample_explan_data &lt;- read.csv(paste0(project_directory, &quot;/extracted_quelea_occ.csv&quot;))</span></span></code></pre></div>
+<p>Or alternatively, you can run the code below to read the
+pre-extracted data into your R environment from the <em>dynamicSDM</em>
+package.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sample_explan_data&quot;</span>)</span></code></pre></div>
 <div id="a-test-for-spatial-and-temporal-autocorrelation" class="section level3">
 <h3>a) Test for spatial and temporal autocorrelation</h3>
-<p>Autocorrelation is when explanatory variable data for species records taken closer in space and time are more similar to each other than to those of records more distantly sampled. When species distribution modelling with spatio-temporally dynamic explanatory variables, spatial and temporal autocorrelation can impact model performance.</p>
-<p>Run the code below to test for spatial and temporal autocorrelation in the extracted explanatory variable data using <code>spatiotemp_autocorr()</code>. This function can also generate a temporal autocorrelation plot for each variable.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">variablenames&lt;-<span class="kw">c</span>(<span class="st">&quot;eight_sum_prec&quot;</span>,<span class="st">&quot;year_sum_prec&quot;</span>,<span class="st">&quot;grass_crop_percentage&quot;</span>)</a>
-<a class="sourceLine" id="cb4-2" title="2"></a>
-<a class="sourceLine" id="cb4-3" title="3">autocorrelation &lt;-<span class="st"> </span><span class="kw">spatiotemp_autocorr</span>(sample_explan_data,</a>
-<a class="sourceLine" id="cb4-4" title="4">                                       <span class="dt">varname =</span> variablenames,</a>
-<a class="sourceLine" id="cb4-5" title="5">                                       <span class="dt">plot =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb4-6" title="6">                                       <span class="dt">temporal.level =</span> <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>)) <span class="co"># can choose month or day too</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; `geom_smooth()` using formula = &#39;y ~ x&#39;</span></a></code></pre></div>
+<p>Autocorrelation is when explanatory variable data for species records
+taken closer in space and time are more similar to each other than to
+those of records more distantly sampled. When species distribution
+modelling with spatio-temporally dynamic explanatory variables, spatial
+and temporal autocorrelation can impact model performance.</p>
+<p>Run the code below to test for spatial and temporal autocorrelation
+in the extracted explanatory variable data using
+<code>spatiotemp_autocorr()</code>. This function can also generate a
+temporal autocorrelation plot for each variable.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>variablenames<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;eight_sum_prec&quot;</span>,<span class="st">&quot;year_sum_prec&quot;</span>,<span class="st">&quot;grass_crop_percentage&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>autocorrelation <span class="ot">&lt;-</span> <span class="fu">spatiotemp_autocorr</span>(sample_explan_data,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">varname =</span> variablenames,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">plot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">temporal.level =</span> <span class="fu">c</span>(<span class="st">&quot;year&quot;</span>)) <span class="co"># can choose month or day too</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `geom_smooth()` using formula = &#39;y ~ x&#39;</span></span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <pre><code>#&gt; `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAABI1BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrYzMzMzZv86AAA6ADo6AGY6OgA6Ojo6OmY6ZmY6ZpA6ZrY6kLY6kNtNTU1NTW5NTY5NbqtNjshmAABmADpmAGZmOgBmOmZmkJBmkNtmtrZmtttmtv9uTU1uTW5uTY5ubo5ubqtuq+SOTU2OTW6OTY6Obk2ObquOyP+QOgCQZgCQZjqQZmaQkDqQkGaQkLaQtpCQttuQ27aQ2/+rbk2rbm6rbo6rjk2r5OSr5P+2ZgC2kDq2tpC2ttu229u22/+2/9u2///Ijk3I///bkDrbkGbbtmbbtpDb27bb29vb/7bb/9vb///kq27k///r6+v/tmb/yI7/25D/27b/29v/5Kv//7b//8j//9v//+T////q+sx+AAAACXBIWXMAAA7DAAAOwwHHb6hkAAANWUlEQVR4nO2di58bNxHH5/IwdQK0wQfFIbTNFUgK9I5HSZuUErdwJDEplEviOpzj7P//V6DRYyXZ2p19S7bn98knZ8uzo9nv6uX1SoKMVSqIHUDqgtgBpC6IHUDqgtgBpC6IHUDqgtgBpC6IHUDqgtgBpC6IHUBrLX/5pNXx67PrFyXeoZXzFDS/0iegObRynoKSBLSAE/H/ajrJstd3AH58jonPfwhw9CHmOJrDlXMnhD+KD+6aUMTH2XI8eT4WtosxvOdGJzyKpGsPrRPHvfpg6/QAwAnD92z9KYtr59azDTcH5CcJQ/TeCNBqOkJMRw9FQCJAEC8Ea6kT4fjqGJyrIs9BfWABvSuOO3qAB488v5iO7rQT635hXgQB5Xa+Z+sPiXmenXBNrBtJbQBlMyzXs+sX6zMsGt+OR8LdFXkB8RVeUqvl+NaF/sACgrvZc3VmbgFfTWF0sf4ajBPXvTi3575jfVoiFGvne/b83UUEGLLybMPVEWwmYaCN2yCsY1jDRIk2QWbZf77501jG4rcKy/HVD/6hIrCARkhDvPVbAJkk8Ssn1r1+FRDm7dq5nq0/mS5eHT3Mw8vDtRF4Sa0AYR3DGrZQpRLyyraRo9QM098799sgU09nPiB5GnM8DUy37pfjExcKqJbHAHLtXM/Wnz5+YTyHwt1IagUILwqemo1MlOZ3//L376YBQNm3on0ELBXpAAqEu5nUDtACPsI+zMatXnmV2tW//yAqpWy5MOhiQCoyA9N1X17FPDsHkPHnVjHr2QvXJtlAmwNan/3oSPbGR5+LHlRFcIFdKbaCPqAF/ES0CF8L8xl8iK1lGSBhqxtVdWrGvWykl9MA+rnsmWwYPiDrzzbSCtBWuDbJBtpioCjGEk+yvBJMTGceAKQ/MRXy2p0yQFfHsjaa65q7169Osi3N8ePcbhOQ8ed28wr9Vrg2yQbaApAus9lStC9XxcVRA7HPZ6Z2uIRwoHgL0/4lhm//LW+DcIR3bodvuXscKB7dDQSyuiO68txuqw3S/pSna9ZzINw8yQaarRoDWoSuZlvpRjUlf9DwuNd3yr7BNNXeABKNX2hQ60iPKYJfD4pNv9gXQKI9u1VuceCADkgQO4DUBbEDSF0QO4DUBbEDSF0QO4DUBY2OelWsss86Nek5JwZEmDAgwoQBESbtAB2QoNFR0a7rcDkxIMKEAREm+wEIAPrKaS8AyZtIPeXEgAiTlAAFzpIBOQqdJrdBjloA6tGEAREmCQFq3gb1aZISoGYmDGgYNwyooQkDIkwYEGHCgAgTBkSYMCDChAERJgyIMKkA6O2j458+zrIXx8fHP3uWvfnk+P2XDMjV09Pse8FE/JG0TrMXP2dAjt787pkk8+Vj8+7y188YkNXlva+wiomqdXx8Kt69zN78Fln9QKi42O2doPCTy48llstfPcZShJVNAUJFu67D5VQB0D2L5Omp+44BSb351AXEbdC2nsoqhnXr7V+fvX10n3uxzSL0CY5/cByEwyEeB9VRtLCHy4kBESYMiDBhQIQJAyJMGBBhwoAIkyCgeT7HmAFtA1pN87UMyFmC0cIeLqctQKtfOCuSeG8YUH1FC3u4nBgQYcKACBMGRJhsAcK1ArToZeWihT1cToESVGO9vWhhD5dTAJC/EAsD2gZUXdHCHi6ndoAOSNDoqGjXdbicigDNK7VD0cIeLicGRJgwIMKEAREmIUCrqVqtkkfSrxgQabINaJ5/F6PX/YoW9nA5lZSgCooW9nA5hQBVV7Swh8tpCxDfk95I3ypBq6lZfHSnftUondfbdRWb7d7vYuUzw7kNYkCUzbCA1mcTtZL77gAauA0aZVklQg0y7NyEv2oM44YBNTQJAVI//MgtjRhQEJDaDYDmc7iAPOkJdfoJcn6QfEtqQp2eSccT6qTmACfmpqueUKdnsfBkFtTs+nfTEzMO0hPq9DwonlCXyW4ee3rdzesJdXomHU+o2wbkFR2eUIeaYxUz4yA9oY7bIFfeOEhNqNMz6XhC3bb0hDoeB+Vanx36rxrOvZMQoIP/2ce9+xYCVPGH+cMFZB50PdjbHWQJqqxBwx4wJ6INYkBuehDQvGAnSgak+fAdRZseAMT3pN10BlRuEgIk9//mKqbTgyWo6oSfaGEPl1OwBFVWtLCHy6kcED9AxYAoEwZEmDAgwoQBESbtAB2QIJjKJYirGGVSDohStLCHyykIaDk+7FuuXnoAUKUHXPcW0DsoJz0A6FB/9nnHkU0PlqBDBLTNRqUHAFW5VbZXgMJo9KEhQIfTSAdrlX9oABDORNj/ErTBpt4dxT1vg4KNcdGhwRK0z4CKGuOiQwOAsuXNfWmk9W/I2qSsualXxfbl4QXzFEIWrFWVvARLUGW1O7WBAJFsSr2kDYjagZdwQ3fitJcQoGSqWHie5WZa0I3PppfbHavbxJzwSIC2EgNuNotNvWA8/8WAsgX9IF61DBubNAAUrlK1gvEzKAMUvYoF26BCQCUtTj+AKiynWCnDrk0CbRDVGHcMSDfSZl0KvTVdojvUVeqo+mmDjNTWdEnuUFe1E++lFzPSW9OltkOdZdNvTkFAcj6UGQbprekS2qHOqVXDZQrum9kIn+Oc6xmHamu6JHaoC3ZUw5eglZqP6XbzeTsUbUJdcSceBRA+oBgEFKMNIjqq4QGtzyb4GOdMVTG9NV2sHerojipCI70cw8iOE/XWdMPvUFexE48AqLJ6C7vGfYqogGI83VH3PsUBAQp0VAzIKlinGBCqpLk5eEDFw7/KXvYWUFf3KfYRUPVO/PAAuWy6ObMoXzV6+m1+o9zsLKA+nu4I1amdBdTxygtd3aco+pk1Rgnq6JdVohPfPDxAIPM+DRPazS+r1AAnEFOIwJ4CqtiJ7y6gFg9x5mzqx0QASqgNWp9NRE9fpS/zXPmVqkFM5W1Q7VPrxiQECNHMJvUeXtiqVf2G3b2buoDmo+qPk6NkrdpngftmJulUGA1Fu67D5RQEhE+Sz8hNNdIBRD6pl1o33zKmeiavsvIdEVrmxIAIkzAgd7lkBrQNyFsuOX1Ar4YG5K8GvCOASgkxoGEB+cslM6BtQDu3bQR38/27YUANTUKAVtMK3zIOGZDcw4+3MtbpQUDqxv3O9GJ9mhQBUoiokVC0sIfLqQjQXO5kTM1niRb2cDkFAa3P9GLJ1GA6WtjD5RQCtJoe2NodZSbBElRZ0cIeLicGRJhUAOTPpEttQl0CgLyZdGlNqBsgJxqQP5MumQl1TdyUfelvDsifSZfChLqmkreNGh9c+Ik/k26Xd6grva/WshfLZ9Lt8g51/QIqb4PKH1ypGVM9k+htkD+TLjyhLnBtUgTUxKRCCfJn0gXHQYcNqETGCwMiAO1IG9TEpCNAQ4c9XE4MiDBhQIQJAyJMGBBhwoAIEwZEmDAgwoQBESYMiDBhQIQJAyJMGBBhwoAIk10ERK8G3GEw6QKSGEImm3fnUgbUo4p/xGr181ZjNcuxn4smpcrJrpegfmKSKgbEbZBSYRvUeU6lJukCqmrCgIZxw4AamjAgwoQBESYMiDBhQIRJO0Al6ubxvI4e8uvADbR34YsBEWJAhBjQgQliB5C6IHYAqQtiB5C6IHYAqQu6coTTgYKPDNdQyQSseqEUPr9cX9D8UF8vjk/DU6dqqGQCVk0337//srUbJWh+qKfL3/z+NDx1qrrKJmDVEB7YgRstaHykp7df/u1RYOpUPRVNwKqpy3tfYRVr60YLGh/p6cV9LMrBqVPVVTYBq46bjyXktm60oPGRXkz3ZJXv4qIVTMCqF4xzfBolCLuf4+P7XVT7gglYNfTmU4kkrTZI9T3BqVPVVTYBq46enqoi3dKNEjQ/1FdH46AuBjDiQDGaSm0ctK+C2AGkLogdQOqC2AGkLogdQOqC2AGkLogdQC/CbZxen2er2xWXPSwRtI8mQc1H2fKGgFNhgwdK0EE4yQlLjgRUfUOwQkEH8VSX3CVZXF5cTQ7XS5NbwUyy5c0/OysTysQTdYbiv+WNByJhgqn2bJc3PpNrYqojjTv8K3O4foHmky6KELQ8vp5wdT1xVeWi5+Is5CYw8ytPlmNnEXQFZnySAxqLk5wjjbkLEbGIioRHGnf4F13i5g7Kjf6/jaDl8fWE4S9vPpGrEIrX/8PLKxk4NUF8rv7mgE4kMO9szXv517gzn0vu6k31PeWKBC2PrylRvfCf2sdsohawPnroX+eZqie2ij20b4yNfGmYGHdm9UcHkCxMrQQtj6+p5c1/inbTbLwglx82DBytpqJJqQFIu9sHQOuzD0QNWuhlmWUTutgsQShz7oWAZBW7qSgad/tQxUR1kK2qICNOC89sOd4AJMuBSMG19ddnR0WAdCOtOnPlDhNkgz2bGDS71kjrSy/7Y7zsork5+sK2rkqqXVLd/Ue3i6rYZ7KlMhVJHWG6eVkyZzCqsa1loaDl8XVl+qi2bkpLRv4VY+cGiuKStm00lYiqM9fjqp37qiEHfUUfqc66dFn93OhBOSBdcvjL6gCC2AGkLogdQOqC2AGkLogdQOqC2AGkLogdQOr6Pye7HxjwKMMKAAAAAElFTkSuQmCC" /><!-- --></p>
@@ -449,41 +476,70 @@ autocorrelation
 </div>
 <div id="b-accounting-for-spatial-and-temporal-autocorrelation" class="section level3">
 <h3>b) Accounting for spatial and temporal autocorrelation</h3>
-<p>One approach to account for autocorrelation when species distribution modelling is to split records into sampling units based upon spatial and temporal factors, and then group units into separate blocks so that the mean and standard deviation of ecoclimatic variables are roughly equal across blocks. SDMs are then fitted in a jack-knife approach, leaving out each block in-turn to use as the test dataset.</p>
-<p><code>spatiotemp_block()</code> splits occurrence records into sampling units by spatial categories (e.g. ecoregions or biome) and temporal units (e.g. month or year of record), before blocking the data. As some spatial categories can be very large, the argument <code>spatial.split.degrees</code> can be used to split large contiguous regions into smaller units.</p>
-<p>In our case study, we use a raster of various biomes in southern Africa and split large biomes by 3 degree cells. The function returns the original data frame with an additional column containing the block numbers that each record belongs to.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">data</span>(<span class="st">&quot;sample_biome_data&quot;</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2"></a>
-<a class="sourceLine" id="cb9-3" title="3">sample_explan_data &lt;-<span class="st"> </span><span class="kw">spatiotemp_block</span>(sample_explan_data,</a>
-<a class="sourceLine" id="cb9-4" title="4">                                     <span class="dt">spatial.layer =</span> sample_biome_data,</a>
-<a class="sourceLine" id="cb9-5" title="5">                                     <span class="dt">spatial.split.degrees =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb9-6" title="6">                                     <span class="dt">vars.to.block.by =</span> variablenames,</a>
-<a class="sourceLine" id="cb9-7" title="7">                                     <span class="dt">temporal.block =</span> <span class="st">&quot;month&quot;</span>,</a>
-<a class="sourceLine" id="cb9-8" title="8">                                     <span class="dt">n.blocks =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb9-9" title="9">                                     <span class="dt">iterations =</span> <span class="dv">5000</span>)</a></code></pre></div>
+<p>One approach to account for autocorrelation when species distribution
+modelling is to split records into sampling units based upon spatial and
+temporal factors, and then group units into separate blocks so that the
+mean and standard deviation of ecoclimatic variables are roughly equal
+across blocks. SDMs are then fitted in a jack-knife approach, leaving
+out each block in-turn to use as the test dataset.</p>
+<p><code>spatiotemp_block()</code> splits occurrence records into
+sampling units by spatial categories (e.g. ecoregions or biome) and
+temporal units (e.g. month or year of record), before blocking the data.
+As some spatial categories can be very large, the argument
+<code>spatial.split.degrees</code> can be used to split large contiguous
+regions into smaller units.</p>
+<p>In our case study, we use a SpatRast of randomly simulated
+categorical data in southern Africa and split large contiguous units by
+3 degree cells. The function returns the original data frame with an
+additional column containing the block numbers that each record belongs
+to.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sample_extent_data&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>random_cat_layer <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(sample_extent_data)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>random_cat_layer <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">setValues</span>(random_cat_layer,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>, terra<span class="sc">::</span><span class="fu">ncell</span>(random_cat_layer),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>sample_explan_data <span class="ot">&lt;-</span> <span class="fu">spatiotemp_block</span>(sample_explan_data,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">spatial.layer =</span> random_cat_layer,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">spatial.split.degrees =</span> <span class="dv">3</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">vars.to.block.by =</span> variablenames,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">temporal.block =</span> <span class="st">&quot;month&quot;</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">n.blocks =</span> <span class="dv">3</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">iterations =</span> <span class="dv">5000</span>)</span></code></pre></div>
 </div>
 <div id="c-fit-species-distribution-models" class="section level3">
 <h3>c) Fit species distribution models</h3>
-<p>There are many SDM approaches to modelling the relationships between species occurrence and associated explanatory variables. <em>dynamicSDM</em> includes the function <code>brt_fit()</code> to fit boosted regression tree models to training and test data. There are arguments to specify the blocks to split data by (<code>block.col</code>, function returns a list of models the length of unique blocks) and to weight records by spatio-temporal sampling effort (<code>weights.col</code>, see the Stage 1 tutorial).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">sample_explan_data<span class="op">$</span>weights &lt;-<span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>sample_explan_data<span class="op">$</span>REL_SAMP_EFFORT)</a>
-<a class="sourceLine" id="cb10-2" title="2"></a>
-<a class="sourceLine" id="cb10-3" title="3">models &lt;-<span class="st"> </span><span class="kw">brt_fit</span>(sample_explan_data,</a>
-<a class="sourceLine" id="cb10-4" title="4">                  <span class="dt">response.col =</span> <span class="st">&quot;presence.absence&quot;</span>,</a>
-<a class="sourceLine" id="cb10-5" title="5">                  <span class="dt">varnames =</span> variablenames,</a>
-<a class="sourceLine" id="cb10-6" title="6">                  <span class="dt">block.col =</span> <span class="st">&quot;BLOCK.CATS&quot;</span>,</a>
-<a class="sourceLine" id="cb10-7" title="7">                  <span class="dt">weights.col =</span> <span class="st">&quot;weights&quot;</span>,</a>
-<a class="sourceLine" id="cb10-8" title="8">                  <span class="dt">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>,</a>
-<a class="sourceLine" id="cb10-9" title="9">                  <span class="dt">interaction.depth =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p>There are many SDM approaches to modelling the relationships between
+species occurrence and associated explanatory variables.
+<em>dynamicSDM</em> includes the function <code>brt_fit()</code> to fit
+boosted regression tree models to training and test data. There are
+arguments to specify the blocks to split data by
+(<code>block.col</code>, function returns a list of models the length of
+unique blocks) and to weight records by spatio-temporal sampling effort
+(<code>weights.col</code>, see the Stage 1 tutorial).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sample_explan_data<span class="sc">$</span>weights <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> sample_explan_data<span class="sc">$</span>REL_SAMP_EFFORT)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">brt_fit</span>(sample_explan_data,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">response.col =</span> <span class="st">&quot;presence.absence&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">varnames =</span> variablenames,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">block.col =</span> <span class="st">&quot;BLOCK.CATS&quot;</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weights.col =</span> <span class="st">&quot;weights&quot;</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">interaction.depth =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div id="note" class="section level5">
 <h5>Note:</h5>
-<p>If you want to use other modelling approaches, this data frame containing response and explanatory variable data can easily be input into SDM functions in other packages.</p>
+<p>If you want to use other modelling approaches, this data frame
+containing response and explanatory variable data can easily be input
+into SDM functions in other packages.</p>
 </div>
 </div>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<p>At the end of this vignette, we now have our fitted species distribution models for each spatio-temporal block. Let’s save this list of models to our project directory for use in the next tutorial!</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">saveRDS</span>(models, <span class="dt">file =</span> <span class="kw">paste0</span>(project_directory, <span class="st">&quot;/fitted_quelea_SDMs.rds&quot;</span>))</a></code></pre></div>
+<p>At the end of this vignette, we now have our fitted species
+distribution models for each spatio-temporal block. Let’s save this list
+of models to our project directory for use in the next tutorial!</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(models, <span class="at">file =</span> <span class="fu">paste0</span>(project_directory, <span class="st">&quot;/fitted_quelea_SDMs.rds&quot;</span>))</span></code></pre></div>
 </div>
 
 

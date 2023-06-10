@@ -73,7 +73,7 @@ test_that("Filters by spatial.ext but all within extent, numeric ", {
 })
 
 test_that("Filters by spatial.ext but all within extent, Extent ", {
-  Extent <- raster::extent(c(
+  Extent <- terra::ext(c(
       min(sample_explan_data$x)+1,
       max(sample_explan_data$x)-1,
       min(sample_explan_data$y)+1,
@@ -89,15 +89,21 @@ test_that("Filters by spatial.ext but all within extent, raster ", {
       min(sample_explan_data$y)+1,
       max(sample_explan_data$y)-1
     )
-  raster <- raster::raster(raster::extent(numeric))
+  raster <- terra::rast(terra::ext(numeric))
   results <- spatiotemp_extent(occ.data = sample_explan_data, spatial.ext = raster)
   expect_equal(nrow(results), 316)
 })
 
 test_that("Filters by spatial.ext polygon ", {
-  polygon <- sp::Polygon(cbind(c(12, 12, 36, 36), c(-35, -12, -35, -12)))
+  polygon <-  sf::st_polygon(list(cbind(c(20, 12, 36, 36,20), c(-35, -12, -35, -12,-35))))
   results <- spatiotemp_extent(occ.data = sample_explan_data, spatial.ext = polygon)
-  expect_equal(nrow(results), 327)
+  expect_equal(nrow(results), 224)
+})
+
+test_that("Filters by spatial.ext sf polygon ", {
+  polygon <- sample_extent_data$geometry
+  results <- spatiotemp_extent(occ.data = sample_explan_data, spatial.ext = polygon)
+  expect_equal(nrow(results), 328)
 })
 
 test_that("Filters by spatial.ext but not all within extent, numeric ", {
@@ -107,15 +113,15 @@ test_that("Filters by spatial.ext but not all within extent, numeric ", {
 })
 
 test_that("Filters by spatial.ext but not all within extent, Extent ", {
-  Extent <- raster::extent(c(24, 36, -35, -12))
+  Extent <- terra::ext(c(24, 36, -35, -12))
   results <- spatiotemp_extent(occ.data = sample_explan_data, spatial.ext = Extent)
   expect_equal(nrow(results), 280)
 })
 
 test_that("Filters by spatial.ext but not all within extent, raster ", {
   numeric <- c(24, 36, -35, -12)
-  raster <- raster::raster(raster::extent(numeric))
-  raster <- raster::setValues(raster, values = 1:raster::ncell(raster))
+  raster <- terra::rast(terra::ext(numeric))
+  raster <- terra::setValues(raster, values = 1:terra::ncell(raster))
   results <- spatiotemp_extent(occ.data = sample_explan_data, spatial.ext = raster)
   expect_equal(nrow(results), 280)
 })

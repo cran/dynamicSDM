@@ -18,7 +18,12 @@ dynamic_proj_covariates(
   prj = "+proj=longlat +datum=WGS84",
   cov.prj,
   save.directory,
-  save.drive.folder
+  save.drive.folder,
+  static.rasters,
+  static.varnames,
+  static.resample.method,
+  static.moving.window.matrix,
+  static.GEE.math.fun
 )
 }
 \arguments{
@@ -36,9 +41,9 @@ if \code{drive.folder} or \code{save.drive.folder} used.}
 \item{local.directory}{optional; a character string or vector, path to local directory or
 directories to read projection covariate rasters from.}
 
-\item{spatial.ext}{optional; the spatial extent to crop explanatory variable rasters to. Object of
-class \code{Extent}, \code{RasterLayer}, \code{sf}, \code{SpatialPolygonsDataFrame}, \code{polygon} or numeric vector
-listing xmin, xmax, ymin and ymax in order.}
+\item{spatial.ext}{optional; the spatial extent to crop explanatory variable
+rasters to. Object of class \code{SpatExtent}, \code{SpatRaster}, an \code{sf} polygon or
+numeric vector listing xmin, xmax, ymin and ymax in order.}
 
 \item{spatial.mask}{an object of class \code{Raster}, \code{sf} or \code{Spatial}, representing a mask in which
 NA cells in the mask layer are removed from the projection covariates.}
@@ -50,7 +55,7 @@ projection rasters to be resampled to. Required if \code{spatial.ext} given.}
 method to use. One of \code{ngb} and \code{bilinear}. See details for more information.}
 
 \item{cov.file.type}{a character string, the type of file to export projection covariates as. One
-of: \code{tif} (raster stack) or \code{csv}(data frame).}
+of: \code{tif} (SpatRaster with multiple layers) or \code{csv}(data frame).}
 
 \item{prj}{a character string, the coordinate reference system desired for projection covariates.
 Default is "+proj=longlat +datum=WGS84".}
@@ -63,6 +68,22 @@ covariates to.}
 
 \item{save.drive.folder}{optional; a character string, Google Drive folder to save projection
 covariates to. Folder must be uniquely named within Google Drive. Do not provide path.}
+
+\item{static.rasters}{a RasterStack of one or more rasters to be added to covariates for each date.}
+
+\item{static.varnames}{a character string or vector, the unique names for each
+explanatory variable in order of rasters in \code{static.raster} stack.}
+
+\item{static.resample.method}{a character string or vector length of \code{static.varnames}, specifying resampling
+method to use on static rasters provided. One of \code{ngb} and \code{bilinear}. See details for more information..}
+
+\item{static.moving.window.matrix}{optional; a matrix of weights with an odd number
+of sides, representing the spatial neighbourhood of cells (“moving
+window”) to calculate \code{GEE.math.fun} across from record co-ordinate. See
+details for more information.}
+
+\item{static.GEE.math.fun}{optional; a character string, the mathematical function to
+compute across the specified spatial matrix for each cell in \code{spatial.ext}}
 }
 \value{
 Exports combined covariates in "csv" or "tif" file for each projection date to the local
@@ -83,9 +104,10 @@ date and explanatory variable name, then the function will error.
 }
 
 \section{Processing rasters}{
-If required, rasters are cropped and resampled to the same spatial extent and resolution. If
-\code{spatial.mask} is given, then cells with NA in this mask layer are removed from the returned
-projection covariates. See \code{raster::mask()} in R package \code{raster} for details.
+If required, rasters are cropped and resampled to the same spatial extent and
+resolution. If \code{spatial.mask} is given, then cells with NA in this mask layer
+are removed from the returned projection covariates. See \code{terra::mask()} in R
+package \code{terra} for details (Hijmans et al., 2022).
 
 Rasters are then stacked and reprojected if \code{cov.prj} is different to \code{prj}.
 
@@ -117,6 +139,42 @@ If one of \code{drive.folder} or \code{save.drive.folder} are used then user.ema
 appropriate Google Drive user account. This requires users to have installed R package
 \code{googledrive} and initialised Google Drive with valid log-in credentials. Please follow
 instructions on \url{https://googledrive.tidyverse.org/}.
+}
+
+\section{Static rasters}{
+If static datasets are to be added into the dynamic projection covariates,
+then five arguments are available to specify their inclusion.
+
+Please provide the static rasters in RasterStack format, specifying any
+spatial buffering needed (using \code{static.moving.window.matrix} and
+\code{static.GEE.math.fun} as described below).
+
+The resample method or methods for rasters within the static raster stack need
+to be specified too using \code{static.resample.method}. Please also provide
+\code{static.varnames} to name the static variables in the covariate data exported.
+
+#' # Spatial buffering of static rasters (optional)
+
+Using the \code{focal} function from \code{terra} R package (Hijmans et al., 2022),
+\code{GEE.math.fun} is calculated across the spatial buffer area from the record
+co-ordinate. The spatial buffer area used is specified by the argument
+\code{moving.window.matrix}, which dictates the neighbourhood of cells
+surrounding the cell containing the occurrence record to include in this
+calculation.
+
+See function \code{get_moving_window()} to generate appropriate
+\code{moving.window.matrix}.
+}
+
+\section{Mathematical function}{
+\code{GEE.math.fun} specifies the mathematical function to be calculated over the
+spatial buffered area and temporal period. Options are limited to Google
+Earth Engine ImageCollection Reducer functions
+(\url{https://developers.google.com/earth-engine/apidocs/}) for which an
+analogous R function is available. This includes: "allNonZero","anyNonZero",
+"count", "first","firstNonNull", "last", "lastNonNull", "max","mean",
+"median","min", "mode","product", "sampleStdDev", "sampleVariance",
+"stdDev", "sum" and "variance".
 }
 
 \examples{
@@ -174,4 +232,8 @@ dynamic_proj_covariates(dates = projectiondates,
                        prj="+proj=longlat +datum=WGS84",
                        save.directory = tempdir())
 \dontshow{\}) # examplesIf}
+}
+\references{
+Hijmans, R.J., Bivand, R., Forner, K., Ooms, J., Pebesma, E. and Sumner, M.D.,
+2022. Package 'terra'. Maintainer: Vienna, Austria.
 }

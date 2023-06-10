@@ -28,10 +28,14 @@ autocorrelation <- spatiotemp_autocorr(sample_explan_data,
 autocorrelation
 
 ## ----example-spatiotemp_block-------------------------------------------------
-data("sample_biome_data")
+data("sample_extent_data")
+random_cat_layer <- terra::rast(sample_extent_data)
+random_cat_layer <- terra::setValues(random_cat_layer,
+                                     sample(0:10, terra::ncell(random_cat_layer),
+                                            replace = TRUE))
 
 sample_explan_data <- spatiotemp_block(sample_explan_data,
-                                     spatial.layer = sample_biome_data,
+                                     spatial.layer = random_cat_layer,
                                      spatial.split.degrees = 3,
                                      vars.to.block.by = variablenames,
                                      temporal.block = "month",

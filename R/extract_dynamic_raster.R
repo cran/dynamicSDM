@@ -4,7 +4,7 @@
 #'Earth Engine.
 #'@param dates a character string, vector of dates in format "YYYY-MM-DD".
 #'@param spatial.ext the spatial extent for the extracted raster. Object from which extent can be
-#'  extracted of class `Extent`, `RasterLayer`, `SpatialPolygonsDataFrame`, `sf` or `polygon` or
+#'  extracted of class `SpatExtent`, `SpatRaster`, an `sf` polygon or a
 #'  numeric vector listing xmin, xmax, ymin and ymax in order.
 #'@param datasetname a character string, the Google Earth Engine dataset to extract data from.
 #'@param bandname a character string, the Google Earth Engine dataset bandname to extract data for.
@@ -214,7 +214,8 @@ extract_dynamic_raster <- function(dates,
                                        "Extent",
                                        "RasterLayer",
                                        "Polygon",
-                                       "sf"))) {
+                                       "sf",
+                                       "SpatRaster"))) {
 
       stop("Please check the class of spatial.ext")
 
@@ -236,7 +237,6 @@ extract_dynamic_raster <- function(dates,
     if (inherits(spatial.ext, "numeric") && !length(spatial.ext) == 4) {
       stop("spatial.ext vector should be length 4: xmin, xmax, ymin and ymax")
     }
-
     xmin <- extract_xy_min_max(spatial.ext)[1]
     xmax <- extract_xy_min_max(spatial.ext)[2]
     ymin <- extract_xy_min_max(spatial.ext)[3]
@@ -331,9 +331,9 @@ extract_dynamic_raster <- function(dates,
 
         check_file <- paste0(varname, "_", firstdate, ".tif")
 
-        file_list <- file_list[grep(check_file, file_list)]
+        file_list_filt <- file_list[grep(check_file, file_list)]
 
-        if (!length(file_list) == 0) {
+        if (!length(file_list_filt) == 0) {
           next()
         }
         }

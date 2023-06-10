@@ -8,9 +8,9 @@
 #'  variable data.
 #'@param spatial.res.metres a numeric value, the spatial resolution in metres of explanatory
 #'  variable data.
-#'@param spatial.ext the spatial extent of the study. Object from which extent can be extracted of
-#'  class `Extent`, `RasterLayer`, `sf` or `polygon` or numeric vector listing xmin, xmax, ymin and
-#'  ymax in order.
+#'@param spatial.ext the spatial extent of the study. Object from which extent
+#'  can be extracted of class `SpatExtent`, `SpatRaster`, `sf` polygon or
+#'  numeric vector listing xmin, xmax, ymin and ymax in order.
 #'@details
 #'
 #'# Importance for other functions in `dynamicSDM` To extract spatially buffered explanatory
@@ -22,10 +22,13 @@
 #'variable would be calculated across the nine grid cells neighbouring the cell of interest and the
 #'cell of interest.
 #'
-#'# Why use a moving window matrix instead of circular buffer? The benefit of using a “moving
-#'window” over calculating explanatory variable values across a set radius from each record
-#'co-ordinate, is that when generating projection rasters at high spatial and temporal resolution,
-#'these can be generated much faster as the “moving windows” standardise the calculation.
+#'# Why use a moving window matrix instead of circular buffer?
+#'
+#'The benefit of using a “moving window” over calculating explanatory
+#'variable values across a set radius from each record co-ordinate, is that when
+#'generating projection rasters at high spatial and temporal resolution, these
+#'can be generated much faster as the “moving windows” standardise the
+#'calculation.
 #'
 #'# Function calculation
 #'
@@ -72,27 +75,33 @@ get_moving_window <-  function(radial.distance,
         stop("spatial.ext is missing. Required when spatial.res given in degrees.")
       }
 
-
-    # Check spatial.ext is valid
-      if (!any(class(spatial.ext) %in% c("numeric", "Extent","sf", "RasterLayer", "Polygon"))) {
-        stop("spatial.ext must be of class numeric, Extent, sf, RasterLayer or Polygon")
-      }
-
-      if (any(class(spatial.ext) == "numeric") && !length(spatial.ext) == 4) {
+         if (any(class(spatial.ext) == "numeric") && !length(spatial.ext) == 4) {
         stop("spatial.ext numeric vector should be of length four c(xmin, xmax, ymin and ymax)")
       }
 
+
+    if("RasterLayer" %in% class(spatial.ext)){
+      spatial.ext <- terra::rast(spatial.ext)
+    }
+
+    if("SpatRaster" %in% class(spatial.ext)){
+      spatial.ext <- terra::as.polygons(spatial.ext)
+    }
+
       # Create raster of same resolution and extent to extract average cell area size for region
-      rast_area <- raster::rasterToPoints(raster::area(
-        raster::raster(ext = raster::extent(
-              extract_xy_min_max(spatial.ext)[1],
-              extract_xy_min_max(spatial.ext)[2],
-              extract_xy_min_max(spatial.ext)[3],
-              extract_xy_min_max(spatial.ext)[4]),
-              resolution = spatial.res.degrees)))
+      rast_area <- terra::cellSize(
+        terra::rast(extent = terra::ext(
+          extract_xy_min_max(spatial.ext)[1],
+          extract_xy_min_max(spatial.ext)[2],
+          extract_xy_min_max(spatial.ext)[3],
+          extract_xy_min_max(spatial.ext)[4]),
+          resolution = spatial.res.degrees),
+        unit="km")
+
+      rast_area <- terra::as.data.frame(rast_area)
 
       # Convert mean km2 to m2
-      meancellarea <- (mean(rast_area[, 3], na.rm = TRUE)) * 1000000
+      meancellarea <- (mean(rast_area$area, na.rm = TRUE)) * 1000000
 
     }
 

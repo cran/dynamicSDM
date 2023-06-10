@@ -209,10 +209,10 @@ dynamic_proj(dates = projectiondates,
 Let’s read in and plot our projections!
 
 ```{r plot projections, eval = FALSE}
-sp::plot(raster::raster(list.files(projection_directories)[1]))
-sp::plot(raster::raster(list.files(projection_directories)[2]))
-sp::plot(raster::raster(list.files(projection_directories)[3]))
-sp::plot(raster::raster(list.files(projection_directories)[4]))
+terra::plot(terra::rast(list.files(projection_directories)[1]))
+terra::plot(terra::rast(list.files(projection_directories)[2]))
+terra::plot(terra::rast(list.files(projection_directories)[3]))
+terra::plot(terra::rast(list.files(projection_directories)[4]))
 ```
 
 
@@ -255,7 +255,7 @@ apply these functions to your own study species!
 + We have demonstrated a variety of options across our functions, but even more are available with
 the diverse and flexible arguments. Please see our package manual for full details of each
 *dynamicSDM* function [manual](
-https://github.com/r-a-dobson/dynamicSDM/blob/main/man/figures/dynamicSDM_1.2.pdf).
+https://github.com/r-a-dobson/dynamicSDM/blob/main/man/figures/dynamicSDM_1.3.pdf).
 
 + Also, please visit the GitHub discussion page for *dynamicSDM* if you have any questions or are
 facing errors with any of our functions

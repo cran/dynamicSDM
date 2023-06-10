@@ -9,9 +9,9 @@
 #'@param temporal.ext optional; a character vector, two dates in format "YYYY-MM-DD". First date
 #'  represents start of temporal extent and second date represents end of temporal extent for
 #'  inclusion.
-#'@param spatial.ext the spatial extent to filter by. Object from which extent can be extracted of
-#'  class `Extent`, `RasterLayer`, `SpatialPolygonsDataFrame`,`sf` or `polygon` or numeric vector
-#'  listing xmin, xmax, ymin and ymax in order.
+#'@param spatial.ext the spatial extent to filter by. Object from which extent
+#'  can be extracted of class `SpatExtent`, `SpatRaster`, `sf` polygon or
+#'  numeric vector listing xmin, xmax, ymin and ymax in order.
 #'@param prj a character string, the coordinate reference system of input `occ.data` co-ordinates.
 #'  Default is "+proj=longlat +datum=WGS84".
 #'@details
@@ -23,10 +23,9 @@
 #'outside of this extent.
 #'
 #'
-#'If `spatial.ext` object can be used as a mask by `raster::mask()` then the mask is used to filter
-#'records in a more targetted way. If not, then the rectangular extent of the `spatial.ext` object
-#'is used. If an `sf` polygon object is provided, this is first transformed into a `Spatial` object
-#'for use by `raster::mask()`.
+#'If `spatial.ext` object can be used as a mask by `terra::mask()` then the mask is used to filter
+#'records in a more targeted way. If not, then the rectangular extent of the `spatial.ext` object
+#'is used.
 #'
 #'# Temporal extent
 #'
@@ -100,50 +99,63 @@ spatiotemp_extent <- function(occ.data,
   if (!missing(spatial.ext)) {
 
     if (any(class(spatial.ext) == "numeric") && length(spatial.ext) == 4) {
-      spatial.ext <- raster::extent(spatial.ext)
+      spatial.ext <- terra::ext(spatial.ext)
     }
 
     # Create spatial points dataframe from occurrence records
-    points <- sp::SpatialPointsDataFrame(coords = occ.data[,c("x","y")],
-                                       data = occ.data,
-                                       proj4string = sp::CRS(prj))
+
+    points <-  terra::vect(occ.data[, c("x", "y")],
+                           geom = c("x", "y"),
+                           crs = prj)
+
     r <- spatial.ext
 
     # Convert sf object to Spatial object that can be tranformed into raster
     if("sf" %in% class(spatial.ext)){
-      spatial.ext <- sf::as_Spatial(spatial.ext)}
-
+      spatial.ext <- terra::vect(spatial.ext)
+     }
 
     # Convert polygon object to Extent object that can be transformed into raster
     if ("Polygon" %in% class(spatial.ext)) {
-      xmin <- sp::bbox(spatial.ext)[1, 1]
-      xmax <- sp::bbox(spatial.ext)[1, 2]
-      ymin <- sp::bbox(spatial.ext)[2, 1]
-      ymax <- sp::bbox(spatial.ext)[2, 2]
-      r<-raster::extent(xmin,xmax,ymin,ymax)}
-
+      stop("Please provide sf polygon as spatial.ext object.")
+    }
 
     if("RasterLayer" %in% class(spatial.ext)){
-      spatial.ext <- raster::rasterToPolygons(spatial.ext)}
+      spatial.ext <- terra::rast(spatial.ext)
+    }
+
+    if (inherits(spatial.ext, "XY")) {
+      spatial.ext <- spatial.ext %>%
+        sf::st_sfc(crs = prj)
+      spatial.ext <- sf::st_set_crs(spatial.ext, prj)
+    }
+
+    if(inherits(spatial.ext, "sfc_POLYGON")){
+      spatial.ext <- terra::vect(spatial.ext)
+      r <- terra::ext(spatial.ext)
+    }
+
+    if(inherits(spatial.ext, "sfc_MULTIPOLYGON")){
+      spatial.ext <- terra::vect(spatial.ext)
+      r <- terra::ext(spatial.ext)
+    }
 
 
     # Convert spatial.ext to raster in same projection
-    r <- raster::raster(r)
-    raster::crs(r) <- prj
-    raster::res(r) <- 0.05 # High resolution for precise clipping
-    r <- raster::setValues(r, values = 1:raster::ncell(r)) # Set fake raster values - not important
-
+    r <- terra::rast(r)
+    terra::crs(r) <- prj
+    terra::res(r) <- 0.05# High resolution for precise clipping
+    r <- terra::setValues(r, values = 1:terra::ncell(r)) # Set fake raster values - not important
 
     # Mask to original spatial.ext, if fails keep original. Depending on spatial.ext type.
     tryCatch({
-      r <- raster::mask(r, spatial.ext)
+      r <- terra::mask(r, spatial.ext)
     }, error = function(error_message) {
       r <- r
       message("spatial.ext could not be used as a mask.")})
 
-
     # Remove points that return NA as these do not overlap the spatial extent
-    occ.data<-occ.data[!is.na(raster::extract(r,points)),]
+    occ.data <- occ.data[!is.na(terra::extract(r, points, ID = FALSE)),]
 
   }
 

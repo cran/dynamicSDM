@@ -22,7 +22,7 @@ column names as follows; record longitude as "x", latitude as "y", year as "year
 \item{vars.to.block.by}{a character string or vector, the explanatory variable column names to
 group sampling units based upon.}
 
-\item{spatial.layer}{optional; a \code{RasterLayer} object, a categorical spatial layer for sample
+\item{spatial.layer}{optional; a \code{SpatRaster} object, a categorical spatial layer for sample
 unit splitting.}
 
 \item{spatial.split.degrees}{a numeric value, the grid cell resolution in degrees to split
@@ -88,10 +88,15 @@ variables (\code{vars.to.block.by}) and total sample size are similar across eac
 \examples{
 \donttest{
 data("sample_explan_data")
-data("sample_biome_data")
+data("sample_extent_data")
+random_cat_layer <- terra::rast(sample_extent_data)
+random_cat_layer <- terra::setValues(random_cat_layer,
+                                    sample(0:10, terra::ncell(random_cat_layer),
+                                           replace = TRUE))
+
 spatiotemp_block(
  occ.data = sample_explan_data,
- spatial.layer = sample_biome_data,
+ spatial.layer = random_cat_layer,
  spatial.split.degrees = 3,
  temporal.block = c("month"),
  vars.to.block.by = colnames(sample_explan_data)[14:16],

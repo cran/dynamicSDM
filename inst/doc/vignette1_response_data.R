@@ -10,6 +10,7 @@ knitr::opts_chunk$set(
 ## ----install package CRAN-----------------------------------------------------
 #install.packages("dynamicSDM")
 library(dynamicSDM)
+library(terra)
 
 ## ----check Google, eval=FALSE-------------------------------------------------
 #  library(rgee)
@@ -19,10 +20,6 @@ library(dynamicSDM)
 #  library(googledrive)
 #  #googledrive::drive_auth_configure()
 #  googledrive::drive_user()
-
-## ----install sp---------------------------------------------------------------
-#install.packages("sp")
-library(sp)
 
 ## ----create directory---------------------------------------------------------
 project_directory <- file.path(file.path(tempdir(), "dynamicSDM_vignette"))
@@ -59,24 +56,25 @@ data("sample_extent_data")
 
 sample_occ_cropped <- spatiotemp_extent(occ.data = sample_occ_filtered,
                                                temporal.ext = c("2001-01-01", "2018-12-01"),
-                                               spatial.ext = raster::extent(sample_extent_data),
+                                               spatial.ext = terra::ext(sample_extent_data),
                                                prj = "+proj=longlat +datum=WGS84 +no_defs")
 
-## Lets plot the change
-plot(sample_extent_data$geometry)
-plot(SpatialPointsDataFrame(coords = sample_occ_filtered[, c("x", "y")], 
-                            proj4string = sp::CRS("+proj=longlat +datum=WGS84 +no_defs"),
-                            data = sample_occ_filtered), add = T)
 
-plot(sample_extent_data$geometry)
-plot(SpatialPointsDataFrame(coords = sample_occ_cropped[, c("x", "y")], 
-                            proj4string = sp::CRS("+proj=longlat +datum=WGS84 +no_defs"),
-                            data = sample_occ_cropped), add = T)
+## Lets plot the change
+#terra::plot(sample_extent_data$geometry)
+terra::plot(terra::vect(sample_occ_filtered[, c("x", "y")],
+                        geom = c("x", "y"),
+                        crs = "+proj=longlat +datum=WGS84 +no_defs"))
+
+#terra::plot(sample_extent_data$geometry)
+terra::plot(terra::vect(sample_occ_cropped[, c("x", "y")],
+                        geom = c("x", "y"),
+                        crs = "+proj=longlat +datum=WGS84 +no_defs"))
 
 ## ----example-spatiotemp_resolution--------------------------------------------
 sample_occ_cropped<-spatiotemp_resolution(occ.data = sample_occ_cropped,
-                                             spatial.res = 4,
-                                             temporal.res = "day")
+                                          spatial.res = 4,
+                                          temporal.res = "day")
 
 nrow(sample_occ_cropped) # Even more records have been removed!
 
@@ -101,21 +99,21 @@ occ_thin <- spatiotemp_thin(occ.data = sample_occ_cropped,
                                    temporal.method = "day",
                                    temporal.dist = 30,
                                    spatial.split.degrees = 3,
-                                   spatial.dist = 30000,
+                                   spatial.dist = 100000,
                                    iterations = 5)
 
 # Plot the difference in spatial distribution after thinning
 # Non-thinned
-plot(sample_extent_data$geometry)
-sp::plot(sp::SpatialPointsDataFrame(coords = sample_occ_cropped[, c("x", "y")],
-                                    proj4string = sp::CRS("+proj=longlat +datum=WGS84 +no_defs"),
-                                    data = sample_occ_cropped), add = T)
+terra::plot(sample_extent_data$geometry)
+terra::plot(terra::vect(sample_occ_cropped[, c("x", "y")],
+                        geom = c("x", "y"),
+                        crs = "+proj=longlat +datum=WGS84 +no_defs"),add=T)
 
 # Thinned
-plot(sample_extent_data$geometry)
-sp::plot(sp::SpatialPointsDataFrame(coords = occ_thin[, c("x", "y")],
-                                    proj4string = sp::CRS("+proj=longlat +datum=WGS84 +no_defs"),
-                                    data = occ_thin), add = T)
+terra::plot(sample_extent_data$geometry)
+terra::plot(terra::vect(occ_thin[, c("x", "y")],
+                        geom = c("x", "y"),
+                        crs = "+proj=longlat +datum=WGS84 +no_defs"),add=T)
 
 ## ----example-spatiotemp_weights-----------------------------------------------
 data("sample_events_data")
@@ -145,22 +143,22 @@ pseudo_abs_rand <- spatiotemp_pseudoabs(occ.data = sample_occ_cropped,
 
 # Plot the spatial distribution of pseudo-absences (red) compared to occurrence records for:
 # Buffered
-plot(sample_extent_data$geometry)
-sp::plot(sp::SpatialPointsDataFrame(coords = sample_occ_cropped[, c("x", "y")],
-                                    proj4string = sp::CRS("+proj=longlat +datum=WGS84 +no_defs"),
-                                    data = sample_occ_cropped), col = "black",add = T)
-sp::plot(sp::SpatialPointsDataFrame(coords = pseudo_abs_buff[, c("x", "y")],
-                                    proj4string = sp::CRS("+proj=longlat +datum=WGS84 +no_defs"),
-                                    data = pseudo_abs_buff), col = "red",add = T)
+terra::plot(sample_extent_data$geometry)
+terra::plot(terra::vect(sample_occ_cropped[, c("x", "y")],
+                        geom = c("x", "y"),
+                        crs = "+proj=longlat +datum=WGS84 +no_defs"),col = "black",add=T)
+terra::plot(terra::vect(pseudo_abs_buff[, c("x", "y")],
+                        geom = c("x", "y"),
+                        crs = "+proj=longlat +datum=WGS84 +no_defs"),col = "red", add=T)
 
 # Random
-plot(sample_extent_data$geometry)
-sp::plot(sp::SpatialPointsDataFrame(coords = sample_occ_cropped[, c("x", "y")],
-                                    proj4string = sp::CRS("+proj=longlat +datum=WGS84 +no_defs"),
-                                    data = sample_occ_cropped), col = "black",add = T)
-sp::plot(sp::SpatialPointsDataFrame(coords = pseudo_abs_rand[, c("x", "y")],
-                                    proj4string = sp::CRS("+proj=longlat +datum=WGS84 +no_defs"),
-                                    data = pseudo_abs_rand), col = "red",add = T)
+terra::plot(sample_extent_data$geometry)
+terra::plot(terra::vect(sample_occ_cropped[, c("x", "y")],
+                        geom = c("x", "y"),
+                        crs = "+proj=longlat +datum=WGS84 +no_defs"),col = "black",add=T)
+terra::plot(terra::vect(pseudo_abs_rand[, c("x", "y")],
+                        geom = c("x", "y"),
+                        crs = "+proj=longlat +datum=WGS84 +no_defs"),col = "red", add=T)
 
 ## ----complete_dataset,eval=F--------------------------------------------------
 #  pseudo_abs_buff$decimalLatitude <- pseudo_abs_buff$y

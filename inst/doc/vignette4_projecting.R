@@ -130,10 +130,10 @@ projectiondates <- dynamic_proj_dates(startdate = "2018-01-01",
 #               save.directory = projection_directories)
 
 ## ----plot projections, eval = FALSE-------------------------------------------
-#  sp::plot(raster::raster(list.files(projection_directories)[1]))
-#  sp::plot(raster::raster(list.files(projection_directories)[2]))
-#  sp::plot(raster::raster(list.files(projection_directories)[3]))
-#  sp::plot(raster::raster(list.files(projection_directories)[4]))
+#  terra::plot(terra::rast(list.files(projection_directories)[1]))
+#  terra::plot(terra::rast(list.files(projection_directories)[2]))
+#  terra::plot(terra::rast(list.files(projection_directories)[3]))
+#  terra::plot(terra::rast(list.files(projection_directories)[4]))
 
 ## ----example-dynamic_proj_GIF, eval = FALSE-----------------------------------
 #  
