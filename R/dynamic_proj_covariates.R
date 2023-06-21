@@ -11,7 +11,7 @@
 #'@param spatial.res.degrees optional; a numeric value, the spatial resolution in degrees for
 #'  projection rasters to be resampled to. Required if `spatial.ext` given.
 #'@param resample.method a character string or vector length of varnames, specifying resampling
-#'  method to use. One of `ngb` and `bilinear`. See details for more information.
+#'  method to use. One of `near` and `bilinear`. See details for more information.
 #'@param drive.folder optional; a character string or vector, Google Drive folder or folders to read
 #'  projection covariate rasters from. Folder must be uniquely named within Google Drive. Do not
 #'  provide path.
@@ -35,7 +35,7 @@
 #'@param static.varnames a character string or vector, the unique names for each
 #'  explanatory variable in order of rasters in `static.raster` stack.
 #'@param static.resample.method a character string or vector length of `static.varnames`, specifying resampling
-#'  method to use on static rasters provided. One of `ngb` and `bilinear`. See details for more information..
+#'  method to use on static rasters provided. One of `near` and `bilinear`. See details for more information..
 #'@param static.moving.window.matrix optional; a matrix of weights with an odd number
 #'  of sides, representing the spatial neighbourhood of cells (“moving
 #'  window”) to calculate `GEE.math.fun` across from record co-ordinate. See
@@ -64,7 +64,7 @@
 #'Note: if explanatory variable rasters are not of the same spatial resolution and extent, then the
 #'function will error. Resample methods (`resample.method`) include:
 #'
-#'* `ngb`:  Each cell acquires the value of its nearest neighbour cell in the original raster. This
+#'* `near`:  Each cell acquires the value of its nearest neighbour cell in the original raster. This
 #'is typically used for categorical variables.
 #'
 #'* `bilinear`: the distance-weighted average of the four nearest cells are used to estimate a new
@@ -231,6 +231,19 @@ dynamic_proj_covariates <- function(dates,
     if (length(resample.method) != 1 &&
         length(resample.method) != length(varnames)) {
       stop("resample.method must be of length(1) or length(varnames).")
+    }
+  }
+
+  if (!missing(resample.method)) {
+    if (length(resample.method) == 1) {
+      resample.method <- rep(resample.method, length(varnames))
+    }
+  }
+
+  if (!missing(static.resample.method)) {
+    if (length(static.resample.method) == 1) {
+      static.resample.method <-
+        rep(static.resample.method, length(static.varnames))
     }
   }
 
@@ -485,17 +498,20 @@ dynamic_proj_covariates <- function(dates,
     stack <- vector("list",length(varnames)) # Empty stack to bind rasters for this date to
     start <- 1
     end <- length(varnames)
+    varnames_name <- varnames
+    resample.method_name <- resample.method
 
     if (!missing(static.rasters)) {
       stack <- static.raster.stack
       start <- length(static.varnames)+1
       end <-  length(static.varnames) + length(varnames)
-      varnames <- c(static.varnames,varnames)
+      varnames_name <- c(static.varnames,varnames)
+      resample.method_name <- c(static.resample.method, resample.method)
     }
 
     for (v in start:end) {
 
-      name <- varnames[v]
+      name <- varnames_name[v]
 
       # Read in raster for this variable and date from Google Drive
 
@@ -520,6 +536,7 @@ dynamic_proj_covariates <- function(dates,
       if (!missing(local.directory)) {
         fileimport <- directoryfiles[grep(name, directoryfiles)]
         fileimport <- fileimport[grep(date, fileimport)] # Select files
+        fileimport <- fileimport[!grepl("unprocessed", fileimport)] # Select files
         raster <- terra::rast(fileimport) # Read raster from local dir
         terra::crs(raster) <- prj # Check that projection is set
       }
@@ -552,13 +569,13 @@ dynamic_proj_covariates <- function(dates,
           })}
 
         # Resample raster using single method given
-        if (length(resample.method) == 1) {
-          raster <- terra::resample(raster, r, method = resample.method)
+        if (length(resample.method_name) == 1) {
+          raster <- terra::resample(raster, r, method = resample.method_name)
         }
 
         # Resample raster using variable specific method given
-        if (!length(resample.method) == 1) {
-          raster <- terra::resample(raster, r, method = resample.method[v])
+        if (!length(resample.method_name) == 1) {
+          raster <- terra::resample(raster, r, method = resample.method_name[v])
         }
 
         if(!missing(spatial.mask)) {
@@ -581,7 +598,7 @@ dynamic_proj_covariates <- function(dates,
 
     stack <- terra::rast(stack)
 
-    names(stack) <- varnames # Label each layer in stack as variable
+    names(stack) <- varnames_name # Label each layer in stack as variable
 
     if (!prj == cov.prj) {
       stack <- terra::project(stack, cov.prj)
