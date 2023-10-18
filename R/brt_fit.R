@@ -77,14 +77,9 @@
 #' @examples
 #'
 #'data("sample_explan_data")
-#'
-#'sample_explan_data$weights<-1-sample_explan_data$REL_SAMP_EFFORT
-#'
 #'\dontshow{
-#'sample_filt_data<-sample_explan_data[1:100,]
+#'sample_filt_data<-sample_explan_data[1:65,]
 #'}
-#'
-#'
 #'split <- sample(c(TRUE, FALSE),
 #'                replace=TRUE,
 #'                nrow(sample_explan_data),
@@ -92,12 +87,12 @@
 #'
 #'training <- sample_explan_data[split, ]
 #'testing <- sample_explan_data[!split, ]
+#'
 #'brt_fit(
 #'  occ.data = training,
 #'  test.data = testing,
 #'  response.col = "presence.absence",
 #'  distribution = "bernoulli",
-#'  weights.col = "weights",
 #'  varnames = colnames(training)[14:16],
 #'  interaction.depth = 2
 #')

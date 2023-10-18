@@ -298,3 +298,4 @@ test_that("Success if projection.method = tif and spatial mask multi used", {
   expect_equal(file.exists(paste0(save.directory, "/", filenames[1])), TRUE)
 })
 
+
