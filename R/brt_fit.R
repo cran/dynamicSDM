@@ -153,14 +153,6 @@ brt_fit <- function(occ.data,
   # Create formula using response and explanatory variables specified
     formula <- stats::formula(paste(response.col, paste(varnames, collapse = " + "), sep = " ~ "))
 
-    # Set response variable as correct class for "bernoulli" distribution
-    if (distribution == "bernoulli") {
-      if (!is.character(occ.data[, response.col])) {
-        occ.data[, response.col] <- as.character(occ.data[, response.col])
-      }
-    }
-
-
     # Remove rows that contain NA where applicable.
     occ.data <- occ.data[!is.na(occ.data[, response.col]), ]
     for (v in 1:length(varnames)) {

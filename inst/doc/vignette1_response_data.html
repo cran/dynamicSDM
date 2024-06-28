@@ -14,38 +14,26 @@
 
 <title>dynamicSDM: Response variable data</title>
 
-<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
-// be compatible with the behavior of Pandoc < 2.8).
-document.addEventListener('DOMContentLoaded', function(e) {
-  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
-  var i, h, a;
-  for (i = 0; i < hs.length; i++) {
-    h = hs[i];
-    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
-    a = h.attributes;
-    while (a.length > 0) h.removeAttribute(a[0].name);
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
-});
-</script>
-
-<style type="text/css">
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-</style>
-
-
-
-<style type="text/css">
-code {
-white-space: pre;
-}
-.sourceCode {
-overflow: visible;
-}
+  .sourceCode {
+    overflow: visible;
+  }
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -63,54 +51,55 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-{ counter-reset: source-line 0; }
+  { counter-reset: source-line 0; }
 pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
+  { position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-color: #aaaaaa;
-}
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-{ }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } 
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.at { color: #7d9029; } 
-code span.bn { color: #40a070; } 
-code span.bu { color: #008000; } 
-code span.cf { color: #007020; font-weight: bold; } 
-code span.ch { color: #4070a0; } 
-code span.cn { color: #880000; } 
-code span.co { color: #60a0b0; font-style: italic; } 
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.do { color: #ba2121; font-style: italic; } 
-code span.dt { color: #902000; } 
-code span.dv { color: #40a070; } 
-code span.er { color: #ff0000; font-weight: bold; } 
-code span.ex { } 
-code span.fl { color: #40a070; } 
-code span.fu { color: #06287e; } 
-code span.im { color: #008000; font-weight: bold; } 
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.kw { color: #007020; font-weight: bold; } 
-code span.op { color: #666666; } 
-code span.ot { color: #007020; } 
-code span.pp { color: #bc7a00; } 
-code span.sc { color: #4070a0; } 
-code span.ss { color: #bb6688; } 
-code span.st { color: #4070a0; } 
-code span.va { color: #19177c; } 
-code span.vs { color: #4070a0; } 
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -144,187 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 
 
 
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
-}
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
-}
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
-
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; } 
-code > span.er { color: #a61717; background-color: #e3d2d2; } 
-</style>
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
 
 
 
@@ -342,38 +151,25 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p><em>dynamicSDM</em> offers novel tools for developing species
-geographical distribution and abundance modelling (SDM) at high
-spatiotemporal resolution. Across the dynamicSDM vignettes, we
-demonstrate package functions on a case study species and guide users
-through the four key species distribution modelling stages:</p>
+<p><em>dynamicSDM</em> offers novel tools for developing species geographical distribution and abundance modelling (SDM) at high spatiotemporal resolution. Across the dynamicSDM vignettes, we demonstrate package functions on a case study species and guide users through the four key species distribution modelling stages:</p>
 <ul>
-<li>Stage 1: Organising response variable data including species
-occurrence and pseudo-absence records</li>
-<li>Stage 2: Extracting spatio-temporally buffered explanatory
-variables</li>
-<li>Stage 3: Fitting SDMs whilst accounting for spatial and temporal
-autocorrelation</li>
-<li>Stage 4: Projecting intra- and inter-annual geographical
-distributions and abundances at high spatiotemporal resolution.</li>
+<li>Stage 1: Organising response variable data including species occurrence and pseudo-absence records</li>
+<li>Stage 2: Extracting spatio-temporally buffered explanatory variables</li>
+<li>Stage 3: Fitting SDMs whilst accounting for spatial and temporal autocorrelation</li>
+<li>Stage 4: Projecting intra- and inter-annual geographical distributions and abundances at high spatiotemporal resolution.</li>
 </ul>
 </div>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
-<p>Before starting this tutorial, the <em>dynamicSDM</em> package needs
-to be installed. You can install the latest version from <a href="https://github.com/r-a-dobson/dynamicSDM">GitHub</a> with:</p>
+<p>Before starting this tutorial, the <em>dynamicSDM</em> package needs to be installed. You can install the latest version from <a href="https://github.com/r-a-dobson/dynamicSDM">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&#39;r-a-dobson/dynamicSDM&#39;)</span></span></code></pre></div>
 <p>or from <a href="https://CRAN.R-project.org/package=dynamicSDM">CRAN</a> with</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;dynamicSDM&quot;)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dynamicSDM)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; terra 1.7.3</span></span></code></pre></div>
-<p>Due to the utilisation of Google Earth Engine and Google Drive across
-<em>dynamicSDM</em> functions, you must also set up a free Google
-account at <a href="https://www.google.com/account/about/">Google</a>.
-Once you have your Google log-in details, these can be used to authorise
-Google Earth Engine in the <code>rgee</code> package and Google Drive in
-the <code>googledrive</code> package.</p>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;terra&#39; was built under R version 4.3.2</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; terra 1.7.55</span></span></code></pre></div>
+<p>Due to the utilisation of Google Earth Engine and Google Drive across <em>dynamicSDM</em> functions, you must also set up a free Google account at <a href="https://www.google.com/account/about/">Google</a>. Once you have your Google log-in details, these can be used to authorise Google Earth Engine in the <code>rgee</code> package and Google Drive in the <code>googledrive</code> package.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgee)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#rgee::ee_install()</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>rgee<span class="sc">::</span><span class="fu">ee_check</span>()</span>
@@ -384,61 +180,31 @@ the <code>googledrive</code> package.</p>
 </div>
 <div id="directory-organisation" class="section level2">
 <h2>Directory organisation</h2>
-<p>As we continue through the species distribution modelling framework,
-functions will generate a range of outputs. To keep organised, we
-recommend a structured directory system. The code below will create a
-new project directory in your temporary folders, but you can edit the
-script to specify your home directory if you want to retain function
-outputs between R sessions.</p>
+<p>As we continue through the species distribution modelling framework, functions will generate a range of outputs. To keep organised, we recommend a structured directory system. The code below will create a new project directory in your temporary folders, but you can edit the script to specify your home directory if you want to retain function outputs between R sessions.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>project_directory <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;dynamicSDM_vignette&quot;</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(project_directory)</span></code></pre></div>
 </div>
 <div id="case-study-the-red-billed-quelea" class="section level2">
 <h2>Case study: the red-billed quelea</h2>
-<p>In this four stage tutorial, we will be studying the case study
-species, the red-billed quelea (Quelea quelea), a nomadic bird
-inhabiting sub-Saharan Africa. With highly variable distributions driven
-by short-term weather and resource availability, <em>dynamicSDM</em>
-provides key functions to accurately model quelea’s distribution through
-space and time.</p>
+<p>In this four stage tutorial, we will be studying the case study species, the red-billed quelea (Quelea quelea), a nomadic bird inhabiting sub-Saharan Africa. With highly variable distributions driven by short-term weather and resource availability, <em>dynamicSDM</em> provides key functions to accurately model quelea’s distribution through space and time.</p>
 </div>
 <div id="stage-1-response-variable-data" class="section level2">
 <h2>Stage 1: Response variable data</h2>
-<p>In this tutorial, we will be processing a sample of species
-occurrence records for the red-billed quelea (Quelea quelea) to generate
-an SDM response variable data frame. This will involve filtering records
-by spatio-temporal quality, extent and resolution; testing and
-accounting for spatio-temporal biases in records, and generating
-pseudo-absences through space and time.</p>
+<p>In this tutorial, we will be processing a sample of species occurrence records for the red-billed quelea (Quelea quelea) to generate an SDM response variable data frame. This will involve filtering records by spatio-temporal quality, extent and resolution; testing and accounting for spatio-temporal biases in records, and generating pseudo-absences through space and time.</p>
 <div id="a-import-occurrence-records" class="section level3">
 <h3>a) Import occurrence records</h3>
-<p>A sample of red-billed quelea occurrence data can be loaded into your
-local R environment using the code below.</p>
+<p>A sample of red-billed quelea occurrence data can be loaded into your local R environment using the code below.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sample_occ_data&quot;</span>)</span></code></pre></div>
-<p>These records are formatted as exported from the Global Biodiversity
-Information Facility, with columns labelled “decimalLongitude” and
-“decimalLatitude”. For <em>dynamicSDM</em> functions, occurrence data
-must be in a specific format; containing numeric data in columns
-labelled “x” and “y” for the record co-ordinates longitude and latitude,
-and “day”, “month” and “year” for the record’s date.</p>
-<p><code>convert_gbif()</code> can be used to convert between these
-formats, or this can be achieved manually for data not extracted from
-GBIF.</p>
+<p>These records are formatted as exported from the Global Biodiversity Information Facility, with columns labelled “decimalLongitude” and “decimalLatitude”. For <em>dynamicSDM</em> functions, occurrence data must be in a specific format; containing numeric data in columns labelled “x” and “y” for the record co-ordinates longitude and latitude, and “day”, “month” and “year” for the record’s date.</p>
+<p><code>convert_gbif()</code> can be used to convert between these formats, or this can be achieved manually for data not extracted from GBIF.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sample_occ <span class="ot">&lt;-</span> <span class="fu">convert_gbif</span>(sample_occ_data)</span></code></pre></div>
 </div>
 <div id="b-filter-occurrence-records" class="section level3">
 <h3>b) Filter occurrence records</h3>
 <div id="validity-and-completeness" class="section level4">
 <h4>Validity and completeness</h4>
-<p>Species occurrence records may contain anomalous or missing values in
-the co-ordinates or dates given. <code>spatiotemp_check()</code> can be
-used to exclude records with missing (NA) values (argument
-<code>na.handle</code>), invalid co-ordinates
-(<code>coord.handle</code>), invalid dates (<code>date.handle</code>)
-and duplicate records (<code>duplicate.handle</code>).</p>
-<p>Here, we specify <code>date.res = &quot;day&quot;</code> to check all date
-columns from year to day. If you only want to check the year of record
-dates, then you could specify <code>date.res = &quot;year&quot;</code>.</p>
+<p>Species occurrence records may contain anomalous or missing values in the co-ordinates or dates given. <code>spatiotemp_check()</code> can be used to exclude records with missing (NA) values (argument <code>na.handle</code>), invalid co-ordinates (<code>coord.handle</code>), invalid dates (<code>date.handle</code>) and duplicate records (<code>duplicate.handle</code>).</p>
+<p>Here, we specify <code>date.res = &quot;day&quot;</code> to check all date columns from year to day. If you only want to check the year of record dates, then you could specify <code>date.res = &quot;year&quot;</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sample_occ_filtered <span class="ot">&lt;-</span> <span class="fu">spatiotemp_check</span>(<span class="at">occ.data =</span> sample_occ,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">na.handle =</span> <span class="st">&quot;exclude&quot;</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">date.handle =</span> <span class="st">&quot;exclude&quot;</span>,</span>
@@ -452,11 +218,7 @@ dates, then you could specify <code>date.res = &quot;year&quot;</code>.</p>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; any records with invalid dates excluded</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(sample_occ_filtered)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 311</span></span></code></pre></div>
-<p>Additionally, users can opt to take advantage of the
-<code>CoordinateCleaner</code> package functions to exclude records
-flagged as containing potentially anomalous co-ordinates, based on a
-wider variety of spatial tests than <em>dynamicSDM</em> alone
-offers.</p>
+<p>Additionally, users can opt to take advantage of the <code>CoordinateCleaner</code> package functions to exclude records flagged as containing potentially anomalous co-ordinates, based on a wider variety of spatial tests than <em>dynamicSDM</em> alone offers.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sample_occ_filtered <span class="ot">&lt;-</span> <span class="fu">spatiotemp_check</span>(<span class="at">occ.data =</span> sample_occ,</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">na.handle =</span> <span class="st">&quot;exclude&quot;</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">date.handle =</span> <span class="st">&quot;exclude&quot;</span>,</span>
@@ -469,17 +231,8 @@ offers.</p>
 </div>
 <div id="spatiotemporal-extent" class="section level4">
 <h4>Spatiotemporal extent</h4>
-<p>When generating dynamic species distribution models, it is important
-that occurrence records match the spatio-temporal extent of the study
-and any remote-sensing datasets to be utilised as explanatory variables.
-<code>spatiotemporal_extent()</code> removes any records outside of the
-set extents.</p>
-<p>In this case study, we want to model the subspecies Q. q. lathamii
-which is typically limited to southern Africa and we will incorporate
-remote sensing datasets available for the years 2001 to 2019. To filter
-records to these extents, we use a polygon of southern African
-countries, which can be read into your R environment and applied using
-the following code.</p>
+<p>When generating dynamic species distribution models, it is important that occurrence records match the spatio-temporal extent of the study and any remote-sensing datasets to be utilised as explanatory variables. <code>spatiotemporal_extent()</code> removes any records outside of the set extents.</p>
+<p>In this case study, we want to model the subspecies Q. q. lathamii which is typically limited to southern Africa and we will incorporate remote sensing datasets available for the years 2001 to 2019. To filter records to these extents, we use a polygon of southern African countries, which can be read into your R environment and applied using the following code.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sample_extent_data&quot;</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sample_occ_cropped <span class="ot">&lt;-</span> <span class="fu">spatiotemp_extent</span>(<span class="at">occ.data =</span> sample_occ_filtered,</span>
@@ -494,23 +247,18 @@ the following code.</p>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(terra<span class="sc">::</span><span class="fu">vect</span>(sample_occ_filtered[, <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>),</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>))</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#terra::plot(sample_extent_data$geometry)</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(terra<span class="sc">::</span><span class="fu">vect</span>(sample_occ_cropped[, <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>),</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>))</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="spatiotemporal-resolution" class="section level4">
 <h4>Spatiotemporal resolution</h4>
-<p>The spatial resolution of occurrence record co-ordinates and the
-temporal resolution of occurrence record dates are also important when
-generating dynamic SDMs. <code>spatiotemp_resolution()</code> can filter
-records by set thresholds.</p>
-<p>As quelea migrations are driven by highly local and short-term
-environmental factors, we will filter to exclude records not given to
-the specific day and co-ordinates to four decimal places.</p>
+<p>The spatial resolution of occurrence record co-ordinates and the temporal resolution of occurrence record dates are also important when generating dynamic SDMs. <code>spatiotemp_resolution()</code> can filter records by set thresholds.</p>
+<p>As quelea migrations are driven by highly local and short-term environmental factors, we will filter to exclude records not given to the specific day and co-ordinates to four decimal places.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sample_occ_cropped<span class="ot">&lt;-</span><span class="fu">spatiotemp_resolution</span>(<span class="at">occ.data =</span> sample_occ_cropped,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">spatial.res =</span> <span class="dv">4</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">temporal.res =</span> <span class="st">&quot;day&quot;</span>)</span>
@@ -521,12 +269,7 @@ the specific day and co-ordinates to four decimal places.</p>
 </div>
 <div id="c-test-for-spatial-and-temporal-sampling-biases" class="section level3">
 <h3>c) Test for spatial and temporal sampling biases</h3>
-<p>For many reasons, the collection of species occurrence records are
-biased through space and time. These biases can impact SDM performance
-by over- or under- representing conditions at a given site or time.
-<code>spatiotemp_bias()</code> returns the results of statistical tests
-and plots for visual assessment of such biases. The code below tests for
-bias across the entire dataset and species range.</p>
+<p>For many reasons, the collection of species occurrence records are biased through space and time. These biases can impact SDM performance by over- or under- representing conditions at a given site or time. <code>spatiotemp_bias()</code> returns the results of statistical tests and plots for visual assessment of such biases. The code below tests for bias across the entire dataset and species range.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>bias_results <span class="ot">&lt;-</span> <span class="fu">spatiotemp_bias</span>(<span class="at">occ.data =</span> sample_occ_cropped,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">temporal.level =</span> <span class="fu">c</span>(<span class="st">&quot;year&quot;</span>),</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot =</span> <span class="cn">FALSE</span>,</span>
@@ -546,139 +289,124 @@ bias across the entire dataset and species range.</p>
 <span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  min.nndist.actual and min.nndist.random</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = -6.7987, df = 245.85, p-value = 7.948e-11</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = -6.7945, df = 262.91, p-value = 7.243e-11</span></span>
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></span>
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -70264.54 -38697.24</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -73309.46 -40366.60</span></span>
 <span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
 <span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x mean of y </span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  45486.12  99967.01</span></span></code></pre></div>
-<p>Whereas, this code will test for bias across only the core of the
-species range.</p>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  45486.12 102324.15</span></span></code></pre></div>
+<p>Whereas, this code will test for bias across only the core of the species range.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bias_results <span class="ot">&lt;-</span> <span class="fu">spatiotemp_bias</span>(<span class="at">occ.data =</span> sample_occ_cropped,</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">temporal.level =</span> <span class="fu">c</span>(<span class="st">&quot;year&quot;</span>),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">spatial.method =</span> <span class="st">&quot;core&quot;</span>,</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">prj =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>bias_results</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Temporal_bias_year</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Chi-squared test for given probabilities</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  occ.data.frequency</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 50.451, df = 15, p-value = 1.016e-05</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: [mask] CRS do not match</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>bias_results</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Temporal_bias_year</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Chi-squared test for given probabilities</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  occ.data.frequency</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 50.451, df = 15, p-value = 1.016e-05</span></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Spatial_bias</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  min.nndist.actual and min.nndist.random</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = -0.79308, df = 189.12, p-value = 0.4287</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -20174.209   8603.924</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x mean of y </span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  45486.12  51271.26</span></span></code></pre></div>
-<p>Both approaches can generate important results. The latter may be a
-more reliable indicator if the species range is expanding or shifting in
-response to global change. This is because records at the range
-periphery that have been collected randomly may still not be evenly
-distributed through space and time due to underlying ecological
-processes. Therefore, testing for biases on the species range core may
-be more representative of true spatial and temporal sampling biases.</p>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Spatial_bias</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  min.nndist.actual and min.nndist.random</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = -0.14508, df = 190.95, p-value = 0.8848</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -15509.24  13384.01</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x mean of y </span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  45486.12  46548.73</span></span></code></pre></div>
+<p>Both approaches can generate important results. The latter may be a more reliable indicator if the species range is expanding or shifting in response to global change. This is because records at the range periphery that have been collected randomly may still not be evenly distributed through space and time due to underlying ecological processes. Therefore, testing for biases on the species range core may be more representative of true spatial and temporal sampling biases.</p>
 </div>
 <div id="d-account-for-spatial-and-temporal-sampling-biases" class="section level3">
 <h3>d) Account for spatial and temporal sampling biases</h3>
 <div id="occurrence-record-thinning" class="section level4">
 <h4>Occurrence record thinning</h4>
-<p>One approach to correct spatio-temporal sampling biases are to “thin”
-records, which involves excluding records that have been collected too
-closely in space or time. <code>spatiotemp_thin()</code> allows users to
-specify the spatial and temporal distance to thin records by. An
-important argument of <code>spatiotemp_thin()</code> is
-<code>spatial.split.degrees</code> which specifies the size of grid
-cells to split occurrence records into before temporal thinning. This
-prevents spatially distant but temporally close records from being
-filtered out.</p>
+<p>One approach to correct spatio-temporal sampling biases are to “thin” records, which involves excluding records that have been collected too closely in space or time. <code>spatiotemp_thin()</code> allows users to specify the spatial and temporal distance to thin records by. An important argument of <code>spatiotemp_thin()</code> is <code>spatial.split.degrees</code> which specifies the size of grid cells to split occurrence records into before temporal thinning. This prevents spatially distant but temporally close records from being filtered out.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>occ_thin <span class="ot">&lt;-</span> <span class="fu">spatiotemp_thin</span>(<span class="at">occ.data =</span> sample_occ_cropped,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">temporal.method =</span> <span class="st">&quot;day&quot;</span>,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">temporal.dist =</span> <span class="dv">30</span>,</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">spatial.split.degrees =</span> <span class="dv">3</span>,</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">spatial.dist =</span> <span class="dv">100000</span>,</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">iterations =</span> <span class="dv">5</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Wed Oct 18 06:45:02 2023</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 </span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 48&quot;</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Wed Oct 18 06:45:02 2023</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 </span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 48&quot;</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Wed Oct 18 06:45:02 2023</span></span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 47 </span></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 47&quot;</span></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Wed Oct 18 06:45:02 2023</span></span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 46 </span></span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 46&quot;</span></span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
-<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Wed Oct 18 06:45:02 2023</span></span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 </span></span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 48&quot;</span></span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the difference in spatial distribution after thinning</span></span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-thinned</span></span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(sample_extent_data<span class="sc">$</span>geometry)</span>
-<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(terra<span class="sc">::</span><span class="fu">vect</span>(sample_occ_cropped[, <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>                        <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>),</span>
-<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>                        <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),<span class="at">add=</span>T)</span></code></pre></div>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAMAAACTGUWNAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAALPklEQVR4nO2d27aiOhQF8f9/ukdvRRLIZZELtcBZD+e4NYGZlCQQ1F5eAmWhA/w6EgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwEgAjATASACMBMBIAIwEwvICFj0CCt35xkIGEbvz//f/0MUC3/dcPALr1P9//dPMlQAJg6OYveAIYuvnLT58CvXgBb5YEdKaLwNuZ62w82EXQ7czunw52FXQ78/unk10E3sxfPwTwZkoAzY8bcNDKXITkudHjzk8dNMd6CHxOWB0kHomH5hgPgc+fD7tQ89AO2yGQ1nF7XLTDdAhIwDxqh0Bq7HcRfAAu2lG8HH4P94cx30XwAbhoRyFEdrJ1EXwAPtrRkuJcHbdnTj4yzRWwdb1DBT4SNaQ40f/RH94cuIgz9QA4FPTlwEWWawW8XA1FHpI0ZbBWypRzo8BDDkKAm4XV+2Yw1ipdY3iQQO//D+YQ+Hw0u2XfA6H3/wd1CHgw4ELAVAM1AXAXSIAE/GfiLFAsxRt4vIByIbOAaf3kRMC8i+GKAONt/nlnq78t4L1GXd3OzA9jeBEwbUF0gICpE8WtBVi+TmAQUCvTms/ErQUEj9oFlMoEZiWgXDt7IFQvAzJldlt7/CTcKyC7GaOAvbx9NQkwVj6YMAl4d/5nQkgeSRJgrbx+jOiUgLB6dQ9jeZyA19dBfbuGIuk9DOQZAlK17YeABLy6c5TOY94De6GaBLwmHADhK9mr3RPXWA+/DphwAMSvJEucmAMeLqA3RaF+qZMl4ENTCOsvS+SHmVOrDBLQWqkuAJ2FPQhoy2CulVtNTlw+j9jdSRwIaIxgr5YZoySgL0F3cgnoSzDwzMnyAcXHCmgO0C1gyf81YXdXb3d+gP7k5TsAw3d37XbnB+hcvDjcDP5RAe3776gZ3C0IZ4JJu6uEmbTd+ftvPXvdjfbW2+4SMKBm7gcaTWtCk3rqhwRUPzskAXNrVtesJWBuzT4BD50DOnZ/vmrXECQB/VVzNUzL0hLQWzW/4GMRMK2fWAE9ez9Vt/ghaAmYXXf9hHnt87vVaXoCvyBgVzL362f1G8szuK+AkzeFC08s1c1N7CVUQOeCprFYYsxJfBYd6v87C7BVz868u6VoZPyZvfHZOzfUN/Zr8YaYBLTXN/dr4QRobhfxAnp+i7tWq3txYf7vCcFnQb3fQuxZwKzu8ZJfc/JzGhonMX7wcz2FtP5LWGHBStMv+i0tPwIKfV65RFq/FVb5ouNaqPC6bZdDcSSgWDB/NhncYI8kJI+JWoHa7sZzEwGJuXr9+/vk7ujpEHBlp9xGwFpj383vx8uRfPXazi/tk7sJiGpvXf/9u3ZGa5gDru0SVkDb7qOOTh0Qtq1KQG3/2XFkXyoa+a0GfPS/ZwHZnjyuLw8UcHWH0AKKizANAsz/VEZUI3i2XnMsuIB0gu/0aqsR96Gx/8NJZH2yXnE0vIDgluz3h07KJ5OdSzzrvg4CkL5wJGB/Rm+chM++HO4sesR0hWcBtQptL297ix9BPeFAwPaphG3kL47jtcxNlwFURzgScPixq1r59gLHUlg/eBIwrny8ZmfYDNcNHgScDRGdclaK5GcTHwfAvQUU5uqlWsTHAeBbQO06oHSytNSKSEBAffE+Wbp4tvp+zXY1JwHpZ2sCamdMpZOqpfDXlfgQkF0Qsn7a4cRWky9JQPrZlrUgW8H9Sz99HfCfMznsy232bUjA6LJnl5N+eSnijxNB7AIsF8Hn9z+UhwuwTyI/L+BEkhO3XJIOmu4yzMKPAEuU2p2CROm//1v2IwHpe71Rf59LG971Cp7Klj618VF4EnA8N9y/48+u2m39v61LZJfvJGC4gHUr3/+XDbRsvJvHC4i/DSkBRY7nK70C4s8LSUCF1PVRl4Bw/g4w7/0CnAvoOgt6JUYfCSiRHoJKBeybe29KAoqMFbBf8s98l69t48N4roDsLYYTC0QX4FvA/pZM64rdZzPfQci280twLuBsgXTJT6dXZmHmUvg3BTg6BB4qIHn5KwE1Rgj4nOxET6xdXjSgOeBVT1NPe+zf8O+CAKojHipgfwREryUEQGvRr+cKiA3ELx36n+v+2wmod1XYx3FfL2kDhm3OxJeAWpzcvwscb2FZ9n29LIff81iL0x1A739HVYBplNp19ZLiXZhvPp8g4ryA/YCyPVnm5aL7byhgV2T3Tt76NNPtYf8PzN2OjxQb5TyHftv3d/hS8m0fPBqauxknMb7UBcTLDMciiZPOcNTfVoYGJe7ESYyNYqC9gGT/Z6bdrYanEchLjI0TApIrOtkpN9y6BOSxCzgM+a9q/4cCfJwE3VjArmeDoeeoYb/xJfoLxUWIEKuA/Vs7O/anBLwvjUdHb8JHipBSoqDvC0dAQcCStEfiI0VIXcD6R2YOSIxAS3BD5vvAR9N9pAgxC8iXyh0FsYABWQfgJEZIIZIx7dbNr6OA70EyIOoAnMQIGSbg8zCYB7YXJKBAPlNtrS4xwCyfFaBDSScGfKSIaRRwHOqjjo96XAKKZEMVJ+jyXBt3uQSUyV2pptLG5/bL4amtWPZ4IHESY897tewQLrf69n2wLVMknooHocGJW/GSY8+SXLEsCXgtx+FGAtqJV57DJ3dPJUaWrIDilhjcBNmTmAYyn6k9zq3bqX88CRw27wA3QQ4c38KGOuF50PJ3xZuZucfl7MRPkj2797Up6F5AcBjFB8rIoH04irKnJdr3jR9JW2KJrtrsKkxMW7TQQLCp8CphTLxB+EoTY1v5OT4bjjzro2BeHphwAM7iRJSzZSaG1Bs9mBbcNdhbnoj62lv+6f05vwQ00CLg+LGrcKnIX3vdBYqoGbBUjdaH/DXXX6KQnnTrG3/YBufgL1FEr4Hl+JQzHEYK6Yq3+H//+8wU0mlg4MYm4TFTxMCALtvqMlTIqYDGEyNPuAwVYU4YL8B1bOhSfKaKMEZcKgKcttRprJAxArw21GuuEFvGogBPt2Bi3AYLMC5LFwQ4bqXjaF/My9LZ9bnxmYbhOduK/b7A/frfd7gPTTdmrNVpfKf7ozaBRv1/lOG8hc7jvc5fCt9gAS7Ee74mAYEE9+1zH9AYcb0T/+Xz7MRcY/Cf0BRx+yxE8A3iG3T/LQRYMkZj/zoOzcw0jDukPCvA0ReQ6twhp3EMSj52zx2i2q8D3l8JmJ1nKHdIm1/i36bb7yc/79CgkDvkrX8z5nWvcT/kFpmPywuJFQcJmEkYM/uRUAmYSLDmXytxL24Uevn+50ncqUE3HWTKPK9FN0MCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQARgJgJABGAmAkAEYCYCQA5h8F4DSver48EQAAAABJRU5ErkJggg==" /><!-- --></p>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;18  of  142 removed by temporal&quot;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Fri Jun 28 14:50:48 2024</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 47 </span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 47&quot;</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;19  of  142 removed by temporal&quot;</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Fri Jun 28 14:50:48 2024</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 47 </span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 47&quot;</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;18  of  142 removed by temporal&quot;</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Fri Jun 28 14:50:48 2024</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 </span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 48&quot;</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;18  of  142 removed by temporal&quot;</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Fri Jun 28 14:50:48 2024</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 47 </span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 47&quot;</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;19  of  142 removed by temporal&quot;</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ********************************************** </span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Beginning Spatial Thinning.</span></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Script Started at: Fri Jun 28 14:50:49 2024</span></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lat.long.thin.count</span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 45 </span></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 </span></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Maximum number of records after thinning: 45&quot;</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Number of data.frames with max records: 1&quot;</span></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No files written for this run.&quot;</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the difference in spatial distribution after thinning</span></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-thinned</span></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(sample_extent_data<span class="sc">$</span>geometry)</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(terra<span class="sc">::</span><span class="fu">vect</span>(sample_occ_cropped[, <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>                        <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>),</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>                        <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),<span class="at">add=</span>T)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Thinned</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(sample_extent_data<span class="sc">$</span>geometry)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(terra<span class="sc">::</span><span class="fu">vect</span>(occ_thin[, <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>),</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),<span class="at">add=</span>T)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="weight-records-by-sampling-effort" class="section level4">
 <h4>Weight records by sampling effort</h4>
-<p>Another approach to account for spatio-temporal sampling biases is to
-weight records by sampling effort when fitting SDMs.This results in the
-downweighting of the importance of records from over-sampled regions and
-vice versa.</p>
-<p>Here, we will read in a sample of e-Bird avian sampling records in
-southern Africa to use as a proxy for sampling effort, and sum these
-across a spatial and temporal buffer from each occurrence record using
-<code>spatiotemp_weights()</code>.</p>
+<p>Another approach to account for spatio-temporal sampling biases is to weight records by sampling effort when fitting SDMs.This results in the downweighting of the importance of records from over-sampled regions and vice versa.</p>
+<p>Here, we will read in a sample of e-Bird avian sampling records in southern Africa to use as a proxy for sampling effort, and sum these across a spatial and temporal buffer from each occurrence record using <code>spatiotemp_weights()</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sample_events_data&quot;</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sample_occ_cropped <span class="ot">&lt;-</span> <span class="fu">spatiotemp_weights</span>(<span class="at">occ.data =</span> sample_occ_cropped,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">samp.events =</span> sample_events_data,</span>
@@ -690,16 +418,7 @@ across a spatial and temporal buffer from each occurrence record using
 </div>
 <div id="e-generate-pseudo-absences-through-space-and-time" class="section level3">
 <h3>e) Generate pseudo-absences through space and time</h3>
-<p>Often the paucity of species absence records necessitates the
-generation of pseudo-absences, which are inferred absences based upon
-presence records. When modelling a species distribution at high
-spatiotemporal resolution, it may be best to generate pseudo-absences
-within close spatial and temporal buffers of species occurrence. This is
-because model presence-absence comparisons are made at fine scales,
-instead of coarsely between biomes and seasons. Using
-<code>spatiotemp_pseudoabs()</code> you can specify the spatial and
-temporal buffer size or extents to randomly generate pseudo-absences
-within.</p>
+<p>Often the paucity of species absence records necessitates the generation of pseudo-absences, which are inferred absences based upon presence records. When modelling a species distribution at high spatiotemporal resolution, it may be best to generate pseudo-absences within close spatial and temporal buffers of species occurrence. This is because model presence-absence comparisons are made at fine scales, instead of coarsely between biomes and seasons. Using <code>spatiotemp_pseudoabs()</code> you can specify the spatial and temporal buffer size or extents to randomly generate pseudo-absences within.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudo-absences generated within spatial and temporal buffer</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>pseudo_abs_buff <span class="ot">&lt;-</span> <span class="fu">spatiotemp_pseudoabs</span>(<span class="at">occ.data =</span> sample_occ_cropped,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">spatial.method =</span> <span class="st">&quot;buffer&quot;</span>,</span>
@@ -726,7 +445,7 @@ within.</p>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(terra<span class="sc">::</span><span class="fu">vect</span>(pseudo_abs_buff[, <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>),</span>
 <span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>                        <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),<span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">add=</span>T)</span></code></pre></div>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAMAAACTGUWNAAAACVBMVEUAAAD/AAD///9nGWQeAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAMnUlEQVR4nO2d2YKjIBBF0f//6Jl0RIu9RPEW8Z6HmV5AizoBFEzarQSKQwfwdigADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFACGAsBQABgKAEMBYCgADAWAoQAwFAAGL8DhQ0ACb70zEAMSdOM/5391H0C3/e0dAN361+cf3XwKoAAw6OY7eARg0M13r74EWvECvrgM6JgeAt7OUrLhgT0Eup3F86MDewp0O8vnR0f2EPBmvr0LwJtJAWhebsBAK0shZK+Nfu761EBztF1gu2A1EPGdWGiOsgts3/7YjZqFdui6QF7H9Jhoh6oLUMA4Wl0gN/abCPwGTLSjejv8He6TMd9E4Ddgoh2VIIqTrYnAb8BGO3qiOFfH7JWTjZjGCjhSb1CBjYg6ojiR/+Abaw5MhDO0AyQFbTkwEcuzAlZTQ5GFSLpi0FYqlDOjwEIcCAFmFlbnjUFZq3aPYUEC+vx/YLrA9mh2z7lvBH3+P1BdwIIBEwKGGmgJAKeAAijgw8BZoFoKb+DnBdQLqQUMy5MRAeNuhhsClNv8465W3y3gu0bdPM7IhzGsCBi2IHqDgKETxdQCNG8nUAholemNT8XUAsRX/QJqZYRZCqjXLnaE5m1AoUx0tJ+fhK8KKB5GKSCWF1ejAGXlxIRKgFuWxUvI9yQK0Fb2jxGdErAsfwbW8gU/BZyoHMysCgFuPQToznAjvyEgV1vfBShgvRxH7TrmO7BXqv3/t5V/Cuit/b2LLd0nnLjH+vH7gAEdIPxNtoRimlCc4ho2BFyNolK/lmQK2OgKQvvJEuVh5tQqAwX0VmoLgO7IWBDQF4O6Vmk1OXP7fMfpTmJAQGcI+mqFMYoCrkVwOXIKuBbBjVdOmgcUf1ZAdwCXBbjydwNO9/RxxwdwPfL6DsDtp3v2uOMDuLh4kWwGv1RA//kv1BS7BXImGHS6RjCDjjv+/L1Xr9For912p4AbapY+oFG1JjQoUy8S0Hx2iALG1myuWVPA2JrXBPzoHHDh9Oer7jXiDUgKeKaqrxFvwauWpSngatXjCqhHwLA8YQVcOfupusF9rxewP4ylOCQFXKnrnzD3u5d7/r8GFALGpekNAqKSfiiKBbQ3lkdgWMBdD6sl5fICEDPw2ENfPHnrccHmw2z+JOlZtiWJ/QiuEcvIJFkXUExz+3HO+jkCL64ay9AcWRQg5shympUClHmtboi9TYC4SmwJaCpQ57VyATQ2RXgByaNtS2wgX1lj4PLiwvjPEwJfBeW2Q2IBxdpNBR3Lm/J4j3yak53L0MiAc87/XxmpNgPqv4QlC+aqCKMPfZaWHQHiaVufhNobt478L/5dYY03OvpCld+Le4OnEmNIQLVgUnKRPWArE0jI9olWgb1HaQO7zCQC0rk66gDbYCXKdAn4dronkzKNAF9DjlP/k7WldJ8uGu8YaAroi+oCswkQfF/8wkb7zRrBLFy8R74S1Glm3JAJEi27Q+amouPcrxJQv1WtvrlUlBIXTq7451m1Z344I4YFFDOZri/LqfeigKcTghZQXYTpEKD+Uxl7nwlvzh7PB1xAPgLnKi/l7AK//FqZf3/LdXQfQDbwAsSW7P5BJ/WLyY4lnrRURgAkF4YEfDMhcq+bhM/+eiuUCsCkwrKAVoW+X/tS8RwAyoQBAcdTCcfIXx3HWzF33QagEmFIQPJhV63y/QXSUrA8WBJwX3lRouwzvxnxNBYEnA0iuORsFKmsy12I4EamFlCZq12ziI0OYFtA6z4gya7Y0XWFItmTvl1AIYpS8ooC5P7YtlOjuJv7lDwd8W1MLSDuIkLAd4MgLZIeZC+JwYaA4oKQ9mmHLzkBzRNSwIdiF9AX/hCMQGcEvPs+4MOZOFRl/W59+xiP78OXAoFyu4Czy0lvXor440QgegGam+Dz57+VuQRsO++q4/k11czToy7z9o7XC9BE4p9b0x1PPGAaZttl313w4uXojXYo/ukf1eG2wktiwK0UkCe4NPz+JBzIM2kr8xUQPUDqD5cT8NodsQMfTPSYVXDTqjjMEr3FaX+CVBwuPRIFNAXoOsD+gl++7/FbjqOtyfFyZ3+W6QS0DIRDfjQD/B1tE1P+yIhHMSkgmgNCAQ0DUcaPb/yGczgy5c7+KDYFiB/Fc4BOwHHAyCUF1MgsEIS3syd7QLDnkgjgHJCQBBMvJ7hm/uWoH+76umgMap/9ESYToDjInt+osBPv5ct6pIB7BHgFlV0254tVT/4MtgXEWzLK1YpkiNkO4weh7M0wBSiCaRYoXN98k77Pw/5WILbUEfJlfkpA8QIzEiAKiYKcA64KKFzh73dzhVsBcdMAYEoB2YuYJZ9WeTcdCBBrRbqTj8GUgGY0++VLaqCU/8wbyMRl6FGWO2IfxgpwgqAabC16fYOANc3/Ii6Clr/PO7irAeeZTEBpN2WNDRy3vbJyMgcfx0RhS0ArnNLfBf4QZD8abfY7sEQANvvrfAKKJcKsBgJchFR1ewvOgo8g4LyA7UWeDCtlshMFjOkEREX8/JpkNZ/89RBgpOk2ojiox5MIiDbL5Ms6m//leFLFSMuNhLHTFhDuc+1fhdc/ufyv0URxe+xdGAnjoBpQLEAWFhdA+Vf/Gi5WG2m5kTAOTgjIXUIWJt7vL7fcL/pHfMdjJIwDvQCZ13DHsZr/T+EFu/wgMRGERC0gHFfk0JNq+NZYAoy03UQQEq0AVxbQ6gGmZmEbUUhqEYncV3pASUBowMYINKUA/01hDsiMQC64CPKfszuqBaewEYVELSBgiXcAcr3A+fsv2S3AGAlDUgmp+KtwZcdFT6HsAmSXMNJyI2FIbhOwfSnmgeMXFFChHFNDwJHmwEAm3XbGIBtRhHQIOD6+fo12gY+6MuMUUKUYVHWCTgXINIcpp4A6Tvyb/jz6Wbj8mfzoKFbsD0iMhBHzXfhPgiutvu1fHMsUmR+Fg9DNEfdiJY4Yl9n9qgtYXTrcOPG59hRwjmTvJff9mhnb5c/csUdmNP92AonJTAOFj29K51Z/6R/sUoajvpl2mwkkIb6OqcyaS7AT7/+XT6FnD24CO5HERK/rSqBHjgMBwdp/1FEGxdyBoVBi1KGJF/nmKsr/El0QjYi2F1PBhPQIEJsF0e6LuEsYEWw3tqIJacR2DCrJWvSabn/tBoy12Fg4AfXYChPD9uMlErB3AWsNthZPQDU4ChhPj4C/kWmJOabnQaF2Yy6ggJaBwm8y+fcbA7eHeBV7EUk6o9vzntyF2WuuvYgC+sLbX/exAIOtNRiSpL8L/FV25vNvMibJRQO3HGwoFmMKOBfg9opPxv6OQz2EyaAkpwL0iaeAG1FH6I4/rJ0VYLOpNqMKUIbohIDCR6ZbxGhYkhMC3N4Beo/yOFbjkuhiPNY7MwOQpS2YELOBCZTL0hUBhltpOLQd9bJ0SYDlRlqOzaMQIBfcgjlgMfNepAKmg9toC8hf968n/+QDhAkEtCbQff93+0b+jgKuo4kw3HaJfzEqsluYWUA41G/r/84Ff5Heev4nEFAMMXh1H7tf4gEUw5f/O/YjVAkQTwEd7yCeIP1TCCjFWBBwPJv1WIBXmCHKShfYizi/Bfn9rvosqSlmiFMTY/js7Qyt2pghVPUjiuv3zQGj47mVGaItxuiO6XZ/8nOGBklmiLf9zph1rnFfMkXMSWYzyaaAocgwi4+EUsBAxJp/q8RcTBS02//5JWZq0KSDTJ3fa9FkUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLAUAAYCgBDAWAoAAwFgKEAMBQAhgLA/AM7hWYJE6YTSwAAAABJRU5ErkJggg==" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Random</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(sample_extent_data<span class="sc">$</span>geometry)</span>
@@ -736,10 +455,8 @@ within.</p>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(terra<span class="sc">::</span><span class="fu">vect</span>(pseudo_abs_rand[, <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)],</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>),</span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>),<span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">add=</span>T)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<p>Then, the generated pseudo-absences need to be added to the
-occurrence record data frame by adding relevant columns and binding the
-rows together.</p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Then, the generated pseudo-absences need to be added to the occurrence record data frame by adding relevant columns and binding the rows together.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pseudo_abs_buff<span class="sc">$</span>decimalLatitude <span class="ot">&lt;-</span> pseudo_abs_buff<span class="sc">$</span>y</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>pseudo_abs_buff<span class="sc">$</span>decimalLongitude <span class="ot">&lt;-</span> pseudo_abs_buff<span class="sc">$</span>x</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>pseudo_abs_buff<span class="sc">$</span>occurrenceStatus <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;absent&quot;</span>, <span class="fu">nrow</span>(pseudo_abs_buff))</span>
@@ -755,10 +472,7 @@ rows together.</p>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<p>At the end of this vignette, we now have a complete data frame of
-filtered species occurrence and pseudo-absence records of appropriate
-spatio-temporal quality, extent and resolution. Let’s save this to our
-project directory for use in the next tutorial!</p>
+<p>At the end of this vignette, we now have a complete data frame of filtered species occurrence and pseudo-absence records of appropriate spatio-temporal quality, extent and resolution. Let’s save this to our project directory for use in the next tutorial!</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(complete.dataset, <span class="at">file =</span> <span class="fu">paste0</span>(project_directory, <span class="st">&quot;/filtered_quelea_occ.csv&quot;</span>))</span></code></pre></div>
 </div>
 

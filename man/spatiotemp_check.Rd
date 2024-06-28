@@ -12,7 +12,7 @@ spatiotemp_check(
   date.handle,
   date.res,
   coordclean = FALSE,
-  coordclean.species,
+  coordclean.species = "species_1",
   coordclean.handle = "exclude",
   ...
 )
